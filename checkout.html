@@ -548,6 +548,7 @@
                 createOrder();
             });
         });
+
         // Utility functions for setting and getting cookies
         function setCookie(name, value, minutes) {
             const date = new Date();
@@ -616,8 +617,8 @@
                 })
                 .then(data => {
                     if (data.code === 0) {
-                        // Save order data to localStorage
-                        localStorage.setItem("checkoutData", JSON.stringify(data.result));
+                        // Save order data to a cookie with a 5-minute expiration
+                        setCookie("checkoutData", JSON.stringify(data.result), 5);
 
                         // Redirect to online banking page
                         window.location.href = "onlineBanking.html";

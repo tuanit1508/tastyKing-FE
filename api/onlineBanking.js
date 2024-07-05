@@ -13,3 +13,18 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("amount").textContent = "Amount: $" + orderData.totalAmount.toFixed(2);
     document.getElementById("note").textContent = "Note: " + orderData.note;
 });
+
+////////////////////////////////////////////
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('orderID').textContent = `Order ID: ${getCookie('orderID')}`;
+    document.getElementById('email').textContent = `Email: ${getCookie('email')}`;
+    document.getElementById('orderDate').textContent = `Order Date: ${getCookie('orderDate')}`;
+    document.getElementById('amount').textContent = `Amount: $${getCookie('amount')}`;
+    document.getElementById('note').textContent = `Note: ${getCookie('note')}`;
+});
+
+// Function to get cookie by name
+function getCookie(name) {
+    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return cookieValue ? cookieValue.pop() : '';
+}
