@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/viewProfile.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <style>
+        .change-password-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            background-color: #f8f9fa; /* Light grey background */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition for background color and text color */
+        }
+
+        .change-password-btn:hover {
+            background-color: #007bff; /* Bootstrap primary color */
+            color: #fff; /* White text color */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .labels {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" width="150px"
+                     src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                <span id="username-display" class="font-weight-bold"></span>
+                <span id="email-display" class="text-black-50"></span>
+                <span> </span>
+            </div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label class="labels">User Name</label>
+                        <input type="text" id="input-username" class="form-control" required placeholder="enter user name" value="">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labels">Email</label>
+                        <input type="text" id="input-email" class="form-control" required placeholder="enter email" value="" readonly>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labels">Full Name</label>
+                        <input type="text" id="input-fullname" class="form-control" required placeholder="enter full name" value="">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labels">Mobile Number</label>
+                        <input type="text" id="input-phone" class="form-control" required placeholder="enter mobile number" value="">
+                    </div>
+                </div>
+
+                <div class="mt-5 text-center">
+                    <button id="save-profile-button" class="btn btn-primary profile-button" type="button">Save Profile</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="api/getProfile.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

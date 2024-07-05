@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Restoran - Bootstrap Restaurant Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .spad {
+            padding: 50px 0;
+        }
+
+        h5 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        span {
+            color: red;
+        }
+
+        /* Form Styles */
+        .checkout__form {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkout__form__input {
+            margin-bottom: 15px;
+        }
+
+        .checkout__form__input p {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .checkout__form__input input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .checkout__form__input input[type="text"]::placeholder {
+            color: #aaa;
+        }
+
+        .checkout__form__checkbox {
+            margin-bottom: 15px;
+        }
+
+        .checkout__form__checkbox label {
+            display: block;
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            user-select: none;
+        }
+
+        .checkout__form__checkbox input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkout__form__checkbox .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #eee;
+            border-radius: 4px;
+        }
+
+        .checkout__form__checkbox input:checked ~ .checkmark {
+            background-color: #5cb85c;
+        }
+
+        .checkout__form__checkbox .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkout__form__checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .checkout__form__checkbox .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Order Section */
+        .checkout__order {
+            background: #fff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkout__order h5 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .checkout__order__product ul,
+        .checkout__order__total ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checkout__order__product ul li,
+        .checkout__order__total ul li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .checkout__order__total ul li:last-child {
+            border-bottom: none;
+        }
+
+        .checkout__order__widget {
+            margin-top: 20px;
+        }
+
+        .checkout__order__widget label {
+            display: block;
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            user-select: none;
+        }
+
+        .checkout__order__widget input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkout__order__widget .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #eee;
+            border-radius: 4px;
+        }
+
+        .checkout__order__widget input:checked ~ .checkmark {
+            background-color: #5cb85c;
+        }
+
+        .checkout__order__widget .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkout__order__widget input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .checkout__order__widget .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        .site-btn {
+            display: inline-block;
+            background: #5cb85c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .site-btn:hover {
+            background: #4cae4c;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+                <a href="" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="index.html" class="nav-item nav-link ">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="voucher.html" class="nav-item nav-link">Voucher</a>
+                        <a href="combo.html" class="nav-item nav-link">Combo</a>
+                        <a href="menu.html" class="nav-item nav-link active">Order Now</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Category</a>
+                            <div class="dropdown-menu m-0">
+                                <!-- Categories will be dynamically added here -->
+                            </div>
+                        </div>
+                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    </div>
+                    <div class="d-flex ms-auto" id="auth-buttons">
+
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Order Now</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Order Now</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+
+        <!-- Menu Start -->
+        <section class="checkout spad">
+            <div class="container">
+
+                <form action="#" class="checkout__form" id="checkoutForm">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h5>Billing detail</h5>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="checkout__form__input">
+                                        <p>Customer Name <span>*</span></p>
+                                        <input type="text" id="customerName" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="checkout__form__input">
+                                        <p>Customer Phone <span>*</span></p>
+                                        <input type="text" id="customerPhone" readonly>
+                                    </div>
+                                    <div class="checkout__form__input">
+                                        <p>Date & Time<span>*</span></p>
+                                        <input type="text" id="bookingDate" readonly>
+                                    </div>
+                                    <div class="checkout__form__input">
+                                        <p>No of People <span>*</span></p>
+                                        <input type="number" id="numOfCustomer" readonly>
+                                    </div>
+                                    <div class="checkout__form__input">
+                                        <p>Table ID<span>*</span></p>
+                                        <input type="text" id="table" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="checkout__form__input">
+                                        <p>Special Request<span>*</span></p>
+                                        <input type="text" id="note" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="checkout__order">
+                                <h5>Your order</h5>
+                                <div class="checkout__order__product">
+                                    <ul id="cartItems">
+                                        <li>
+                                            <span class="top__text">Product</span>
+                                            <span class="top__text__right">Total</span>
+                                        </li>
+                                        <!-- Cart items will be inserted here -->
+                                    </ul>
+                                </div>
+                                <div class="checkout__order__total">
+                                    <ul>
+                                        <li>Subtotal <span id="subtotal"></span></li>
+                                        <li>Total <span id="total"></span></li>
+                                    </ul>
+                                </div>
+                                <div class="checkout__order__widget">
+                                    <label for="check-payment">
+                                        Payment By VnPay
+                                        <input type="checkbox" id="check-payment">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label for="paypal">
+                                        Online Banking
+                                        <input type="checkbox" id="paypal">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <button type="submit" class="site-btn">Place order</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </section>
+        <!-- Menu End -->
+        
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Company</h4>
+                        <a class="btn btn-link" href="">About Us</a>
+                        <a class="btn btn-link" href="">Contact Us</a>
+                        <a class="btn btn-link" href="">Reservation</a>
+                        <a class="btn btn-link" href="">Privacy Policy</a>
+                        <a class="btn btn-link" href="">Terms & Condition</a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Opening</h4>
+                        <h5 class="text-light fw-normal">Monday - Saturday</h5>
+                        <p>09AM - 09PM</p>
+                        <h5 class="text-light fw-normal">Sunday</h5>
+                        <p>10AM - 08PM</p>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Newsletter</h4>
+                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                        <div class="position-relative mx-auto" style="max-width: 400px;">
+                            <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved. 
+							
+							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+							Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a><br><br>
+                            Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="">Home</a>
+                                <a href="">Cookies</a>
+                                <a href="">Help</a>
+                                <a href="">FQAs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+    <script src="api/menu.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+
+            if (token) {
+                localStorage.setItem('authToken', token);
+            }
+
+            const authButtons = document.getElementById('auth-buttons');
+            const storedToken = localStorage.getItem('authToken');
+
+            if (storedToken) {
+                const decodedToken = jwt_decode(storedToken);
+                const username = decodedToken.sub; // Extract the "sub" field for the username
+                console.log(token);
+                authButtons.innerHTML = `
+            <div class="nav-item dropdown">
+                <a href="#" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="fa fa-user"></i>
+                </a>
+                <div class="dropdown-menu m-0">
+                    <div class="dropdown-item" id="username">${username}</div>
+                    <a href="viewProfile.html" class="dropdown-item">View Profile</a>
+                     <a href="updatePass.html" class="dropdown-item">Security</a>
+                    <a href="viewOrder.html" class="dropdown-item">View Order</a>
+                    <a href="#" id="logout" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="btn btn-outline-light">
+                    <i class="fa fa-shopping-cart"></i>
+                </a>
+            </div>
+        `;
+
+                document.getElementById('logout').addEventListener('click', function() {
+                    localStorage.removeItem('authToken');
+                    window.location.href = 'index.html';
+                });
+            } else {
+                authButtons.innerHTML = `
+            <a href="login.html" class="btn btn-primary me-2">Login</a>
+            <a href="register.html" class="btn btn-secondary me-2">Register</a>
+        `;
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize the datetime picker
+            $('#date3').datetimepicker({
+                format: 'YYYY-MM-DDTHH:mm:ss'
+            });
+
+            // Handle form submission
+            document.getElementById('checkoutForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form submission
+
+                const selectedPaymentMethod = document.getElementById('paypal').checked;
+                if (!selectedPaymentMethod) {
+                    alert("Please select Online Banking as the payment method.");
+                    return;
+                }
+
+                createOrder();
+            });
+        });
+        // Utility functions for setting and getting cookies
+        function setCookie(name, value, minutes) {
+            const date = new Date();
+            date.setTime(date.getTime() + (minutes * 60 * 1000)); // Calculate expiration time in minutes
+            const expires = "expires=" + date.toUTCString(); // Create expiration string in UTC format
+            document.cookie = name + "=" + value + ";" + expires + ";path=/"; // Set the cookie
+        }
+
+        function getCookie(name) {
+            let cookies = document.cookie.split(';'); // Split document cookies by semicolon
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim(); // Trim leading and trailing spaces from each cookie
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1); // Return the cookie value if the name matches
+                }
+            }
+            return null; // Return null if no cookie with the given name is found
+        }
+
+        function createOrder() {
+            const reservationData = JSON.parse(localStorage.getItem("reservationData"));
+            const tableID = document.getElementById("table").value;
+            const cart = JSON.parse(getCookie("cart") || "[]");
+            const total = parseFloat(document.getElementById("total").textContent.replace('$', ''));
+            const bookingDate = document.getElementById("bookingDate").value;
+            const authToken = localStorage.getItem("authToken");
+            const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+
+            if (!authToken) {
+                alert("Authentication token is missing. Please log in again.");
+                return;
+            }
+
+            const orderData = {
+                user: {
+                    email: loggedInUserEmail
+                },
+                tables: {
+                    tableID: tableID
+                },
+                note: document.getElementById("note").value,
+                totalAmount: total,
+                numOfCustomer: parseInt(document.getElementById("numOfCustomer").value),
+                customerName: document.getElementById("customerName").value,
+                bookingDate: moment(bookingDate).format('YYYY-MM-DDTHH:mm:ss.SSSSSSS'),
+                customerPhone: document.getElementById("customerPhone").value,
+                orderDetails: cart.map(item => ({
+                    foodID: item.foodID,
+                    quantity: item.quantity
+                }))
+            };
+
+            fetch("http://localhost:8080/TastyKing/order", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${authToken}`
+                },
+                body: JSON.stringify(orderData)
+            })
+                .then(response => {
+                    if (response.status === 401) {
+                        throw new Error("Unauthorized: Invalid or expired token");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.code === 0) {
+                        // Save order data to localStorage
+                        localStorage.setItem("checkoutData", JSON.stringify(data.result));
+
+                        // Redirect to online banking page
+                        window.location.href = "onlineBanking.html";
+                    } else {
+                        alert("Please provide the necessary information to complete the booking process");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error creating order:", error);
+                    alert("An error occurred while creating the order. Please try again.");
+                });
+        }
+
+        // Example usage of setCookie
+        // setCookie("cart", JSON.stringify([{ foodID: 1, quantity: 2 }, { foodID: 2, quantity: 3 }]), 3); // Setting cart cookie for 3 minutes
+
+        // Attach createOrder to a button click or form submission
+        document.getElementById("createOrderButton").addEventListener("click", createOrder); // Replace "createOrderButton" with the actual button ID
+
+    </script>
+<script src="api/getCategory.js"></script>
+<script src="api/checkout.js"></script>
+</body>
+
+</html>

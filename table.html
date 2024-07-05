@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Table Booking</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom CSS -->
+    <style>
+        .container-fluid {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            overflow-y: auto; /* Enable scrolling if content overflows */
+            z-index: 1000; /* Ensure sidebar is above content */
+            background-color: #fd7e14; /* Orange background color */
+        }
+        .sidebar h4 {
+            font-weight: bold;
+            color: #fff; /* White text color */
+        }
+        .sidebar .list-group-item {
+            cursor: pointer;
+        }
+        .main-content {
+            margin-left: 25%; /* Adjust based on sidebar width */
+            padding: 20px;
+        }
+        .restaurant-map {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Adjust based on your restaurant layout */
+            gap: 10px;
+        }
+        .table {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Smooth transition for color change */
+        }
+        .table.available {
+            background-color: #28a745; /* Green color for available tables */
+        }
+        .table.selected {
+            background-color: #fd7e14; /* Orange color for selected tables */
+        }
+        .table.booked {
+            background-color: #dc3545; /* Red color for booked tables */
+            cursor: not-allowed; /* Disable cursor for booked tables */
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-3 sidebar">
+            <h4 class="mt-3 mb-4 text-center">Choose Area</h4>
+            <ul id="table-positions" class="list-group">
+
+            </ul>
+        </div>
+        <!-- Main Content -->
+        <div class="col-9 main-content">
+            <h2 class="mt-3 mb-4">Restaurant Table Booking</h2>
+            <div class="restaurant-map" id="restaurant-map">
+                <!-- Tables will be dynamically inserted here -->
+            </div>
+            <div id="booking-message"></div>
+        </div>
+    </div>
+</div>
+
+
+<script src="api/getTablePosition.js"></script>
+</body>
+</html>
