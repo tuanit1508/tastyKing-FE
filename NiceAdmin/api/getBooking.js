@@ -162,9 +162,14 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">${order.customerName}</td>
                             </tr>
                              <tr>
-                                <td style="text-align: left; padding: 20px;">Table:</td>
-                                <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">ID: ${order.tables.tableID}: ${order.tables.tablePosition.tablePosition} - ${order.tables.tableName}</td>
-                            </tr>
+                            <td style="text-align: left; padding: 20px;">Table:</td>
+                            <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">
+                                ${['Canceled', 'Done','Processing', 'InProgress'].includes(order.orderStatus) ? '' : `
+                                    <button class="btn btn-warning" onclick="receiveTable(${order.orderID})">Receive Table</button>
+                                `}
+                                ID: ${order.tables.tableID}: ${order.tables.tablePosition.tablePosition} - ${order.tables.tableName}
+                            </td>
+                        </tr>
                             <tr>
                                 <td style="text-align: left; padding: 20px;">Number of Customer:</td>
                                 <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">${order.numOfCustomer}</td>
@@ -197,6 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function getOrderStatusButton(status) {
         return `<button class="btn ${status === 'Completed' ? 'btn-success' : 'btn-warning'}">${status}</button>`;
     }
+
 
     function getActionButtons(status, orderID) {
         let buttons = '';
@@ -248,5 +254,26 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(`Cancel order with ID: ${orderID}`);
     };
 
+    window.receiveTable = function (orderID) {
+        fetch(`http://localhost:8080/TastyKing/order/receiveTable/${orderID}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 0) {
+                    alert(data.result);
+                    fetchOrders(); // Refresh the orders list
+                } else {
+                    alert(data.message)
+                    console.error('Error receiving the table');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    };
+
     fetchOrders();
-});
+})

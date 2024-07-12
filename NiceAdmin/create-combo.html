@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Tables / Data - NiceAdmin Bootstrap Template</title>
+    <title>Users / Profile - NiceAdmin Bootstrap Template</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -37,18 +37,27 @@
     * License: https://bootstrapmade.com/license/
     ======================================================== -->
     <style>
-        .pagination {
+        .table td, .table th {
+            vertical-align: middle;
+        }
+        .quantity-buttons {
             display: flex;
-            justify-content: center;
-            margin-top: 20px;
+            align-items: center;
         }
-        .pagination button {
+        .quantity-buttons button {
+            border: none;
+            background-color: transparent;
+        }
+        .quantity-buttons input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
             margin: 0 5px;
-            padding: 5px 10px;
-            cursor: pointer;
         }
-        .search-input {
-            width: 250px;
+        .card-img-top {
+            max-width: 150px;
+            max-height: 150px; /* Adjust these values as needed */
         }
     </style>
 </head>
@@ -571,72 +580,124 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Order Management</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Data</li>
-            </ol>
-        </nav>
+        <h1>Order</h1>
     </div><!-- End Page Title -->
 
-    <section class="section">
+    <section class="section profile">
+        <div class="container mt-5">
 
-        <div class="row">
-            <div class="col-lg-12">
 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between mb-3">
-                            <button class="btn btn-warning" onclick="redirectToIndex()">Create new order</button>
-                            <input type="text" id="searchInput" class="form-control search-input" placeholder="Search orders...">
+            <div class="mb-3">
+                <ul class="nav nav-tabs" id="categoryTabs">
+                    <!-- Categories will be inserted here -->
+                </ul>
+            </div>
+
+            <div class="row" id="foodContainer">
+                <!-- Foods will be inserted here -->
+            </div>
+
+            <!-- Order Summary Table -->
+            <div class="mt-5">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col" class="text-center">Quantity</th>
+                        <th scope="col" class="text-right">Price</th>
+                    </tr>
+                    </thead>
+                    <tbody id="orderSummary">
+                    <!-- Ordered items will be inserted here -->
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th colspan="2" class="text-right">Total Price</th>
+                        <th class="text-right" id="totalAmount">$ 0</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+            <div style="margin-top: 20px" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" style="font-weight: bold" id="contactModalLabel">Combo Information</h5>
+
                         </div>
-                        <!-- Table with stripped rows -->
-                        <table class="table datatable">
-                            <thead>
-                            <tr>
-                                <th><b>Order by</b></th>
-                                <th>OrderID</th>
-                                <th data-type="date" data-format="YYYY/DD/MM">Order Date</th>
-                                <th data-type="date" data-format="YYYY/DD/MM">Booking Date</th>
-                                <th>Order Status</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Data will be populated here -->
-                            </tbody>
-                        </table>
-                        <div class="pagination">
-                            <!-- Pagination buttons will be populated here -->
+                        <div class="modal-body">
+                            <!-- Your contact form here -->
+                            <form style="margin-top: 12px" id="contact-form" role="form">
+                                <div class="controls">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="comboTitle">Combo title *</label>
+                                                <input id="comboTitle" type="text" name="comboTitle" class="form-control" placeholder="Please enter combo title *" required="required" data-error="Firstname is required.">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="newPrice">Price *</label>
+                                                <input id="newPrice" type="number" name="comboTitle" class="form-control" placeholder="Please enter price *" required="required" data-error="Firstname is required.">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="openDate">Open Date *</label>
+                                                <input id="openDate" type="datetime-local" name="date" class="form-control" placeholder="Please enter open date *" required="required" data-error="Valid booking date is required.">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="endDate">End Date *</label>
+                                                    <input id="endDate" type="datetime-local" name="date" class="form-control" placeholder="Please enter end date *" required="required" data-error="Valid booking date is required.">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="comboDescription">Combo Description *</label>
+                                                <textarea id="comboDescription" name="message" class="form-control" placeholder="Write description." rows="4" required="required" data-error="Please, leave us a message."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="commboImage">Combo Image(URL) *</label>
+                                            <input id="commboImage" type="text" name="comboTitle" class="form-control" placeholder="Please enter combo image (URL) *" required="required" data-error="Firstname is required.">
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </form>
                         </div>
-                        <!-- End Table with stripped rows -->
 
                     </div>
                 </div>
-
+            </div>
+            <div class="d-flex justify-content-end mt-4">
+                <button class="btn btn-danger mr-2">Back</button>
+                <button class="btn btn-primary mr-2">Save</button>
             </div>
         </div>
+
     </section>
+    <!--modal create order-->
+
+
+
 
 </main><!-- End #main -->
-<!--modal-->
-<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Order details will be populated here -->
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
@@ -662,45 +723,11 @@
 <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script src="assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="assets/vendor/php-email-form/validate.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput = document.getElementById('searchInput');
-        const table = document.querySelector('.datatable tbody');
 
-        searchInput.addEventListener('keyup', function () {
-            const query = searchInput.value.toLowerCase();
-            const rows = table.getElementsByTagName('tr');
-
-            for (let i = 0; i < rows.length; i++) {
-                const row = rows[i];
-                const cells = row.getElementsByTagName('td');
-                let match = false;
-
-                for (let j = 0; j < cells.length; j++) {
-                    const cell = cells[j];
-                    if (cell.textContent.toLowerCase().includes(query)) {
-                        match = true;
-                        break;
-                    }
-                }
-
-                if (match) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            }
-        });
-    });
-
-    function redirectToIndex() {
-        window.location.href = "create-order.html";
-    }
-</script>
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
-<script src="api/getBooking.js"></script>
+
+<script src="api/combo.js"></script>
 </body>
 
 </html>

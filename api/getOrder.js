@@ -45,21 +45,31 @@ function displayOrders(orders) {
             <table style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 100%; margin-bottom: 20px;">
                 <tbody>
                     <tr>
-                        <td colspan="3" style="text-align: left; padding: 20px; font-weight: bold;">Order ID: ${order.orderID}</td>
+                        <td colspan="2" style="text-align: left; padding: 20px; font-weight: bold;">Order ID: ${order.orderID}</td>
+                        <td style="text-align: right; padding: 20px;">
+                            Order detail<span  id="toggle-arrow-${order.orderID}" style="cursor: pointer; margin-left: 10px">&#9654;</span>
+                        </td>
                     </tr>
-                    ${order.orderDetails.map(item => `
-                        <tr>
-                            <td rowspan="2" style="text-align: center; padding: 20px; width: 150px;">
-                                <img src="${item.foodImage}" alt="Product Image" style="width: 100px; height: auto; border: 1px solid #ddd; border-radius: 8px;">
-                            </td>
-                            <td style="text-align: left; padding: 20px;">Food Name:</td>
-                            <td style="text-align: right; padding: 20px; padding-right: 20px;">${item.foodName}</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left; padding: 20px;">Quantity:</td>
-                            <td style="text-align: right; padding: 20px; padding-right: 20px;">${item.quantity}</td>
-                        </tr>
-                    `).join('')}
+                    <!-- Container for order details -->
+                    <tr class="order-details" id="order-details-${order.orderID}" style="display: none;">
+                        <td colspan="3">
+                            ${order.orderDetails.map(item => `
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td rowspan="2" style="text-align: center; padding: 20px; width: 150px;">
+                                            <img src="${item.foodImage}" alt="Product Image" style="width: 100px; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+                                        </td>
+                                        <td style="text-align: left; padding: 20px;">Food Name:</td>
+                                        <td style="text-align: right; padding: 20px; padding-right: 20px;">${item.foodName}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; padding: 20px;">Quantity:</td>
+                                        <td style="text-align: right; padding: 20px; padding-right: 20px;">${item.quantity}</td>
+                                    </tr>
+                                </table>
+                            `).join('')}
+                        </td>
+                    </tr>
                     <tr style="background-color: #f2f2f2;">
                         <th scope="row" colspan="3" style="color: #333; text-align: right; padding: 20px; padding-right: 20px;">Total amount: ${order.totalAmount}</th>
                     </tr>
@@ -107,8 +117,22 @@ function displayOrders(orders) {
             </table>
         `;
         container.appendChild(orderElement);
+
+        // JavaScript to toggle order details visibility
+        document.getElementById(`toggle-arrow-${order.orderID}`).addEventListener('click', function() {
+            const details = document.getElementById(`order-details-${order.orderID}`);
+            if (details.style.display === 'none') {
+                details.style.display = 'table-row';
+                this.innerHTML = '&#9660;'; // Down arrow
+            } else {
+                details.style.display = 'none';
+                this.innerHTML = '&#9654;'; // Right arrow
+            }
+        });
     });
 }
+
+
 
 function getOrderStatusButton(status) {
     const statusMap = {

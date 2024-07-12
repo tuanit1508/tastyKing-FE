@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const orderData = JSON.parse(localStorage.getItem("checkoutData") || "{}");
+    const orderData = JSON.parse(getCookie("checkoutData") || "{}"); // Change here to get order data from cookies
 
     // Ensure orderData is not empty
     if (Object.keys(orderData).length === 0) {
@@ -13,18 +13,13 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("amount").textContent = "Amount: $" + orderData.totalAmount.toFixed(2);
     document.getElementById("note").textContent = "Note: " + orderData.note;
 });
-
-////////////////////////////////////////////
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('orderID').textContent = `Order ID: ${getCookie('orderID')}`;
-    document.getElementById('email').textContent = `Email: ${getCookie('email')}`;
-    document.getElementById('orderDate').textContent = `Order Date: ${getCookie('orderDate')}`;
-    document.getElementById('amount').textContent = `Amount: $${getCookie('amount')}`;
-    document.getElementById('note').textContent = `Note: ${getCookie('note')}`;
-});
-
-// Function to get cookie by name
 function getCookie(name) {
-    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-    return cookieValue ? cookieValue.pop() : '';
+    let cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            return cookie.substring(name.length + 1);
+        }
+    }
+    return null;
 }

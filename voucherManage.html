@@ -31,12 +31,7 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-    <style>
-        .toggle-details {
-            cursor: pointer;
-            float: right;
-        }
-    </style>
+
 </head>
 
 <body>
@@ -98,11 +93,13 @@
 
 
     <!-- Service Start -->
-    <div class="container-fluid mt-3">
-        <div id="orders-container" style="width: 70%; margin-left: auto; margin-right: auto;">
-            <!-- Orders will be dynamically inserted here -->
+    <div style="width: 70%; margin-left: auto; margin-right: auto;">
+        <div style="width: 83.333333%; margin-left: auto; margin-right: auto;">
+            <div id="voucher-list"></div>
+            <div id="pagination-controls" style="text-align: center; margin-top: 20px;"></div>
         </div>
     </div>
+
 
     <!-- Service End -->
 
@@ -217,6 +214,7 @@
                    <a href="viewProfile.html" class="dropdown-item">View Profile</a>
                      <a href="updatePass.html" class="dropdown-item">Security</a>
                     <a href="viewOrder.html" class="dropdown-item">View Order</a>
+                    <a href="voucherManage.html" class="dropdown-item">Voucher Manage</a>
                     <a href="#" id="logout" class="dropdown-item">Logout</a>
                 </div>
             </div>
@@ -241,8 +239,9 @@
 </script>
 
 <script src="api/getCategory.js"></script>
-<script src="api/getVoucher.js"></script>
-<script src="api/getOrder.js"></script>
+
+
+<script src="api/viewVoucherExchange.js"></script>
 </body>
 
 </html>

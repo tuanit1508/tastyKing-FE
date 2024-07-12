@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Tables / Data - NiceAdmin Bootstrap Template</title>
+    <title>Users / Profile - NiceAdmin Bootstrap Template</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -37,18 +37,27 @@
     * License: https://bootstrapmade.com/license/
     ======================================================== -->
     <style>
-        .pagination {
+        .table td, .table th {
+            vertical-align: middle;
+        }
+        .quantity-buttons {
             display: flex;
-            justify-content: center;
-            margin-top: 20px;
+            align-items: center;
         }
-        .pagination button {
+        .quantity-buttons button {
+            border: none;
+            background-color: transparent;
+        }
+        .quantity-buttons input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
             margin: 0 5px;
-            padding: 5px 10px;
-            cursor: pointer;
         }
-        .search-input {
-            width: 250px;
+        .card-img-top {
+            max-width: 150px;
+            max-height: 150px; /* Adjust these values as needed */
         }
     </style>
 </head>
@@ -567,76 +576,113 @@
     </ul>
 
 </aside><!-- End Sidebar-->
-
 <main id="main" class="main">
-
     <div class="pagetitle">
-        <h1>Order Management</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Data</li>
-            </ol>
-        </nav>
+        <h1>Combo</h1>
     </div><!-- End Page Title -->
 
-    <section class="section">
+    <section class="section profile">
+        <div class="container mt-5">
+            <div class="mb-3">
+                <ul class="nav nav-tabs" id="categoryTabs">
+                    <!-- Categories will be inserted here -->
+                </ul>
+            </div>
 
-        <div class="row">
-            <div class="col-lg-12">
+            <div class="row" id="foodContainer">
+                <!-- Foods will be inserted here -->
+            </div>
 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between mb-3">
-                            <button class="btn btn-warning" onclick="redirectToIndex()">Create new order</button>
-                            <input type="text" id="searchInput" class="form-control search-input" placeholder="Search orders...">
+            <!-- Order Summary Table -->
+            <div class="mt-5">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col" class="text-center">Quantity</th>
+                        <th scope="col" class="text-right">Price</th>
+                    </tr>
+                    </thead>
+                    <tbody id="orderSummary">
+                    <!-- Ordered items will be inserted here -->
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th colspan="2" class="text-right">Total Price</th>
+                        <th class="text-right" id="totalAmount"> 0.0VND</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div style="margin-top: 20px" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" style="font-weight: bold" id="contactModalLabel">Combo Information</h5>
                         </div>
-                        <!-- Table with stripped rows -->
-                        <table class="table datatable">
-                            <thead>
-                            <tr>
-                                <th><b>Order by</b></th>
-                                <th>OrderID</th>
-                                <th data-type="date" data-format="YYYY/DD/MM">Order Date</th>
-                                <th data-type="date" data-format="YYYY/DD/MM">Booking Date</th>
-                                <th>Order Status</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Data will be populated here -->
-                            </tbody>
-                        </table>
-                        <div class="pagination">
-                            <!-- Pagination buttons will be populated here -->
+                        <div class="modal-body">
+                            <form style="margin-top: 12px" id="contact-form" role="form">
+                                <div class="controls">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="comboTitle">Combo title *</label>
+                                                <input id="comboTitle" type="text" name="comboTitle" class="form-control" placeholder="Please enter combo title *" required="required" data-error="Combo title is required.">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="newPrice">Price *</label>
+                                                <input id="newPrice" type="number" name="newPrice" class="form-control" placeholder="Please enter price *" required="required" data-error="Price is required.">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="openDate">Open Date *</label>
+                                                <input id="openDate" type="datetime-local" name="openDate" class="form-control" placeholder="Please enter open date *" required="required" data-error="Open date is required.">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="endDate">End Date *</label>
+                                                <input id="endDate" type="datetime-local" name="endDate" class="form-control" placeholder="Please enter end date *" required="required" data-error="End date is required.">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="comboDescription">Combo Description *</label>
+                                                <textarea id="comboDescription" name="comboDescription" class="form-control" placeholder="Write description." rows="4" required="required" data-error="Description is required."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="commboImage">Combo Image(URL) *</label>
+                                                <input id="commboImage" type="text" name="comboImage" class="form-control" placeholder="Please enter combo image (URL) *" required="required" data-error="Image URL is required.">
+                                                <img id="comboImagePreview" src="" alt="Combo Image Preview" style="margin-top: 10px; width: 100px; height: auto;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <!-- End Table with stripped rows -->
-
                     </div>
                 </div>
-
+            </div>
+            <div class="d-flex justify-content-end mt-4">
+                <button class="btn btn-danger mr-2">Back</button>
+                <button class="btn btn-primary mr-2">Save</button>
             </div>
         </div>
     </section>
-
 </main><!-- End #main -->
-<!--modal-->
-<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Order details will be populated here -->
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
@@ -662,45 +708,335 @@
 <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script src="assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="assets/vendor/php-email-form/validate.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput = document.getElementById('searchInput');
-        const table = document.querySelector('.datatable tbody');
 
-        searchInput.addEventListener('keyup', function () {
-            const query = searchInput.value.toLowerCase();
-            const rows = table.getElementsByTagName('tr');
-
-            for (let i = 0; i < rows.length; i++) {
-                const row = rows[i];
-                const cells = row.getElementsByTagName('td');
-                let match = false;
-
-                for (let j = 0; j < cells.length; j++) {
-                    const cell = cells[j];
-                    if (cell.textContent.toLowerCase().includes(query)) {
-                        match = true;
-                        break;
-                    }
-                }
-
-                if (match) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            }
-        });
-    });
-
-    function redirectToIndex() {
-        window.location.href = "create-order.html";
-    }
-</script>
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
-<script src="api/getBooking.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchCategories();
+        const urlParams = new URLSearchParams(window.location.search);
+        const comboID = urlParams.get('comboID');
+
+        if (comboID) {
+            fetchComboByID(comboID);
+        }
+
+        const saveButton = document.querySelector('.btn-primary');
+        saveButton.addEventListener('click', saveCombo);
+    });
+
+    function fetchCategories() {
+        fetch('http://localhost:8080/TastyKing/category')
+            .then(response => response.json())
+            .then(data => {
+                displayCategories(data.result);
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }
+
+    function displayCategories(categories) {
+        const navTabs = document.querySelector('#categoryTabs');
+        navTabs.innerHTML = ''; // Clear existing content
+
+        categories.forEach((category, index) => {
+            const li = document.createElement('li');
+            li.className = 'nav-item';
+
+            const a = document.createElement('a');
+            a.className = 'nav-link';
+            a.href = `#`;
+            a.textContent = category.categoryName;
+            a.dataset.categoryId = category.categoryID;
+            a.onclick = (e) => {
+                e.preventDefault();
+                fetchFoodsByCategory(category.categoryID);
+                setActiveTab(a);
+            };
+
+            if (index === 0) {
+                a.classList.add('active');
+                fetchFoodsByCategory(category.categoryID); // Load foods for the first category by default
+            }
+
+            li.appendChild(a);
+            navTabs.appendChild(li);
+        });
+    }
+
+    function setActiveTab(activeLink) {
+        const links = document.querySelectorAll('.nav-link');
+        links.forEach(link => link.classList.remove('active'));
+        activeLink.classList.add('active');
+    }
+
+    function fetchFoodsByCategory(categoryID) {
+        fetch(`http://localhost:8080/TastyKing/food/${categoryID}`)
+            .then(response => response.json())
+            .then(data => {
+                displayFoods(data.result);
+            })
+            .catch(error => console.error('Error fetching foods:', error));
+    }
+
+    function displayFoods(foods) {
+        const foodContainer = document.querySelector('#foodContainer');
+        foodContainer.innerHTML = ''; // Clear existing content
+
+        foods.forEach(food => {
+            const col = document.createElement('div');
+            col.className = 'col-md-4 mb-4';
+
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            const img = document.createElement('img');
+            img.className = 'card-img-top';
+            img.src = food.foodImage;
+            img.alt = food.foodName;
+
+            const cardBody = document.createElement('div');
+            cardBody.className = 'card-body';
+
+            const cardTitle = document.createElement('h5');
+            cardTitle.className = 'card-title';
+            cardTitle.textContent = food.foodName;
+
+            const addButton = document.createElement('button');
+            addButton.className = 'btn btn-primary mt-2';
+            addButton.textContent = 'Add to Order';
+            addButton.onclick = () => addToOrder(food);
+
+            cardBody.appendChild(cardTitle);
+            cardBody.appendChild(addButton);
+            card.appendChild(img);
+            card.appendChild(cardBody);
+            col.appendChild(card);
+            foodContainer.appendChild(col);
+        });
+    }
+
+    function addToOrder(food) {
+        const orderSummary = document.querySelector('#orderSummary');
+        const existingItem = document.querySelector(`#order-item-${food.foodID}`);
+
+        if (existingItem) {
+            const quantityInput = existingItem.querySelector('.quantity-buttons input');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        } else {
+            const tr = document.createElement('tr');
+            tr.id = `order-item-${food.foodID}`;
+
+            const tdName = document.createElement('td');
+            tdName.textContent = food.foodName;
+
+            const tdQuantity = document.createElement('td');
+            tdQuantity.className = 'text-center';
+
+            const quantityButtons = document.createElement('div');
+            quantityButtons.className = 'quantity-buttons';
+
+            const minusButton = document.createElement('button');
+            minusButton.className = 'btn btn-outline-secondary btn-sm';
+            minusButton.textContent = '-';
+            minusButton.onclick = () => updateQuantity(food.foodID, -1);
+
+            const quantityInput = document.createElement('input');
+            quantityInput.type = 'text';
+            quantityInput.value = '1';
+            quantityInput.readOnly = true;
+
+            const plusButton = document.createElement('button');
+            plusButton.className = 'btn btn-outline-secondary btn-sm';
+            plusButton.textContent = '+';
+            plusButton.onclick = () => updateQuantity(food.foodID, 1);
+
+            quantityButtons.appendChild(minusButton);
+            quantityButtons.appendChild(quantityInput);
+            quantityButtons.appendChild(plusButton);
+            tdQuantity.appendChild(quantityButtons);
+
+            const tdPrice = document.createElement('td');
+            tdPrice.className = 'text-right';
+            tdPrice.textContent = `${food.foodPrice}.000VND`;
+
+            const removeButton = document.createElement('button');
+            removeButton.className = 'btn btn-danger btn-sm';
+            removeButton.textContent = 'x';
+            removeButton.onclick = () => removeFromOrder(food.foodID);
+
+            tdPrice.appendChild(removeButton);
+
+            tr.appendChild(tdName);
+            tr.appendChild(tdQuantity);
+            tr.appendChild(tdPrice);
+
+            orderSummary.appendChild(tr);
+        }
+
+        updateTotal();
+    }
+
+    function updateQuantity(foodID, change) {
+        const item = document.querySelector(`#order-item-${foodID}`);
+        const quantityInput = item.querySelector('.quantity-buttons input');
+        let quantity = parseInt(quantityInput.value);
+        quantity = Math.max(1, quantity + change);
+        quantityInput.value = quantity;
+
+        updateTotal();
+    }
+
+    function removeFromOrder(foodID) {
+        const item = document.querySelector(`#order-item-${foodID}`);
+        item.remove();
+
+        updateTotal();
+    }
+
+    function updateTotal() {
+        const orderSummary = document.querySelector('#orderSummary');
+        const items = orderSummary.querySelectorAll('tr');
+        let total = 0;
+
+        items.forEach(item => {
+            const quantity = parseInt(item.querySelector('.quantity-buttons input').value);
+            const priceText = item.querySelector('td.text-right').textContent;
+            const price = parseFloat(priceText.replace(' $', '').replace(',', '.'));
+            total += quantity * price;
+        });
+
+        const totalAmount = document.querySelector('#totalAmount');
+        totalAmount.textContent = `${total.toFixed(1)} $`;
+    }
+
+    function fetchComboByID(comboID) {
+        fetch(`http://localhost:8080/TastyKing/combo/getCombo/${comboID}`)
+            .then(response => response.json())
+            .then(data => {
+                const combo = data.result;
+                displayComboDetails(combo);
+            })
+            .catch(error => console.error('Error fetching combo details:', error));
+    }
+
+    function displayComboDetails(combo) {
+        document.getElementById('comboTitle').value = combo.comboTitle;
+        document.getElementById('newPrice').value = combo.newPrice;
+        document.getElementById('openDate').value = combo.openDate;
+        document.getElementById('endDate').value = combo.endDate;
+        document.getElementById('comboDescription').value = combo.comboDescription;
+        document.getElementById('commboImage').value = combo.comboImage;
+        document.getElementById('comboImagePreview').src = combo.comboImage;
+
+        const orderSummary = document.getElementById('orderSummary');
+        orderSummary.innerHTML = ''; // Clear existing content
+
+        combo.comboFoods.forEach(food => {
+            const tr = document.createElement('tr');
+            tr.id = `order-item-${food.foodID}`;
+
+            const tdName = document.createElement('td');
+            tdName.textContent = food.foodName;
+
+            const tdQuantity = document.createElement('td');
+            tdQuantity.className = 'text-center';
+
+            const quantityButtons = document.createElement('div');
+            quantityButtons.className = 'quantity-buttons';
+
+            const minusButton = document.createElement('button');
+            minusButton.className = 'btn btn-outline-secondary btn-sm';
+            minusButton.textContent = '-';
+            minusButton.onclick = () => updateQuantity(food.foodID, -1);
+
+            const quantityInput = document.createElement('input');
+            quantityInput.type = 'text';
+            quantityInput.value = food.quantity;
+            quantityInput.readOnly = true;
+
+            const plusButton = document.createElement('button');
+            plusButton.className = 'btn btn-outline-secondary btn-sm';
+            plusButton.textContent = '+';
+            plusButton.onclick = () => updateQuantity(food.foodID, 1);
+
+            quantityButtons.appendChild(minusButton);
+            quantityButtons.appendChild(quantityInput);
+            quantityButtons.appendChild(plusButton);
+            tdQuantity.appendChild(quantityButtons);
+
+            const tdPrice = document.createElement('td');
+            tdPrice.className = 'text-right';
+            tdPrice.textContent = `${food.foodPrice}.000VND`;
+
+            const removeButton = document.createElement('button');
+            removeButton.className = 'btn btn-danger btn-sm';
+            removeButton.textContent = 'x';
+            removeButton.onclick = () => removeFromOrder(food.foodID);
+
+            tdPrice.appendChild(removeButton);
+
+            tr.appendChild(tdName);
+            tr.appendChild(tdQuantity);
+            tr.appendChild(tdPrice);
+
+            orderSummary.appendChild(tr);
+        });
+
+        updateTotal();
+    }
+
+    function saveCombo() {
+        const comboID = new URLSearchParams(window.location.search).get('comboID');
+        const comboTitle = document.getElementById('comboTitle').value;
+        const newPrice = document.getElementById('newPrice').value;
+        const openDate = document.getElementById('openDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const comboDescription = document.getElementById('comboDescription').value;
+        const comboImage = document.getElementById('commboImage').value;
+        const comboFoods = [];
+        const token = localStorage.getItem('token');
+        document.querySelectorAll('#orderSummary tr').forEach(tr => {
+            const foodID = tr.id.replace('order-item-', '');
+            const quantity = tr.querySelector('.quantity-buttons input').value;
+            comboFoods.push({ foodID, quantity });
+        });
+
+        const updateComboRequest = {
+            comboTitle,
+            newPrice,
+            openDate,
+            endDate,
+            comboDescription,
+            comboImage,
+            comboFoods
+        };
+
+        fetch(`http://localhost:8080/TastyKing/combo/${comboID}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(updateComboRequest)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 0) {
+                    alert('Combo updated successfully!');
+                    window.location.href = 'combo-data.html';
+                } else {
+                    alert('Error updating combo');
+                }
+            })
+            .catch(error => console.error('Error updating combo:', error));
+    }
+
+    // Existing functions to fetch categories and foods, add to order, update quantity, remove from order, and update total remain the same
+
+
+</script>
+
 </body>
 
 </html>

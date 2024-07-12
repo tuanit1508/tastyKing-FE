@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('bookNowButton').addEventListener('click', function () {
         const tableID = getLocalStorage('selectedTableID');
         if (tableID) {
-            setLocalStorage('tableID', tableID, 4); // Store table ID in localStorage
+            setLocalStorage('tableID', tableID, 2); // Store table ID in localStorage
             // Redirect to cart.html
             window.location.href = 'cart.html';
         } else {

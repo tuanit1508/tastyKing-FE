@@ -36,6 +36,7 @@
             max-width: 300px; /* Set a maximum width for the image container */
             max-height: 300px; /* Set a maximum height for the image container */
         }
+
     </style>
 </head>
 
@@ -103,7 +104,7 @@
         <div class="container">
             <div class="row gx-5">
                 <aside class="col-lg-6">
-                    <div class="border rounded-4 mb-3 d-flex justify-content-center" style="max-width: 600px; max-height: 600px;">
+                    <div class="border rounded-4 mb-3 d-flex justify-content-center" style="max-width: 400px; max-height: 400px;">
                         <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image" href="#" id="voucherImageLink">
                             <img class="rounded-4 fit" src="" id="voucherImage" alt="Voucher Image" style="max-width: 100%; height: auto; margin: auto;"/>
                         </a>
@@ -151,6 +152,7 @@
             </div>
         </div>
     </section>
+<!--    modal-->
 
     <!-- content -->
 
@@ -364,23 +366,63 @@
     <!-- Footer End -->
     <!--Modal add to cart popup-->
     <!-- Modal -->
+    <!-- Initial Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Item Added to Cart</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Trading reward point to voucher</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Your item has been added to the cart.
+                    Are you sure to change?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='cart.html'">Go to Cart</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" id="confirmExchangeBtn">Yes</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="trade-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal">Trading reward point to voucher</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Exchange Successful. Choose a product to use voucher.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='menu.html'">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fail Modal -->
+    <div class="modal fade" id="trade-fail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Trading reward point to voucher</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="failMessage">
+                    <!-- Error message will be displayed here -->
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='index.html'">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -451,7 +493,7 @@
 </script>
 <script src="api/getVoucherByID.js">
 <script src="api/getCategory.js"></script>
-
+<script src="api/voucherExchange.js"></script>
 
 </body>
 

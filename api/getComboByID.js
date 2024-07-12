@@ -9,13 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.code === 0) {
                     const combo = data.result;
                     document.getElementById('comboTitle').innerText = combo.comboTitle;
-                    document.getElementById('newPrice').innerText = `$${combo.newPrice}`;
-                    document.getElementById('oldPrice').innerText = `(was $${combo.oldPrice})`;
+                    document.getElementById('newPrice').innerText = `${combo.newPrice}.000VND`;
                     document.getElementById('comboDescription').innerText = combo.comboDescription;
                     document.getElementById('openDate').innerText = new Date(combo.openDate).toLocaleDateString();
                     document.getElementById('endDate').innerText = new Date(combo.endDate).toLocaleDateString();
-                    document.getElementById('oldPriceText').innerText = `$${combo.oldPrice}`;
-                    document.getElementById('newPriceText').innerText = `$${combo.newPrice}`;
+                    document.getElementById('newPriceText').innerText = `${combo.newPrice}.000VND`;
                     document.getElementById('comboImage').src = combo.comboImage;
                     document.getElementById('comboImageLink').href = combo.comboImage;
 

@@ -91,7 +91,7 @@ function createComboElement(combo) {
     h4.innerText = combo.comboTitle;
 
     const h5 = document.createElement('h5');
-    h5.innerHTML = `<del>$${combo.oldPrice}</del> $${combo.newPrice}`;
+    h5.innerHTML = `${combo.newPrice}.000VND`;
 
     const p = document.createElement('p');
     p.innerText = combo.comboDescription;

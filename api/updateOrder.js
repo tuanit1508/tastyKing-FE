@@ -272,7 +272,6 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
             if (paymentMethod === 'vnPay') {
                 window.location.href = 'vnPayBanking.html';
             } else if (paymentMethod === 'banking') {
-                // Redirect to onlineBanking.html
                 window.location.href = 'onlineBanking.html';
             }
         } else {

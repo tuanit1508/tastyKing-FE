@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (storedToken) {
         const decodedToken = jwt_decode(storedToken);
-        const username = decodedToken.sub; // Extract the "sub" field for the username
+        const username = decodedToken.sub;
+        localStorage.setItem('loggedInUserEmail', username)
+        // Extract the "sub" field for the username
         console.log(token);
         authButtons.innerHTML = `
             <div class="nav-item dropdown">
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <a href="viewProfile.html" class="dropdown-item">View Profile</a>
                      <a href="updatePass.html" class="dropdown-item">Security</a>
                     <a href="viewOrder.html" class="dropdown-item">View Order</a>
+                    <a href="voucherManage.html" class="dropdown-item">Voucher Manage</a>
                     <a href="#" id="logout" class="dropdown-item">Logout</a>
                 </div>
             </div>
@@ -34,7 +37,20 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
 
         document.getElementById('logout').addEventListener('click', function() {
-            localStorage.removeItem('authToken');
+            const itemsToRemove = [
+                'loggedInUserEmail',
+                'authToken',
+                'checkoutData',
+                'orderData',
+                'email',
+                'selectedTableID',
+                'tableID',
+                'token' // Assuming this is a different token
+            ];
+
+            itemsToRemove.forEach(key => {
+                localStorage.removeItem(key);
+            });
             window.location.href = 'index.html';
         });
     } else {

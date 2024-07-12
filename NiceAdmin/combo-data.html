@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Users / Profile - NiceAdmin Bootstrap Template</title>
+  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -36,6 +36,22 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .pagination button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .search-input {
+      width: 250px;
+    }
+
+  </style>
 </head>
 
 <body>
@@ -275,7 +291,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
+        <a class="nav-link " href="index.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -283,12 +299,12 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-menu-button-wide"></i><span>Booking</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
+            <a href="booking-data.html">
+              <i class="bi bi-circle"></i><span>Booking manage</span>
             </a>
           </li>
           <li>
@@ -361,10 +377,16 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-journal-text"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
+            <a href="category-data.html">
+              <i class="bi bi-circle"></i><span>Category</span>
+            </a>
+            <a href="menu-data.html">
+              <i class="bi bi-circle"></i><span>Menu</span>
+            </a>
             <a href="forms-elements.html">
               <i class="bi bi-circle"></i><span>Form Elements</span>
             </a>
@@ -389,12 +411,15 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-people"></i><span>User</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
+            <a href="customer-data.html">
+              <i class="bi bi-circle"></i><span>Customer</span>
+            </a>
             <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
+              <i class="bi bi-circle"></i><span>Staff</span>
             </a>
           </li>
           <li>
@@ -407,12 +432,17 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-credit-card-2-front"></i><span>Voucher</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
+            <a href="voucher-data.html">
+              <i class="bi bi-circle"></i><span>Voucher Manage</span>
+            </a>
+          </li>
+          <li>
             <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
+              <i class="bi bi-circle"></i><span>Voucher Exchange</span>
             </a>
           </li>
           <li>
@@ -430,9 +460,14 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-egg-fried"></i><span>Combo</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="combo-data.html">
+              <i class="bi bi-circle"></i><span>Combo Manage</span>
+            </a>
+          </li>
           <li>
             <a href="icons-bootstrap.html">
               <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
@@ -451,10 +486,38 @@
         </ul>
       </li><!-- End Icons Nav -->
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#restaurant-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-house-gear-fill"></i><span>Restaurant</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="restaurant-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="area-data.html">
+              <i class="bi bi-circle"></i><span>Area Manage</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-chartjs.html">
+              <i class="bi bi-circle"></i><span>Voucher Exchange</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-apexcharts.html">
+              <i class="bi bi-circle"></i><span>ApexCharts</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-echarts.html">
+              <i class="bi bi-circle"></i><span>ECharts</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Charts Nav -->
+
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link " href="users-profile.html">
+        <a class="nav-link collapsed" href="users-profile.html">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
@@ -509,296 +572,73 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Profile</h1>
+      <h1>Combo Management</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Profile</li>
+          <li class="breadcrumb-item">Tables</li>
+          <li class="breadcrumb-item active">Data</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
-    <section class="section profile">
+    <section class="section">
       <div class="row">
-        <div class="col-xl-4">
-
+        <div class="col-lg-12">
           <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-              <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-              <h2>Kevin Anderson</h2>
-              <h3>Web Designer</h3>
-              <div class="social-links mt-2">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-3">
+                <button class="btn btn-warning" onclick="redirectToIndex()">Create new Combo</button>
+                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search combos...">
               </div>
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                <tr>
+                  <th><b>ComboID</b></th>
+                  <th>Combo title</th>
+                  <th>Open date</th>
+                  <th>End date</th>
+                  <th>Price</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody id="foodTableBody">
+                <!-- Combo items will be dynamically inserted here -->
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
             </div>
           </div>
-
-        </div>
-
-        <div class="col-xl-8">
-
-          <div class="card">
-            <div class="card-body pt-3">
-              <!-- Bordered Tabs -->
-              <ul class="nav nav-tabs nav-tabs-bordered">
-
-                <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
-                </li>
-
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
-                </li>
-
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
-                </li>
-
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                </li>
-
-              </ul>
-              <div class="tab-content pt-2">
-
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
-
-                  <h5 class="card-title">Profile Details</h5>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Company</div>
-                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Job</div>
-                    <div class="col-lg-9 col-md-8">Web Designer</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Country</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
-                  </div>
-
-                </div>
-
-                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                  <!-- Profile Edit Form -->
-                  <form>
-                    <div class="row mb-3">
-                      <label  class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                      <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/profile-img.jpg" alt="Profile">
-                        <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
-                      <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="USA">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End Profile Edit Form -->
-
-                </div>
-
-                <div class="tab-pane fade pt-3" id="profile-settings">
-
-                  <!-- Settings Form -->
-                  <form>
-
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                      <div class="col-md-8 col-lg-9">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                          <label class="form-check-label" for="changesMade">
-                            Changes made to your account
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                          <label class="form-check-label" for="newProducts">
-                            Information on new products and services
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="proOffers">
-                          <label class="form-check-label" for="proOffers">
-                            Marketing and promo offers
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                          <label class="form-check-label" for="securityNotify">
-                            Security alerts
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End settings Form -->
-
-                </div>
-
-                <div class="tab-pane fade pt-3" id="profile-change-password">
-                  <!-- Change Password Form -->
-                  <form>
-
-                    <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
-                    </div>
-                  </form><!-- End Change Password Form -->
-
-                </div>
-
-              </div><!-- End Bordered Tabs -->
-
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
 
   </main><!-- End #main -->
+<!--  modal combo-->
+  <div class="modal fade" id="comboModal" tabindex="-1" role="dialog" aria-labelledby="comboModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="comboModalLabel">Combo Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid mt-3">
+            <div id="orders-container" style="width: 100%;">
+              <table style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 100%; margin-bottom: 20px;">
+                <tbody id="comboDetailsBody">
+                <!-- Combo details will be dynamically inserted here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
@@ -828,7 +668,161 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
 
+
+    function redirectToIndex() {
+      window.location.href = "create-combo.html";
+    }
+  </script>
+<script src="api/menu.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    fetchCombos();
+  });
+
+  function fetchCombos() {
+    fetch('http://localhost:8080/TastyKing/combo')
+            .then(response => response.json())
+            .then(data => {
+              displayCombos(data.result);
+            })
+            .catch(error => console.error('Error fetching combos:', error));
+  }
+
+  function displayCombos(combos) {
+    const foodTableBody = document.querySelector('#foodTableBody');
+
+    foodTableBody.innerHTML = ''; // Clear existing content
+
+    combos.forEach(combo => {
+      const tr = document.createElement('tr');
+
+      const tdID = document.createElement('td');
+      tdID.textContent = combo.comboID;
+      tr.appendChild(tdID);
+
+      const tdTitle = document.createElement('td');
+      tdTitle.textContent = combo.comboTitle;
+      tr.appendChild(tdTitle);
+
+      const tdOpenDate = document.createElement('td');
+      tdOpenDate.textContent = new Date(combo.openDate).toLocaleString();
+      tr.appendChild(tdOpenDate);
+
+      const tdEndDate = document.createElement('td');
+      tdEndDate.textContent = new Date(combo.endDate).toLocaleString();
+      tr.appendChild(tdEndDate);
+
+      const tdPrice = document.createElement('td');
+      tdPrice.textContent = `${combo.newPrice} $`;
+      tr.appendChild(tdPrice);
+
+      const tdAction = document.createElement('td');
+      const viewButton = document.createElement('button');
+      viewButton.className = 'btn btn-info btn-sm mr-2';
+      viewButton.textContent = 'View';
+      viewButton.onclick = () => viewCombo(combo.comboID);
+
+      const updateButton = document.createElement('button');
+      updateButton.className = 'btn btn-primary btn-sm';
+      updateButton.textContent = 'Update';
+      updateButton.onclick = () => {
+        window.location.href = `update-combo.html?comboID=${combo.comboID}`;
+      };
+
+      tdAction.appendChild(viewButton);
+      tdAction.appendChild(updateButton);
+      tr.appendChild(tdAction);
+
+      foodTableBody.appendChild(tr);
+    });
+  }
+
+  function viewCombo(comboID) {
+    fetch(`http://localhost:8080/TastyKing/combo/getCombo/${comboID}`)
+            .then(response => response.json())
+            .then(data => {
+              const combo = data.result; // Assuming the response contains a single combo object, not an array
+              const comboDetailsBody = document.querySelector('#comboDetailsBody');
+               // Clear existing content
+
+              comboDetailsBody.innerHTML = `
+<div class="container-fluid mt-3">
+    <div id="orders-container" style="width: 100%;">
+        <table style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 100%; margin-bottom: 20px;">
+            <tbody>
+                <tr>
+                    <td colspan="3" style="text-align: left; padding: 20px; font-weight: bold;">Combo ID: ${combo.comboID}</td>
+                </tr>
+                ${combo.comboFoods.map(item => `
+                <tr>
+                    <td rowspan="2" style="text-align: center; padding: 20px; width: 150px;">
+                        <img src="http://localhost:63343/TastyKing-FE/${item.foodImage}" alt="Product Image" style="width: 100px; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+                    </td>
+                    <td style="text-align: left; padding: 20px;">Food Name:</td>
+                    <td style="text-align: right; padding: 20px; padding-right: 20px;">${item.foodName}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; padding: 20px;">Quantity:</td>
+                    <td style="text-align: right; padding: 20px; padding-right: 20px;">${item.quantity}</td>
+                </tr>
+                `).join('')}
+                <tr style="background-color: #f2f2f2;">
+                    <th scope="row" colspan="3" style="color: #333; text-align: right; padding: 20px; padding-right: 20px;">Price: ${combo.newPrice} $</th>
+                </tr>
+                <tr>
+                    <td style="text-align: left; padding: 20px;">Open date:</td>
+                    <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">${new Date(combo.openDate).toLocaleString()}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; padding: 20px;">End date:</td>
+                    <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">${new Date(combo.endDate).toLocaleString()}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+            `;
+
+              var modal = new bootstrap.Modal(document.getElementById('comboModal'));
+              modal.show();
+            })
+            .catch(error => console.error('Error fetching combo details:', error));
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('searchInput');
+    const table = document.querySelector('.datatable tbody');
+
+    searchInput.addEventListener('keyup', function () {
+      const query = searchInput.value.toLowerCase();
+      const rows = table.getElementsByTagName('tr');
+
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const cells = row.getElementsByTagName('td');
+        let match = false;
+
+        for (let j = 0; j < cells.length; j++) {
+          const cell = cells[j];
+          if (cell.textContent.toLowerCase().includes(query)) {
+            match = true;
+            break;
+          }
+        }
+
+        if (match) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      }
+    });
+  });
+
+</script>
 </body>
 
 </html>

@@ -4,8 +4,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // Add event listener to the apply voucher button
     document.getElementById("apply-voucher").addEventListener("click", function() {
         const voucherCode = document.getElementById("voucher-code").value;
+        const email = localStorage.getItem('loggedInUserEmail');
         if (voucherCode) {
-            applyVoucher(voucherCode);
+            applyVoucher(voucherCode, email);
         }
     });
 });
@@ -105,13 +106,26 @@ function removeFromCart(index) {
     displayCartItems();
 }
 
-function applyVoucher(voucherCode) {
-    fetch(`http://localhost:8080/TastyKing/voucher/${voucherCode}`)
-        .then(response => response.json())
+function applyVoucher(voucherCode, email) {
+    const token = localStorage.getItem('authToken'); // Retrieve JWT token from localStorage
+
+    fetch(`http://localhost:8080/TastyKing/voucher/apply/${voucherCode}?email=${email}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Include JWT token in Authorization header
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
-            if (data.code === 0 && data.result && data.result.expired==false) {
-                discount = data.result.voucherDiscount;
-                displayCartItems();
+            if (data.code === 0 && data.result && data.result.expried === 0) {
+                discount = data.result.voucherDiscount; // Update global discount variable
+                displayCartItems(); // Update cart display with new discount
             } else {
                 alert("Voucher is invalid or not found.");
             }
@@ -121,6 +135,8 @@ function applyVoucher(voucherCode) {
             alert("Error fetching voucher. Please try again.");
         });
 }
+
+
 
 function getCookie(name) {
     let cookies = document.cookie.split(';');

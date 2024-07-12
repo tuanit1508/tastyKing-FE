@@ -9,28 +9,32 @@ document.getElementById('otpForm').addEventListener('submit', function(event) {
         document.getElementById('otp5').value +
         document.getElementById('otp6').value;
 
+
     fetch('http://localhost:8080/TastyKing/users/verify-account', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            email: email,
-            otp: otp
-        })
+        body: JSON.stringify({ email: email, otp: otp })
     })
-        .then(data => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
+        .then(response => {
+            return response.json().then(data => {
+                if (!response.ok) {
+                    throw new Error(data.message || 'Network response was not ok');
+                }
+                return data;
+            });
         })
         .then(data => {
-            alert(data.result);
-            window.location.href = 'login.html';
+            if (data.code === 0) {
+                alert(data.result);
+                window.location.href = 'login.html';
+            } else {
+                alert(data.message);
+            }
         })
         .catch(error => {
-            alert('Authentication failed, click the OTP resend button to receive a new authentication code.');
+            alert('Authentication failed, click the OTP resend button to receive a new authentication code. Error: ' + error.message);
         });
 });
 

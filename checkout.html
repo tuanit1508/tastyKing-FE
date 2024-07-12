@@ -574,8 +574,8 @@
             const cart = JSON.parse(getCookie("cart") || "[]");
             const total = parseFloat(document.getElementById("total").textContent.replace('$', ''));
             const bookingDate = document.getElementById("bookingDate").value;
-            const authToken = localStorage.getItem("authToken");
-            const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+            const authToken = localStorage.getItem('authToken');// Change here to get authToken from cookies
+            const loggedInUserEmail = localStorage.getItem('loggedInUserEmail'); // Change here to get loggedInUserEmail from cookies
 
             if (!authToken) {
                 alert("Authentication token is missing. Please log in again.");
@@ -638,8 +638,10 @@
         // Attach createOrder to a button click or form submission
         document.getElementById("createOrderButton").addEventListener("click", createOrder); // Replace "createOrderButton" with the actual button ID
 
+
     </script>
 <script src="api/getCategory.js"></script>
+
 <script src="api/checkout.js"></script>
 </body>
 
