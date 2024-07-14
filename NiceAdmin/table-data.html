@@ -50,7 +50,6 @@
     .search-input {
       width: 250px;
     }
-
   </style>
 </head>
 
@@ -572,7 +571,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Combo Management</h1>
+      <h1>Table Management</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -588,23 +587,23 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex justify-content-between mb-3">
-                <button class="btn btn-warning" onclick="redirectToIndex()">Create new Combo</button>
-                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search combos...">
+                <button class="btn btn-warning" id="showModalBtn">Add Table</button>
+                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search tables...">
               </div>
               <!-- Table with stripped rows -->
               <table class="table datatable">
                 <thead>
                 <tr>
-                  <th><b>ComboID</b></th>
-                  <th>Combo title</th>
-                  <th>Open date</th>
-                  <th>End date</th>
-                  <th>Price</th>
+                  <th><b>TableID</b></th>
+                  <th>Table Name</th>
+                  <th>Area Name</th>
+                  <th>Num. of Chair</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
                 </thead>
-                <tbody id="foodTableBody">
-                <!-- Combo items will be dynamically inserted here -->
+                <tbody id="tableTableBody">
+                <!-- Table rows will be dynamically inserted here -->
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
@@ -615,31 +614,61 @@
     </section>
 
   </main><!-- End #main -->
-<!--  modal combo-->
-  <div class="modal fade" id="comboModal" tabindex="-1" role="dialog" aria-labelledby="comboModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<!--  modal menu-->
+  <div class="modal fade" id="tableModal" tabindex="-1" aria-labelledby="tableModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="comboModalLabel">Combo Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title" id="tableModalLabel">Add New Table</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="container-fluid mt-3">
-            <div id="orders-container" style="width: 100%;">
-              <table style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 100%; margin-bottom: 20px;">
-                <tbody id="comboDetailsBody">
-                <!-- Combo details will be dynamically inserted here -->
-                </tbody>
-              </table>
+          <form id="tableForm">
+            <div class="form-group">
+              <label for="tablePosition">Area Name *</label>
+              <select class="form-control" id="tablePosition" name="tablePosition" required>
+                <option value="">Select Area</option>
+                <!-- Options will be dynamically loaded here -->
+              </select>
+              <label for="tableName">Table Name *</label>
+              <input type="text" class="form-control" id="tableName" name="tableName" placeholder="Enter Table name" required>
+              <label for="numOfChair">Num. Of Chair *</label>
+              <input type="text" class="form-control" id="numOfChair" name="numOfChair" placeholder="Enter num Of chair" required>
             </div>
-          </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
 
+  <div class="modal fade" id="updateTableModal" tabindex="-1" aria-labelledby="updateTableModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateTableModalLabel">Update Table</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="updateTableForm">
+            <input type="hidden" id="updateTableID" name="updateTableID">
+            <div class="form-group">
+              <label for="updateTablePosition">Area Name *</label>
+              <select class="form-control" id="updateTablePosition" name="updateTablePosition" required>
+                <option value="">Select Area</option>
+                <!-- Options will be dynamically loaded here -->
+              </select>
+              <label for="updateTableName">Table Name *</label>
+              <input type="text" class="form-control" id="updateTableName" name="updateTableName" placeholder="Enter Table name" required>
+              <label for="updateNumOfChair">Num. Of Chair *</label>
+              <input type="number" class="form-control" id="updateNumOfChair" name="updateNumOfChair" placeholder="Enter num Of chair" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
@@ -668,161 +697,8 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script>
-
-
-    function redirectToIndex() {
-      window.location.href = "create-combo.html";
-    }
-  </script>
+  <script src="api/table.js"></script>
 <script src="api/menu.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    fetchCombos();
-  });
-
-  function fetchCombos() {
-    fetch('http://localhost:8080/TastyKing/combo')
-            .then(response => response.json())
-            .then(data => {
-              displayCombos(data.result);
-            })
-            .catch(error => console.error('Error fetching combos:', error));
-  }
-
-  function displayCombos(combos) {
-    const foodTableBody = document.querySelector('#foodTableBody');
-
-    foodTableBody.innerHTML = ''; // Clear existing content
-
-    combos.forEach(combo => {
-      const tr = document.createElement('tr');
-
-      const tdID = document.createElement('td');
-      tdID.textContent = combo.comboID;
-      tr.appendChild(tdID);
-
-      const tdTitle = document.createElement('td');
-      tdTitle.textContent = combo.comboTitle;
-      tr.appendChild(tdTitle);
-
-      const tdOpenDate = document.createElement('td');
-      tdOpenDate.textContent = new Date(combo.openDate).toLocaleString();
-      tr.appendChild(tdOpenDate);
-
-      const tdEndDate = document.createElement('td');
-      tdEndDate.textContent = new Date(combo.endDate).toLocaleString();
-      tr.appendChild(tdEndDate);
-
-      const tdPrice = document.createElement('td');
-      tdPrice.textContent = `${combo.newPrice} $`;
-      tr.appendChild(tdPrice);
-
-      const tdAction = document.createElement('td');
-      const viewButton = document.createElement('button');
-      viewButton.className = 'btn btn-info btn-sm mr-2';
-      viewButton.textContent = 'View';
-      viewButton.onclick = () => viewCombo(combo.comboID);
-
-      const updateButton = document.createElement('button');
-      updateButton.className = 'btn btn-primary btn-sm';
-      updateButton.textContent = 'Update';
-      updateButton.onclick = () => {
-        window.location.href = `update-combo.html?comboID=${combo.comboID}`;
-      };
-
-      tdAction.appendChild(viewButton);
-      tdAction.appendChild(updateButton);
-      tr.appendChild(tdAction);
-
-      foodTableBody.appendChild(tr);
-    });
-  }
-
-  function viewCombo(comboID) {
-    fetch(`http://localhost:8080/TastyKing/combo/getCombo/${comboID}`)
-            .then(response => response.json())
-            .then(data => {
-              const combo = data.result; // Assuming the response contains a single combo object, not an array
-              const comboDetailsBody = document.querySelector('#comboDetailsBody');
-               // Clear existing content
-
-              comboDetailsBody.innerHTML = `
-<div class="container-fluid mt-3">
-    <div id="orders-container" style="width: 100%;">
-        <table style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 100%; margin-bottom: 20px;">
-            <tbody>
-                <tr>
-                    <td colspan="3" style="text-align: left; padding: 20px; font-weight: bold;">Combo ID: ${combo.comboID}</td>
-                </tr>
-                ${combo.comboFoods.map(item => `
-                <tr>
-                    <td rowspan="2" style="text-align: center; padding: 20px; width: 150px;">
-                        <img src="http://localhost:63343/TastyKing-FE/${item.foodImage}" alt="Product Image" style="width: 100px; height: auto; border: 1px solid #ddd; border-radius: 8px;">
-                    </td>
-                    <td style="text-align: left; padding: 20px;">Food Name:</td>
-                    <td style="text-align: right; padding: 20px; padding-right: 20px;">${item.foodName}</td>
-                </tr>
-                <tr>
-                    <td style="text-align: left; padding: 20px;">Quantity:</td>
-                    <td style="text-align: right; padding: 20px; padding-right: 20px;">${item.quantity}</td>
-                </tr>
-                `).join('')}
-                <tr style="background-color: #f2f2f2;">
-                    <th scope="row" colspan="3" style="color: #333; text-align: right; padding: 20px; padding-right: 20px;">Price: ${combo.newPrice} $</th>
-                </tr>
-                <tr>
-                    <td style="text-align: left; padding: 20px;">Open date:</td>
-                    <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">${new Date(combo.openDate).toLocaleString()}</td>
-                </tr>
-                <tr>
-                    <td style="text-align: left; padding: 20px;">End date:</td>
-                    <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">${new Date(combo.endDate).toLocaleString()}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-            `;
-
-              var modal = new bootstrap.Modal(document.getElementById('comboModal'));
-              modal.show();
-            })
-            .catch(error => console.error('Error fetching combo details:', error));
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.getElementById('searchInput');
-    const table = document.querySelector('.datatable tbody');
-
-    searchInput.addEventListener('keyup', function () {
-      const query = searchInput.value.toLowerCase();
-      const rows = table.getElementsByTagName('tr');
-
-      for (let i = 0; i < rows.length; i++) {
-        const row = rows[i];
-        const cells = row.getElementsByTagName('td');
-        let match = false;
-
-        for (let j = 0; j < cells.length; j++) {
-          const cell = cells[j];
-          if (cell.textContent.toLowerCase().includes(query)) {
-            match = true;
-            break;
-          }
-        }
-
-        if (match) {
-          row.style.display = '';
-        } else {
-          row.style.display = 'none';
-        }
-      }
-    });
-  });
-
-</script>
 </body>
 
 </html>

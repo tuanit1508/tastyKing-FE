@@ -127,6 +127,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 mt-4">
+                    <!-- Payment Confirmation Button -->
+                    <div style="margin-left: 450px">
+                        <button class="btn btn-secondary mx-2" onclick="redirectToHome()">Back to Home</button>
+                    <button class="btn btn-primary mx-2" onclick="redirectToView()">Payment Confirmation</button>
+                    <!-- Back to Home Button -->
+
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -264,6 +273,16 @@
         `;
             }
         });
+        // Function to redirect to view.html
+        function redirectToView() {
+            window.location.href = 'viewOrder.html';
+        }
+
+        // Function to redirect to home.html
+        function redirectToHome() {
+            window.location.href = 'index.html';
+        }
+
     </script>
 <script src="api/getCategory.js"></script>
 

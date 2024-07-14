@@ -9,7 +9,21 @@ document.getElementById("reservationForm").addEventListener("submit", function(e
         people: document.getElementById("people").value,
         message: document.getElementById("note").value
     };
-
+    // Validate "No of People"
+    if (parseInt(reservationData.people) > 60) {
+        document.getElementById("peopleError").innerText = "We only accept reservations for up to 60 people.";
+        return;
+    } else {
+        document.getElementById("peopleError").innerText = "";
+    }
+    const inputDate = new Date(reservationData.datetime);
+    const currentDate = new Date();
+    if (inputDate <= currentDate) {
+        document.getElementById("datetimeError").innerText = "The reservation date and time must be in the future.";
+        return;
+    } else {
+        document.getElementById("datetimeError").innerText = "";
+    }
     // Save reservation data to cookies
     setCookie("reservationData", JSON.stringify(reservationData), 3); // 1 day expiration
     window.location.href='cart.html'

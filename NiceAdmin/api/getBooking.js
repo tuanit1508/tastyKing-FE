@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
                              <tr>
                             <td style="text-align: left; padding: 20px;">Table:</td>
                             <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">
-                                ${['Canceled', 'Done','Processing', 'InProgress'].includes(order.orderStatus) ? '' : `
+                                ${['Canceled', 'Done','Processing', 'InProgress', 'InProgressNotPaying'].includes(order.orderStatus) ? '' : `
                                     <button class="btn btn-warning" onclick="receiveTable(${order.orderID})">Receive Table</button>
                                 `}
                                 ID: ${order.tables.tableID}: ${order.tables.tablePosition.tablePosition} - ${order.tables.tableName}
@@ -206,13 +206,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function getActionButtons(status, orderID) {
         let buttons = '';
-        if (status === 'Processing') {
+        if (status === 'Processing'|| status==='Updating') {
             buttons = `
                 <h3>Click to "Confirm" to confirm order</h3>
                 <button class="btn btn-success m-2" onclick="confirmOrder(${orderID})">Confirm</button>
                 <button class="btn btn-danger m-2" onclick="cancelOrder(${orderID})">Cancel</button>
             `;
-        } else if (['Confirmed', 'InProgress', 'Done', 'Canceled'].includes(status)) {
+        } else if (['Confirmed', 'InProgress', 'InProgressNotPaying'].includes(status)) {
             buttons = `
                 <a href="updateOrder" class="m-2" style="text-decoration: none;">
                     <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
@@ -221,9 +221,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 </a>
                 <a href="feedbackOrder" class="m-2" style="text-decoration: none;">
                     <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
-                        Feedback
+                        Payment
                     </button>
                 </a>
+            `;
+        }
+        else if (['Done', 'Canceled'].includes(status)) {
+            buttons = `
+              
+               
             `;
         }
         return buttons;
