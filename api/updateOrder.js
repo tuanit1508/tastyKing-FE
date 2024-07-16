@@ -102,7 +102,7 @@ function createFoodItem(food) {
 
     const label = document.createElement('label');
     label.classList.add('form-check-label');
-    label.textContent = `${food.foodName} - $${food.foodPrice.toFixed(2)}`;
+    label.textContent = `${food.foodName} - ${food.foodPrice.toFixed(0)}000VND`;
 
     formCheck.appendChild(checkbox);
     formCheck.appendChild(label);
@@ -110,12 +110,21 @@ function createFoodItem(food) {
 
     const col2 = document.createElement('div');
     col2.classList.add('col-md-4', 'd-flex', 'align-items-center');
+    checkbox.addEventListener('change', function() {
+        const quantityInput = inputQuantity;
+        if (checkbox.checked) {
+            quantityInput.value = '1';
+        } else {
+            quantityInput.value = '0';
+        }
 
+        updateTotalPrice(); // Update total price after changing quantity
+    });
     const btnDecrease = document.createElement('button');
     btnDecrease.type = 'button';
     btnDecrease.classList.add('btn', 'btn-secondary', 'btn-sm', 'quantity-btn');
     btnDecrease.textContent = '-';
-    btnDecrease.addEventListener('click', () => changeQuantity(food.foodID, -1));
+
 
     const inputQuantity = document.createElement('input');
     inputQuantity.type = 'number';
@@ -170,7 +179,8 @@ function updateTotalPrice() {
             totalPrice += quantity * price;
         }
     });
-    document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+    const formattedPrice = `${totalPrice.toFixed(0)}000VND`;
+    document.getElementById('totalPrice').textContent = formattedPrice;
 }
 
 function serializeOrderData(orderData) {

@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         // Display subtotal and total
-        document.querySelector(".checkout__order__total ul li:nth-child(1) span").textContent = `$${orderData.total.toFixed(2)}`;
-        document.querySelector(".checkout__order__total ul li:nth-child(2) span").textContent = `$${orderData.total.toFixed(2)}`;
+        document.querySelector(".checkout__order__total ul li:nth-child(1) span").textContent = `$${orderData.total.toFixed(0)}`;
+        document.querySelector(".checkout__order__total ul li:nth-child(2) span").textContent = `$${orderData.total.toFixed(0)}`;
     } else {
         // Redirect to reservation page if order data is not found
         alert('Order data not found. Please make a reservation first.');

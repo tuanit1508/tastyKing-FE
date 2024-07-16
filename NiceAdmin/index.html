@@ -211,19 +211,18 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqKotfUM-sQrv-oj4qZcOYHxvQCPZrOsb5vw&s" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Welcome</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6 id="userName"></h6>
+              <span id="userRole"></span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-person"></i>
@@ -233,35 +232,13 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="#" id="signOutBtn">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
             </li>
-
-          </ul><!-- End Profile Dropdown Items -->
+          </ul>
         </li><!-- End Profile Nav -->
 
       </ul>
@@ -402,6 +379,9 @@
             <a href="customer-data.html">
               <i class="bi bi-circle"></i><span>Customer</span>
             </a>
+            <a href="staff-data.html">
+              <i class="bi bi-circle"></i><span>Staff</span>
+            </a>
             <a href="tables-general.html">
               <i class="bi bi-circle"></i><span>Staff</span>
             </a>
@@ -425,8 +405,13 @@
             </a>
           </li>
           <li>
-            <a href="charts-chartjs.html">
+            <a href="voucherExchange-data.html">
               <i class="bi bi-circle"></i><span>Voucher Exchange</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-chartjs.html">
+              <i class="bi bi-circle"></i><span>ChartJS</span>
             </a>
           </li>
           <li>
@@ -575,193 +560,175 @@
             <!-- Sales Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
-
                 <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="updateReport('daily')">Today</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="updateReport('monthly')">This Month</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="updateReport('yearly')">This Year</a></li>
                   </ul>
                 </div>
-
                 <div class="card-body">
-                  <h5 class="card-title">Sales <span>| Today</span></h5>
-
+                  <h5 class="card-title">Sales <span id="salesPeriod">| Today</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-cart"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
+                      <h6 id="numberOfOrders">0</h6>
+                      <span class="text-success small pt-1 fw-bold">12%</span>
+                      <span class="text-muted small pt-2 ps-1">increase</span>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div><!-- End Sales Card -->
 
             <!-- Revenue Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
-
                 <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="updateReport('daily')">Today</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="updateReport('monthly')">This Month</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="updateReport('yearly')">This Year</a></li>
                   </ul>
                 </div>
-
                 <div class="card-body">
-                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
-
+                  <h5 class="card-title">Revenue <span id="revenuePeriod">| This Month</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$3,264</h6>
-                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
+                      <h6 id="totalAmount">0.00VND</h6>
+                      <span class="text-success small pt-1 fw-bold">8%</span>
+                      <span class="text-muted small pt-2 ps-1">increase</span>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div><!-- End Revenue Card -->
 
             <!-- Customers Card -->
             <div class="col-xxl-4 col-xl-12">
-
               <div class="card info-card customers-card">
-
                 <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="updateReport('daily')">Today</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="updateReport('monthly')">This Month</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="updateReport('yearly')">This Year</a></li>
                   </ul>
                 </div>
-
                 <div class="card-body">
-                  <h5 class="card-title">Customers <span>| This Year</span></h5>
-
+                  <h5 class="card-title">Customers <span id="customersPeriod">| This Year</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1244</h6>
-                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
-
+                      <h6 id="userCount">0</h6>
+                      <span class="text-danger small pt-1 fw-bold">12%</span>
+                      <span class="text-muted small pt-2 ps-1">decrease</span>
                     </div>
                   </div>
-
                 </div>
               </div>
-
             </div><!-- End Customers Card -->
+          </div>
+        </div><!-- End Left side columns -->
 
-            <!-- Reports -->
-            <div class="col-12">
-              <div class="card">
+        <!-- Reports -->
+        <div class="col-12">
+          <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+                </li>
+                <li><a class="dropdown-item" href="#" onclick="updateReport('daily')">Today</a></li>
+                <li><a class="dropdown-item" href="#" onclick="updateReport('monthly')">This Month</a></li>
+                <li><a class="dropdown-item" href="#" onclick="updateReport('yearly')">This Year</a></li>
+              </ul>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Reports <span id="reportPeriod">/Today</span></h5>
+              <canvas id="reportChart" style="max-height: 400px;"></canvas>
+            </div>
+          </div>
+        </div><!-- End Reports -->
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Line Chart</h5>
 
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title">Reports <span>/Today</span></h5>
-
-                  <!-- Line Chart -->
-                  <div id="reportsChart"></div>
-
-                  <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }, {
-                          name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
-                        }
-                      }).render();
+              <!-- Line Chart -->
+              <canvas id="lineChart" style="max-height: 400px;"></canvas>
+              <script>
+                document.addEventListener("DOMContentLoaded", async () => {
+                  try {
+                    const response = await fetch('http://localhost:8080/TastyKing/reports/monthlyRevenue', {
+                      method: 'GET',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`
+                      }
                     });
-                  </script>
-                  <!-- End Line Chart -->
 
-                </div>
+                    const data = await response.json();
 
-              </div>
-            </div><!-- End Reports -->
+                    // Extract the result part of the response
+                    const revenueData = data.result;
+                    const labels = Object.keys(revenueData);
+                    const values = Object.values(revenueData);
 
-            <!-- Recent Sales -->
+                    new Chart(document.querySelector('#lineChart'), {
+                      type: 'line',
+                      data: {
+                        labels: labels,
+                        datasets: [{
+                          label: 'Monthly Revenue',
+                          data: values,
+                          fill: false,
+                          borderColor: 'rgb(75, 192, 192)',
+                          tension: 0.1
+                        }]
+                      },
+                      options: {
+                        scales: {
+                          y: {
+                            beginAtZero: true
+                          }
+                        }
+                      }
+                    });
+                  } catch (error) {
+                    console.error('Error fetching the monthly revenue data:', error);
+                  }
+                });
+              </script>
+              <!-- End Line Chart -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- Recent Sales -->
             <div class="col-12">
               <div class="card recent-sales overflow-auto">
 
@@ -1229,7 +1196,98 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const ctx = document.getElementById('reportChart').getContext('2d');
+      let reportChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Total Amount', 'User Count', 'Number of Orders'],
+          datasets: [{
+            label: 'Report Data',
+            data: [0, 0, 0],
+            backgroundColor: [
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+              'rgba(75, 192, 192, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
 
+      const updateReport = (period) => {
+        const date = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+        const token = localStorage.getItem('token');
+        let apiUrl = `http://localhost:8080/TastyKing/reports/${period}?date=${date}`;
+
+        fetch(apiUrl, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token // Replace with the actual bearer token
+          }
+        })
+                .then(response => response.json())
+                .then(data => {
+                  const reportData = data.result;
+
+                  // Update chart data
+                  reportChart.data.datasets[0].data = [
+                    reportData.totalAmount || 0,
+                    reportData.userCount || 0,
+                    reportData.numberOfOrders || 0
+                  ];
+                  reportChart.update();
+
+                  // Update card data
+                  document.getElementById('numberOfOrders').innerText = reportData.numberOfOrders || 0;
+                  document.getElementById('totalAmount').innerText = `$${reportData.totalAmount.toFixed(2) || '0.00'}`;
+                  document.getElementById('userCount').innerText = reportData.userCount || 0;
+
+                  // Update period labels
+                  document.getElementById('reportPeriod').innerText = `/${period.charAt(0).toUpperCase() + period.slice(1)}`;
+                  document.getElementById('salesPeriod').innerText = `| ${period.charAt(0).toUpperCase() + period.slice(1)}`;
+                  document.getElementById('revenuePeriod').innerText = `| ${period.charAt(0).toUpperCase() + period.slice(1)}`;
+                  document.getElementById('customersPeriod').innerText = `| ${period.charAt(0).toUpperCase() + period.slice(1)}`;
+                })
+                .catch(error => console.error('Error fetching report data:', error));
+      };
+
+      updateReport('daily'); // Initialize with daily report
+
+      window.updateReport = updateReport; // Make function accessible globally
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const username = localStorage.getItem('username');
+      const role = localStorage.getItem('role');
+
+      if (username && role) {
+        document.getElementById('userName').textContent = username;
+        document.getElementById('userRole').textContent = role;
+      }
+
+      document.getElementById('signOutBtn').addEventListener('click', function() {
+        // Clear all items in localStorage
+        localStorage.clear();
+
+        // Optionally, redirect to the login page
+        window.location.href = 'pages-login.html';
+      });
+    });
+  </script>
 </body>
 
 </html>

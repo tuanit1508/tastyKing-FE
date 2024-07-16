@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Users / Profile - NiceAdmin Bootstrap Template</title>
+  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -36,6 +36,21 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .pagination button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .search-input {
+      width: 250px;
+    }
+  </style>
 </head>
 
 <body>
@@ -402,6 +417,9 @@
             <a href="customer-data.html">
               <i class="bi bi-circle"></i><span>Customer</span>
             </a>
+            <a href="staff-data.html">
+              <i class="bi bi-circle"></i><span>Staff</span>
+            </a>
             <a href="tables-general.html">
               <i class="bi bi-circle"></i><span>Staff</span>
             </a>
@@ -561,89 +579,101 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Profile</h1>
+      <h1>Staff Management</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Profile</li>
+          <li class="breadcrumb-item">Tables</li>
+          <li class="breadcrumb-item active">Data</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
-    <section class="section profile">
+    <section class="section">
       <div class="row">
-        <div class="col-xl-4">
-
+        <div class="col-lg-12">
           <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqKotfUM-sQrv-oj4qZcOYHxvQCPZrOsb5vw&s" alt="Profile" class="rounded-circle">
-              <h2>userName</h2>
-              <h3>email</h3>
-              <div class="social-links mt-2">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-3">
+                <button class="btn btn-warning" id="showModalBtn" data-bs-toggle="modal" data-bs-target="#staffModal">Create new Staff</button>
+                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search staff...">
               </div>
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                <tr>
+                  <th>StaffID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Role</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody id="staffTableBody">
+                <!-- Staff rows will be appended here by JavaScript -->
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
             </div>
           </div>
-
-        </div>
-
-        <div class="col-xl-8">
-
-          <div class="card">
-            <div class="card-body pt-3">
-              <!-- Bordered Tabs -->
-
-              <div class="tab-content pt-2">
-
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-
-                  <h5 class="card-title">Profile Details</h5>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8"></div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8"></div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Password</div>
-                    <div class="col-lg-9 col-md-8">Web Designer</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
-                  </div>
-
-
-                </div>
-
-
-
-
-
-
-
-              </div><!-- End Bordered Tabs -->
-
-            </div>
-          </div>
-
         </div>
       </div>
+
     </section>
 
   </main><!-- End #main -->
+<!--  modal customer-->
+  <div class="modal fade" id="staffModal" tabindex="-1" aria-labelledby="staffModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staffModalLabel">Create New Staff Account</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="staffForm">
+            <div class="form-group">
+              <label for="fullName">Full Name *</label>
+              <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter full name" required>
+              <label for="email">Email *</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+              <label for="phone">Phone *</label>
+              <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone" required>
+              <label for="password">Password *</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!--  update modal-->
+  <div class="modal fade" id="updateStaffModal" tabindex="-1" aria-labelledby="updateStaffModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateStaffModalLabel">Update Staff Account</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="updateStaffForm">
+            <div class="form-group">
+              <label for="updateFullName">Full Name *</label>
+              <input type="text" class="form-control" id="updateFullName" name="fullName" placeholder="Enter full name" required>
+              <label for="updatePhone">Phone *</label>
+              <input type="text" class="form-control" id="updatePhone" name="phone" placeholder="Enter phone" required>
+              <label for="updatePassword">Password *</label>
+              <input type="password" class="form-control" id="updatePassword" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
@@ -673,6 +703,7 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
+<script src="api/staff.js"></script>
 </body>
 
 </html>

@@ -25,7 +25,7 @@ document.getElementById("reservationForm").addEventListener("submit", function(e
         document.getElementById("datetimeError").innerText = "";
     }
     // Save reservation data to cookies
-    setCookie("reservationData", JSON.stringify(reservationData), 3); // 1 day expiration
+    setCookie("reservationData", JSON.stringify(reservationData), 10); // 1 day expiration
     window.location.href='cart.html'
     // Show the table selection modal
     $('#tableModal').modal('show');

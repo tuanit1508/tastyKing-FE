@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const food = data.result;
                 // Update the page content with the fetched food details
                 document.querySelector(".title").innerText = food.foodName;
-                document.querySelector(".h5").innerText = `$${food.foodPrice}`;
+                document.querySelector(".h5").innerText = `${food.foodPrice}.000VND`;
                 document.querySelector(".per").innerText = `/per ${food.unit}`;
                 document.querySelector("p").innerText = food.description;
                 document.querySelector(".fit").src = food.foodImage;

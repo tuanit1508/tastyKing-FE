@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("orderID").textContent = "Order ID: " + orderData.orderID;
     document.getElementById("email").textContent = "Email: " + orderData.user.email;
     document.getElementById("orderDate").textContent = "Order Date: " + new Date(orderData.orderDate).toLocaleString();
-    document.getElementById("amount").textContent = "Amount: $" + orderData.totalAmount.toFixed(2);
+    document.getElementById("amount").textContent = "Amount: " + orderData.totalAmount.toFixed(0)+"VND";
     document.getElementById("note").textContent = "Note: " + orderData.note;
 });
 function getCookie(name) {

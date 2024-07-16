@@ -26,7 +26,7 @@ function displayCartItems() {
         subtotal = RESERVATION_FEE; // Apply reservation fee if cart is empty
     } else {
         cart.forEach((food, index) => {
-            const total = (food.foodPrice * food.quantity).toFixed(2);
+            const total = (food.foodPrice * food.quantity).toFixed(0);
             subtotal += parseFloat(total);
             const foodItem = document.createElement("tr");
             foodItem.innerHTML = `
@@ -36,7 +36,7 @@ function displayCartItems() {
                 <td class="product-name">
                     <h2 class="h5 text-black">${food.foodName}</h2>
                 </td>
-                <td class="product-price">$${food.foodPrice}</td>
+                <td class="product-price">${food.foodPrice}000VND</td>
                 <td>
                     <div class="input-group mb-3" style="max-width: 120px;">
                         <div class="input-group-prepend">
@@ -48,7 +48,7 @@ function displayCartItems() {
                         </div>
                     </div>
                 </td>
-                <td class="product-total">$${total}</td>
+                <td class="product-total">${total}000VND</td>
                 <td><button class="btn btn-primary btn-sm js-btn-remove" data-index="${index}" data-foodid="${food.foodID}">X</button></td>
             `;
             cartContainer.appendChild(foodItem);
@@ -63,8 +63,8 @@ function displayCartItems() {
     // Update subtotal and total in the cart summary
     const subtotalElement = document.getElementById("cart-subtotal");
     const totalElement = document.getElementById("cart-total");
-    subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-    totalElement.textContent = `$${discountedSubtotal.toFixed(2)}`; // Display total with discount applied
+    subtotalElement.textContent = `${subtotal.toFixed(0)}000VND`;
+    totalElement.textContent = `${discountedSubtotal.toFixed(0)}000VND`; // Display total with discount applied
 }
 
 function attachEventListeners() {
@@ -161,16 +161,7 @@ document.getElementById("continueShoppingBtn").addEventListener("click", functio
     window.location.href = "menu.html";
 });
 
-// document.getElementById("bookNowButton").addEventListener("click", function() {
-//     // Assume table ID is obtained from the iframe or some other method
-//     const tableID = "exampleTableID"; // Replace with actual table ID
-//
-//     // Save table ID to cookies
-//     setCookie("tableID", tableID, 1); // 1 day expiration
-//
-//     // Redirect to cart.html
-//     window.location.href = "cart.html";
-// });
+
 
 document.getElementById("proceed-to-checkout").addEventListener("click", function() {
     const reservationData = JSON.parse(getCookie("reservationData"));

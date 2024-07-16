@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Users / Profile - NiceAdmin Bootstrap Template</title>
+  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -36,6 +36,21 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .pagination button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .search-input {
+      width: 250px;
+    }
+  </style>
 </head>
 
 <body>
@@ -402,6 +417,9 @@
             <a href="customer-data.html">
               <i class="bi bi-circle"></i><span>Customer</span>
             </a>
+            <a href="staff-data.html">
+              <i class="bi bi-circle"></i><span>Staff</span>
+            </a>
             <a href="tables-general.html">
               <i class="bi bi-circle"></i><span>Staff</span>
             </a>
@@ -561,88 +579,57 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Profile</h1>
+      <h1>Voucher Exchange History</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Profile</li>
+          <li class="breadcrumb-item">Tables</li>
+          <li class="breadcrumb-item active">Data</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
-    <section class="section profile">
+    <section class="section">
       <div class="row">
-        <div class="col-xl-4">
-
+        <div class="col-lg-12">
           <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-3">
 
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqKotfUM-sQrv-oj4qZcOYHxvQCPZrOsb5vw&s" alt="Profile" class="rounded-circle">
-              <h2>userName</h2>
-              <h3>email</h3>
-              <div class="social-links mt-2">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search history...">
               </div>
+              <table class="table datatable">
+                <thead>
+                <tr>
+                  <th>User Id</th>
+                  <th>User</th>
+                  <th>Voucher</th>
+                  <th>Date</th>
+
+                </tr>
+                </thead>
+                <tbody id="voucherExchangeTableBody">
+                <!-- Voucher rows will be appended here by JavaScript -->
+                </tbody>
+              </table>
             </div>
           </div>
-
-        </div>
-
-        <div class="col-xl-8">
-
-          <div class="card">
-            <div class="card-body pt-3">
-              <!-- Bordered Tabs -->
-
-              <div class="tab-content pt-2">
-
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-
-                  <h5 class="card-title">Profile Details</h5>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8"></div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8"></div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Password</div>
-                    <div class="col-lg-9 col-md-8">Web Designer</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
-                  </div>
-
-
-                </div>
-
-
-
-
-
-
-
-              </div><!-- End Bordered Tabs -->
-
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
 
   </main><!-- End #main -->
+
+<!--  modal voucher-->
+
+
+
+
+  <!--  update modal-->
+
+
+
+  <!-- View Voucher Modal -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
@@ -672,6 +659,93 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      fetchVoucherExchanges();
+
+      async function fetchVoucherExchanges(token) {
+
+        try {
+          const token = localStorage.getItem('token');
+          const response = await fetch('http://localhost:8080/TastyKing/voucherExchange', {
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            }
+          });
+          const data = await response.json();
+
+          if (data.code === 0) {
+            displayVoucherExchanges(data.result);
+          } else {
+            console.error('Error fetching voucher exchanges:', data);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
+
+      function displayVoucherExchanges(voucherExchanges) {
+        const tableBody = document.getElementById('voucherExchangeTableBody');
+        tableBody.innerHTML = '';
+
+        voucherExchanges.forEach(voucherExchange => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+                <td>${voucherExchange.user.userId}</td>
+                <td>${voucherExchange.user.email}</td>
+                <td>${voucherExchange.voucher.voucherCode}</td>
+                <td>${formatDate(voucherExchange.voucherExchangeDate)}</td>
+            `;
+          tableBody.appendChild(row);
+        });
+      }
+
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchInput = document.getElementById('searchInput');
+      const table = document.querySelector('.datatable tbody');
+
+      searchInput.addEventListener('keyup', function () {
+        const query = searchInput.value.toLowerCase();
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          const cells = row.getElementsByTagName('td');
+          let match = false;
+
+          for (let j = 0; j < cells.length; j++) {
+            const cell = cells[j];
+            if (cell.textContent.toLowerCase().includes(query)) {
+              match = true;
+              break;
+            }
+          }
+
+          if (match) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        }
+      });
+    });
+
+
+  </script>
 
 </body>
 

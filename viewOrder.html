@@ -36,6 +36,23 @@
             cursor: pointer;
             float: right;
         }
+        .pagination button {
+            margin: 0 5px;
+            padding: 10px 15px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .pagination button.active {
+            background-color: #0056b3;
+        }
+
+        .pagination button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 
@@ -101,6 +118,9 @@
     <div class="container-fluid mt-3">
         <div id="orders-container" style="width: 70%; margin-left: auto; margin-right: auto;">
             <!-- Orders will be dynamically inserted here -->
+        </div>
+        <div id="pagination-container" style="text-align: center; margin-top: 20px;">
+            <!-- Pagination buttons will be dynamically inserted here -->
         </div>
     </div>
 
