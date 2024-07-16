@@ -302,9 +302,9 @@
                     <h1 class="display-3 text-white mb-3 animated slideInDown">Order Now</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center text-uppercase">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                             <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">Order Now</li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Checkout</li>
                         </ol>
                     </nav>
                 </div>
@@ -619,11 +619,11 @@
                     if (data.code === 0) {
                         // Save order data to a cookie with a 5-minute expiration
                         setCookie("checkoutData", JSON.stringify(data.result), 5);
-
+                        localStorage.removeItem('tableID');
                         // Redirect to online banking page
                         window.location.href = "onlineBanking.html";
                     } else {
-                        alert("Please provide the necessary information to complete the booking process");
+                        alert("Please provide the necessary information to complete the booking process. Error code: " + data.message);
                     }
                 })
                 .catch(error => {
