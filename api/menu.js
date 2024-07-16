@@ -15,7 +15,7 @@
                         <div class="w-100 d-flex flex-column text-start ps-4">
                             <h5 class="d-flex justify-content-between border-bottom pb-2">
                                 <a href="food-detail.html?foodID=${food.foodID}"><span>${food.foodName}</span></a>
-                                <span class="text-primary">${food.foodPrice}000VND</span>
+                                <span class="text-primary">${food.foodPrice}VND</span>
                             </h5>
                             <small class="fst-italic">${food.description}</small>
                         </div>

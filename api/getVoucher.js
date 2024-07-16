@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <div class="p-4">
                                         <img src="${voucher.voucherImage}" alt="Voucher Image">
                                         <h5>${voucher.voucherTitle}</h5>
-                                        <p>${voucher.voucherDescribe}</p>
+                                        
                                         <div class="voucher-meta">
                                             <span><i class="fa fa-eye"></i> ${voucher.numberVoucherUsed}</span>
                                             <span><i class="fa fa-tags"></i> ${voucher.voucherQuantity}</span>
