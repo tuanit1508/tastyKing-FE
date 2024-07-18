@@ -102,7 +102,7 @@ function createFoodItem(food) {
 
     const label = document.createElement('label');
     label.classList.add('form-check-label');
-    label.textContent = `${food.foodName} - ${food.foodPrice.toFixed(0)}000VND`;
+    label.textContent = `${food.foodName} - ${food.foodPrice.toFixed(0)}VND`;
 
     formCheck.appendChild(checkbox);
     formCheck.appendChild(label);
@@ -179,7 +179,7 @@ function updateTotalPrice() {
             totalPrice += quantity * price;
         }
     });
-    const formattedPrice = `${totalPrice.toFixed(0)}000VND`;
+    const formattedPrice = `${totalPrice.toFixed(0)}VND`;
     document.getElementById('totalPrice').textContent = formattedPrice;
 }
 
@@ -271,12 +271,12 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
             const paymentMethod = document.querySelector('input[name="order_type"]:checked').value;
 
             // Set cookies with order information expiring in 5 minutes
-            setCookie('orderID', orderData.orderID, 5);
-            setCookie('email', orderData.user.email, 5);
-            setCookie('orderDate', orderData.bookingDate, 5);
-            setCookie('amount', orderData.totalAmount.toFixed(2), 5);
-            setCookie('note', orderData.note, 5);
-            setCookie('paymentMethod', paymentMethod, 5);
+            setCookie('orderID', orderData.orderID, 3);
+            setCookie('email', orderData.user.email, 3);
+            setCookie('orderDate', orderData.bookingDate, 3);
+            setCookie('amount', orderData.totalAmount.toFixed(2), 3);
+            setCookie('note', orderData.note, 3);
+            setCookie('paymentMethod', paymentMethod, 3);
 
             // Redirect based on payment method
             if (paymentMethod === 'vnPay') {

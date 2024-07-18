@@ -96,6 +96,10 @@ function displayOrders(orders, page) {
                                 <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">${order.customerName}</td>
                             </tr>
                             <tr>
+                                <td style="text-align: left; padding: 20px;">Table:</td>
+                                <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">ID:${order.tables.tableID} (${order.tables.tableName})</td>
+                            </tr>
+                            <tr>
                                 <td style="text-align: left; padding: 20px;">Number of Customer:</td>
                                 <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">${order.numOfCustomer}</td>
                             </tr>

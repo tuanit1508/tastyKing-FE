@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             ${order.orderDetails.map(item => `
                                 <tr>
                                     <td rowspan="2" style="text-align: center; padding: 20px; width: 150px;">
-                                        <img src="${item.foodImage}" alt="Product Image" style="width: 100px; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+                                        <img src="http://localhost:63343/TastyKing-FE/${item.foodImage}" alt="Product Image" style="width: 100px; height: auto; border: 1px solid #ddd; border-radius: 8px;">
                                     </td>
                                     <td style="text-align: left; padding: 20px;">Food Name:</td>
                                     <td style="text-align: right; padding: 20px; padding-right: 20px;">${item.foodName}</td>
@@ -212,9 +212,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 <button class="btn btn-success m-2" onclick="confirmOrder(${orderID})">Confirm</button>
                 <button class="btn btn-danger m-2" onclick="cancelOrder(${orderID})">Cancel</button>
             `;
-        } else if (['Confirmed', 'InProgress', 'InProgressNotPaying'].includes(status)) {
+        } else if (['InProgressNotPaying'].includes(status)) {
             buttons = `
-                <a href="updateOrder" class="m-2" style="text-decoration: none;">
+                <a href="update-order.html?orderID=${orderID}" class="m-2" style="text-decoration: none;">
                     <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
                         Update
                     </button>
@@ -232,9 +232,37 @@ document.addEventListener("DOMContentLoaded", function () {
                
             `;
         }
+        else if (['InProgress'].includes(status)) {
+            buttons = `
+               <button onclick="doneOrder(${orderID})" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
+                Done
+            </button>
+               
+            `;
+        }
         return buttons;
     }
+    window.doneOrder = function(orderID) {
+        const token = localStorage.getItem('token'); // or from cookies
 
+        fetch(`http://localhost:8080/TastyKing/order/doneOrder/${orderID}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 0) {
+                    alert(data.result);
+                    fetchOrders(); // Refresh the orders list
+                } else {
+                    console.error('Error marking the order as done');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    };
     window.confirmOrder = function (orderID) {
         fetch(`http://localhost:8080/TastyKing/order/confirmOrder/${orderID}`, {
             method: 'PUT',

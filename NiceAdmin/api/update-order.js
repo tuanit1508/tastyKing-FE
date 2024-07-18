@@ -1,8 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderID = urlParams.get('orderID');
     fetchCategories();
+    fetchTables().then(() => {
+        if (orderID) {
+            fetchOrderDetails(orderID);
+        }
+    });
 
-    document.querySelector('.btn-primary.mr-2').addEventListener('click', function() {
-        createOrder();
+    document.querySelector('.save-order').addEventListener('click', function() {
+        updateOrder(orderID);
+    });
+
+    document.getElementById('showFoodModal').addEventListener('click', function() {
+        const foodModal = new bootstrap.Modal(document.getElementById('foodModal'));
+        foodModal.show();
     });
 });
 
@@ -96,15 +108,70 @@ function displayFoods(foods) {
     });
 }
 
+function fetchTables() {
+    return fetch('http://localhost:8080/TastyKing/table/getTable/available')
+        .then(response => response.json())
+        .then(data => {
+            displayTables(data.result);
+        })
+        .catch(error => console.error('Error fetching tables:', error));
+}
+
+function displayTables(tables) {
+    const tableSelect = document.getElementById('table');
+    tableSelect.innerHTML = '<option value="" selected disabled>--Select Your Table--</option>'; // Clear existing content and add default option
+
+    tables.forEach(table => {
+        const option = document.createElement('option');
+        option.value = table.tableID;
+        option.textContent = table.tableName;
+        tableSelect.appendChild(option);
+    });
+}
+
+function fetchOrderDetails(orderID) {
+    const token = localStorage.getItem('token'); // or from cookies
+
+    fetch(`http://localhost:8080/TastyKing/order/${orderID}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            populateOrderForm(data.result);
+        })
+        .catch(error => {
+            console.error('Error fetching order details:', error);
+        });
+}
+
+function populateOrderForm(order) {
+    document.getElementById('customerName').value = order.customerName;
+    document.getElementById('customerPhone').value = order.customerPhone;
+    document.getElementById('bookingDate').value = new Date(order.bookingDate).toISOString().slice(0, 16);
+    const tableSelect = document.getElementById('table');
+    tableSelect.value = order.tables.tableID;
+    tableSelect.setAttribute('data-current-value', order.tables.tableID); // Store current table ID
+    document.getElementById('numOfCustomer').value = order.numOfCustomer;
+    document.getElementById('note').value = order.note;
+    document.getElementById('email').value = order.user.email;
+    order.orderDetails.forEach(detail => addToOrder(detail));
+}
+
 function addToOrder(food) {
     const orderSummary = document.querySelector('#orderSummary');
-    const existingItem = document.querySelector(`#order-item-${food.foodID}`);
+    let tr = document.querySelector(`#order-item-${food.foodID}`);
 
-    if (existingItem) {
-        const quantityInput = existingItem.querySelector('.quantity-buttons input');
-        quantityInput.value = parseInt(quantityInput.value) + 1;
-    } else {
-        const tr = document.createElement('tr');
+    if (!tr) {
+        tr = document.createElement('tr');
         tr.id = `order-item-${food.foodID}`;
 
         const tdName = document.createElement('td');
@@ -123,7 +190,7 @@ function addToOrder(food) {
 
         const quantityInput = document.createElement('input');
         quantityInput.type = 'text';
-        quantityInput.value = '1';
+        quantityInput.value = 1;
         quantityInput.readOnly = true;
 
         const plusButton = document.createElement('button');
@@ -152,67 +219,15 @@ function addToOrder(food) {
         tr.appendChild(tdPrice);
 
         orderSummary.appendChild(tr);
+    } else {
+        updateQuantity(food.foodID, 1);
     }
 
     updateTotal();
 }
-function createOrder() {
-    const customerName = document.getElementById('customerName').value;
-    const customerPhone = document.getElementById('customerPhone').value;
-    const bookingDateRaw = document.getElementById('bookingDate').value;
-    const tableID = document.getElementById('table').value;
-    const numOfCustomer = document.getElementById('numOfCustomer').value;
-    const note = document.getElementById('note').value;
-    const  token = localStorage.getItem('token');
-    const orderDetails = [];
-    const orderItems = document.querySelectorAll('#orderSummary tr');
-    orderItems.forEach(item => {
-        const foodID = item.id.split('-')[2];
-        const quantity = item.querySelector('.quantity-buttons input').value;
-        orderDetails.push({
-            foodID: parseInt(foodID),
-            quantity: parseInt(quantity)
-        });
-    });
-
-    // Convert booking date to the desired format: YYYY-MM-DD HH:MM:SS
-    const bookingDate = bookingDateRaw + ':00';
-
-
-    const orderData = {
-        user: {
-            email: 'admin' // Replace with the actual user's email
-        },
-        tables: {
-            tableID: parseInt(tableID)
-        },
-        note: note,
-        totalAmount: parseFloat(document.getElementById('totalAmount').textContent.replace(' $', '')),
-        numOfCustomer: parseInt(numOfCustomer),
-        customerName: customerName,
-        bookingDate: bookingDate,
-        customerPhone: customerPhone,
-        orderDetails: orderDetails
-    };
-
-    fetch('http://localhost:8080/TastyKing/order/admin', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token // Replace with the actual bearer token
-        },
-        body: JSON.stringify(orderData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Order created successfully:', data);
-            // Optionally, handle success (e.g., show a success message or redirect)
-        })
-        .catch(error => console.error('Error creating order:', error));
-}
 
 function updateQuantity(foodID, change) {
-    const item = document.querySelector(`#order-item-${foodID}`);
+    const item = document.querySelector(`#order-item-${foodID.toString()}`);
     const quantityInput = item.querySelector('.quantity-buttons input');
     let quantity = parseInt(quantityInput.value);
     quantity = Math.max(1, quantity + change);
@@ -222,7 +237,7 @@ function updateQuantity(foodID, change) {
 }
 
 function removeFromOrder(foodID) {
-    const item = document.querySelector(`#order-item-${foodID}`);
+    const item = document.querySelector(`#order-item-${foodID.toString()}`);
     item.remove();
 
     updateTotal();
@@ -236,12 +251,60 @@ function updateTotal() {
     items.forEach(item => {
         const quantity = parseInt(item.querySelector('.quantity-buttons input').value);
         const priceText = item.querySelector('td.text-right').textContent;
-        const price = parseFloat(priceText.replace(' $', '').replace(',', '.'));
+        const price = parseFloat(priceText.replace(' VND', '').replace(',', '.'));
         total += quantity * price;
     });
 
     const totalAmount = document.querySelector('#totalAmount');
-    totalAmount.textContent = `${total.toFixed(1)} $`;
+    totalAmount.textContent = `${total.toFixed(1)} VND`;
 }
 
+function updateOrder(orderID) {
+    const token = localStorage.getItem('token'); // or from cookies
+    const tableSelect = document.getElementById('table');
+    const tableID = tableSelect.value || tableSelect.getAttribute('data-current-value'); // Use current table ID if no new table is selected
 
+    const orderData = {
+        orderID: parseInt(orderID),
+        user: {
+            email: document.getElementById('email').value // Replace with actual user email
+        },
+        tables: {
+            tableID: tableID
+        },
+        orderDate: new Date().toISOString(),
+        note: document.getElementById('note').value,
+        totalAmount: parseFloat(document.getElementById('totalAmount').textContent.replace(' VND', '')),
+        numOfCustomer: parseInt(document.getElementById('numOfCustomer').value),
+        customerName: document.getElementById('customerName').value,
+        bookingDate: new Date(document.getElementById('bookingDate').value).toISOString(),
+        customerPhone: document.getElementById('customerPhone').value,
+        orderDetails: Array.from(document.querySelectorAll('#orderSummary tr')).map(tr => ({
+            foodID: parseInt(tr.id.replace('order-item-', '')),
+            quantity: parseInt(tr.querySelector('.quantity-buttons input').value)
+        }))
+    };
+
+    console.log(JSON.stringify(orderData, null, 2)); // Debug the JSON structure
+
+    fetch(`http://localhost:8080/TastyKing/order/updateOrderByAdmin/${orderID}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orderData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result) {
+                alert('Order updated successfully!');
+                window.location.href = 'booking-data.html'; // Redirect to order list or another page
+            } else {
+                alert('Error updating order.');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating order:', error);
+        });
+}

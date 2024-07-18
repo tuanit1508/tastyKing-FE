@@ -71,7 +71,7 @@ function displayFoods(foods) {
 
         const img = document.createElement('img');
         img.className = 'card-img-top';
-        img.src = food.foodImage;
+        img.src = `http://localhost:63343/TastyKing-FE/${food.foodImage}`;
         img.alt = food.foodName;
 
         const cardBody = document.createElement('div');
