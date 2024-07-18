@@ -509,6 +509,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="payment-data.html">
+                        <i class="bi bi-circle"></i><span>Payment Manage</span>
+                    </a>
+                </li>
+                <li>
                     <a href="charts-apexcharts.html">
                         <i class="bi bi-circle"></i><span>ApexCharts</span>
                     </a>
@@ -663,6 +668,42 @@
         </div>
     </div>
 </div>
+<!--//////////////////////-->
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Payment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="paymentForm">
+                    <div class="form-group">
+                        <label for="orderID">Order ID *</label>
+                        <input type="text" class="form-control" id="orderID" name="orderID" placeholder="Enter Order ID" required>
+                        <label for="paymentMethod">Payment method *</label>
+                        <select class="form-control" id="paymentMethod" name="paymentMethod" required>
+                            <option value="">Select Method</option>
+                            <option value="Online Banking">Online Banking</option>
+                            <option value="Cash">Cash</option>
+                        </select>
+                        <label for="totalAmount">Total (VND)*</label>
+                        <input type="number" class="form-control" id="totalAmount" name="totalAmount" placeholder="Enter Total" required>
+                        <label for="customerPayment">Amount Received *</label>
+                        <input type="number" class="form-control" id="customerPayment" name="customerPayment" placeholder="Enter Amount Received" required>
+                        <div class="form-group mt-3" id="changeAmountDiv" style="display: none;">
+                            <label for="changeAmount">Change (VND)</label>
+                            <input type="number" class="form-control" id="changeAmount" name="changeAmount" readonly>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">

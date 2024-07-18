@@ -509,11 +509,6 @@
             </a>
           </li>
           <li>
-            <a href="payment-data.html">
-              <i class="bi bi-circle"></i><span>Payment Manage</span>
-            </a>
-          </li>
-          <li>
             <a href="charts-apexcharts.html">
               <i class="bi bi-circle"></i><span>ApexCharts</span>
             </a>
@@ -584,7 +579,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Customer Management</h1>
+      <h1>Menu Management</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -600,23 +595,23 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex justify-content-between mb-3">
-                <button class="btn btn-warning" id="showModalBtn" data-bs-toggle="modal" data-bs-target="#customerModal">Create new Customer</button>
-                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search customer...">
+                <button class="btn btn-warning" id="showModalBtn">Create new Food</button>
+                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search orders...">
               </div>
               <!-- Table with stripped rows -->
               <table class="table datatable">
                 <thead>
                 <tr>
-                  <th>CustomerID</th>
-                  <th>Customer name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Status</th>
+                  <th><b>F</b>oodID</th>
+                  <th>Food name</th>
+                  <th>Category</th>
+                  <th>Food price</th>
+                  <th>Unit</th>
                   <th>Action</th>
                 </tr>
                 </thead>
-                <tbody id="customerTableBody">
-                <!-- Customer rows will be appended here by JavaScript -->
+                <tbody id="foodTableBody">
+                <!-- Food items will be dynamically inserted here -->
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
@@ -627,30 +622,33 @@
     </section>
 
   </main><!-- End #main -->
-<!--  modal customer-->
-  <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+<!--  modal menu-->
+  <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="customerModalLabel">Create New Customer account</h5>
+          <h5 class="modal-title" id="menuModalLabel">Create New Food Item</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="customerForm">
+          <form id="foodForm" enctype="multipart/form-data">
             <div class="form-group">
-              <label for="fullName">Customer Full Name *</label>
-              <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter full name" required>
-              <label for="email">Email *</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
-              <label for="phone">Phone *</label>
-              <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter customer's phone" required>
-              <label for="password">Password *</label>
-              <input type="password" class="form-control" id="password" name="password" placeholder="Enter customer's password" required>
-              <label for="status">Account status*</label>
-              <select class="form-control" id="status" name="status" required>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
+              <label for="categoryName">Category Name *</label>
+              <select class="form-control" id="categoryName" name="categoryName" required>
+                <option value="">Select Category</option>
               </select>
+              <label for="foodName">Food Name *</label>
+              <input type="text" class="form-control" id="foodName" name="foodName" placeholder="Enter Food name" required>
+              <label for="foodPrice">Food Price ($) *</label>
+              <input type="text" class="form-control" id="foodPrice" name="foodPrice" placeholder="Enter Food price" required>
+              <label for="foodCost">Food Cost ($) *</label>
+              <input type="text" class="form-control" id="foodCost" name="foodCost" placeholder="Enter Food cost" required>
+              <label for="unit">Unit *</label>
+              <input type="text" class="form-control" id="unit" name="unit" placeholder="Enter unit" required>
+              <label for="description">Description *</label>
+              <textarea id="description" name="description" class="form-control" placeholder="Enter description" required></textarea>
+              <label for="foodImage">Food Image *</label>
+              <input type="file" class="form-control" id="foodImage" name="foodImage" required>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
           </form>
@@ -658,24 +656,34 @@
       </div>
     </div>
   </div>
-<!--  update modal-->
-  <div class="modal fade" id="updatecustomerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+
+  <div class="modal fade" id="updatemenuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="updatecustomerr">Update Customer account</h5>
+          <h5 class="modal-title" id="updatemenuModalLabel">Update Food Item</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="updatecustomer">
+          <form id="updatefoodForm" enctype="multipart/form-data">
             <div class="form-group">
-              <label for="fullName">Customer Full Name *</label>
-              <input type="text" class="form-control" id="updatefullName" name="fullName" placeholder="Enter full name" required>
-              <label for="phone">Phone *</label>
-              <input type="text" class="form-control" id="updatephone" name="phone" placeholder="Enter customer's phone" required>
-              <label for="password">Password *</label>
-              <input type="password" class="form-control" id="updatepassword" name="password" placeholder="Enter customer's password" required>
-              <label for="status">Account status*</label>
+              <label for="categoryName">Category Name *</label>
+              <select class="form-control" id="updatecategoryName" name="categoryName" required>
+                <option value="">Select Category</option>
+              </select>
+              <label for="foodName">Food Name *</label>
+              <input type="text" class="form-control" id="updatefoodName" name="foodName" placeholder="Enter Food name" required>
+              <label for="foodPrice">Food Price ($) *</label>
+              <input type="text" class="form-control" id="updatefoodPrice" name="foodPrice" placeholder="Enter Food price" required>
+              <label for="foodCost">Food Cost ($) *</label>
+              <input type="text" class="form-control" id="updatefoodCost" name="foodCost" placeholder="Enter Food cost" required>
+              <label for="unit">Unit *</label>
+              <input type="text" class="form-control" id="updateunit" name="unit" placeholder="Enter unit" required>
+              <label for="description">Description *</label>
+              <textarea id="updatedescription" name="description" class="form-control" placeholder="Enter description" required></textarea>
+              <label for="foodImage">Food Image</label>
+              <input type="file" class="form-control" id="updatefoodImage" name="foodImage">
+              <img id="foodImagePreview" src="" alt="Food Image" style="width: 150px; height: 150px; margin-top: 10px;" />
             </div>
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
           </form>
@@ -711,8 +719,41 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Get a reference to the button that triggers the modal
+      var showModalBtn = document.getElementById('showModalBtn');
 
-<script src="api/customer.js"></script>
+      // Add click event listener to the button
+      showModalBtn.addEventListener('click', function() {
+        // Create a new modal object using bootstrap.modal
+        var myModal = new bootstrap.Modal(document.getElementById('menuModal'));
+
+        // Show the modal
+        myModal.show();
+      });
+    });
+
+    function fetchCategories() {
+      fetch('http://localhost:8080/TastyKing/category')
+              .then(response => response.json())
+              .then(data => {
+                const categories = data.result;
+                let categoryDropdown = document.getElementById('categoryName');
+                categories.forEach(category => {
+                  let option = document.createElement('option');
+                  option.value = category.categoryID;
+                  option.text = category.categoryName;
+                  categoryDropdown.add(option);
+                });
+              });
+    }
+
+    // Fetch and display categories on page load
+    fetchCategories();
+
+  </script>
+<script src="api/menu.js"></script>
 </body>
 
 </html>

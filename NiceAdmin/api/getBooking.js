@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function fetchOrderDetails(orderID) {
-        fetch(`http://localhost:8080/TastyKing/order/${orderID}`, {
+        fetch(`${apiUrl}/${orderID}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -161,15 +161,15 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <td style="text-align: left; padding: 20px;">Customer name:</td>
                                 <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">${order.customerName}</td>
                             </tr>
-                             <tr>
-                            <td style="text-align: left; padding: 20px;">Table:</td>
-                            <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">
-                                ${['Canceled', 'Done','Processing', 'InProgress', 'InProgressNotPaying'].includes(order.orderStatus) ? '' : `
-                                    <button class="btn btn-warning" onclick="receiveTable(${order.orderID})">Receive Table</button>
-                                `}
-                                ID: ${order.tables.tableID}: ${order.tables.tablePosition.tablePosition} - ${order.tables.tableName}
-                            </td>
-                        </tr>
+                            <tr>
+                                <td style="text-align: left; padding: 20px;">Table:</td>
+                                <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">
+                                    ${['Canceled', 'Done', 'Processing', 'InProgress', 'InProgressNotPaying'].includes(order.orderStatus) ? '' : `
+                                        <button class="btn btn-warning" onclick="receiveTable(${order.orderID})">Receive Table</button>
+                                    `}
+                                    ID: ${order.tables.tableID}: ${order.tables.tablePosition.tablePosition} - ${order.tables.tableName}
+                                </td>
+                            </tr>
                             <tr>
                                 <td style="text-align: left; padding: 20px;">Number of Customer:</td>
                                 <td style="text-align: right; padding: 20px; padding-right: 20px;" colspan="2">${order.numOfCustomer}</td>
@@ -203,10 +203,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return `<button class="btn ${status === 'Completed' ? 'btn-success' : 'btn-warning'}">${status}</button>`;
     }
 
-
     function getActionButtons(status, orderID) {
         let buttons = '';
-        if (status === 'Processing'|| status==='Updating') {
+        if (status === 'Processing' || status === 'Updating') {
             buttons = `
                 <h3>Click to "Confirm" to confirm order</h3>
                 <button class="btn btn-success m-2" onclick="confirmOrder(${orderID})">Confirm</button>
@@ -219,32 +218,85 @@ document.addEventListener("DOMContentLoaded", function () {
                         Update
                     </button>
                 </a>
-                <a href="feedbackOrder" class="m-2" style="text-decoration: none;">
-                    <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
-                        Payment
-                    </button>
-                </a>
+                <button class="btn btn-primary m-2" onclick="showPaymentModal(${orderID})">Payment</button>
             `;
-        }
-        else if (['Done', 'Canceled'].includes(status)) {
+        } else if (['Done', 'Canceled'].includes(status)) {
+            buttons = ``;
+        } else if (['InProgress'].includes(status)) {
             buttons = `
-              
-               
-            `;
-        }
-        else if (['InProgress'].includes(status)) {
-            buttons = `
-               <button onclick="doneOrder(${orderID})" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
-                Done
-            </button>
-               
+                <button onclick="doneOrder(${orderID})" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
+                    Done
+                </button>
             `;
         }
         return buttons;
     }
-    window.doneOrder = function(orderID) {
-        const token = localStorage.getItem('token'); // or from cookies
 
+    window.showPaymentModal = function (orderID) {
+        // Set the order ID in the modal form
+        document.getElementById('orderID').value = orderID;
+        // Reset the form and hide the change amount div
+        document.getElementById('paymentForm').reset();
+        document.getElementById('changeAmountDiv').style.display = 'none';
+        document.getElementById('changeAmount').value = '';
+        // Show the modal
+        var paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+        paymentModal.show();
+    }
+
+    document.getElementById('paymentForm').addEventListener('input', function () {
+        const totalAmount = parseFloat(document.getElementById('totalAmount').value);
+        const customerPayment = parseFloat(document.getElementById('customerPayment').value);
+
+        if (customerPayment > totalAmount) {
+            const changeAmount = customerPayment - totalAmount;
+            document.getElementById('changeAmount').value = changeAmount;
+            document.getElementById('changeAmountDiv').style.display = 'block';
+        } else {
+            document.getElementById('changeAmountDiv').style.display = 'none';
+            document.getElementById('changeAmount').value = '';
+        }
+    });
+
+    document.getElementById('paymentForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const orderID = document.getElementById('orderID').value;
+        const paymentMethod = document.getElementById('paymentMethod').value;
+        const totalAmount = document.getElementById('totalAmount').value;
+        const customerPayment = document.getElementById('customerPayment').value;
+
+        const paymentData = {
+            orderID: parseInt(orderID),
+            paymentMethod: paymentMethod
+        };
+
+        fetch("http://localhost:8080/TastyKing/payment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(paymentData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 0) {
+                    alert(`Payment submitted for Order ID: ${orderID}\nPayment Method: ${paymentMethod}\nTotal Amount: ${totalAmount}\nAmount Received: ${customerPayment}`);
+                    var paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+                    paymentModal.hide();
+                } else {
+                    alert("Failed to create payment. Error code: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error creating payment:", error);
+                alert("An error occurred while creating the payment. Please try again.");
+            });
+    });
+
+    // Example functions for order confirmation and done actions
+    window.doneOrder = function (orderID) {
         fetch(`http://localhost:8080/TastyKing/order/doneOrder/${orderID}`, {
             method: 'PUT',
             headers: {
@@ -263,6 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => console.error('Error:', error));
     };
+
     window.confirmOrder = function (orderID) {
         fetch(`http://localhost:8080/TastyKing/order/confirmOrder/${orderID}`, {
             method: 'PUT',
@@ -284,8 +337,23 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     window.cancelOrder = function (orderID) {
-        // Implement cancel order logic here
-        console.log(`Cancel order with ID: ${orderID}`);
+        fetch(`http://localhost:8080/TastyKing/order/cancelOrder/${orderID}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 0) {
+                    alert(data.result);
+                    fetchOrders(); // Refresh the orders list
+                } else {
+                    console.error('Error canceling the order');
+                }
+            })
+            .catch(error => console.error('Error:', error));
     };
 
     window.receiveTable = function (orderID) {
@@ -310,4 +378,4 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     fetchOrders();
-})
+});
