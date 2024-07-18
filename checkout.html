@@ -373,14 +373,14 @@
                                     </ul>
                                 </div>
                                 <div class="checkout__order__widget">
-                                    <label for="check-payment">
+                                    <label for="VNPAY">
                                         Payment By VnPay
-                                        <input type="checkbox" id="check-payment">
+                                        <input type="checkbox" id="VNPAY" name="paymentMethod" value="VNPAY">
                                         <span class="checkmark"></span>
                                     </label>
-                                    <label for="paypal">
+                                    <label for="CASH">
                                         Online Banking
-                                        <input type="checkbox" id="paypal">
+                                        <input type="checkbox" id="CASH" name="paymentMethod" value="CASH">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -530,21 +530,9 @@
     </script>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
-            // Initialize the datetime picker
-            $('#date3').datetimepicker({
-                format: 'YYYY-MM-DDTHH:mm:ss'
-            });
-
             // Handle form submission
-            document.getElementById('checkoutForm').addEventListener('submit', function(event) {
+            document.querySelector('.site-btn').addEventListener('click', function(event) {
                 event.preventDefault(); // Prevent form submission
-
-                const selectedPaymentMethod = document.getElementById('paypal').checked;
-                if (!selectedPaymentMethod) {
-                    alert("Please select Online Banking as the payment method.");
-                    return;
-                }
-
                 createOrder();
             });
         });
@@ -574,8 +562,8 @@
             const cart = JSON.parse(getCookie("cart") || "[]");
             const total = parseFloat(document.getElementById("total").textContent.replace('$', ''));
             const bookingDate = document.getElementById("bookingDate").value;
-            const authToken = localStorage.getItem('authToken');// Change here to get authToken from cookies
-            const loggedInUserEmail = localStorage.getItem('loggedInUserEmail'); // Change here to get loggedInUserEmail from cookies
+            const authToken = localStorage.getItem('authToken');
+            const loggedInUserEmail = localStorage.getItem('loggedInUserEmail');
 
             if (!authToken) {
                 alert("Authentication token is missing. Please log in again.");
@@ -620,8 +608,19 @@
                         // Save order data to a cookie with a 5-minute expiration
                         setCookie("checkoutData", JSON.stringify(data.result), 5);
                         localStorage.removeItem('tableID');
-                        // Redirect to online banking page
-                        window.location.href = "onlineBanking.html";
+
+                        // Determine the selected payment method
+                        const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+                        if (!selectedPaymentMethod) {
+                            alert("Please select a payment method.");
+                            return;
+                        }
+
+                        if (selectedPaymentMethod.value === 'CASH') {
+                            window.location.href = "onlineBanking.html";
+                        } else if (selectedPaymentMethod.value === 'VNPAY') {
+                            window.location.href = "VnPay.html";
+                        }
                     } else {
                         alert("Please provide the necessary information to complete the booking process. Error code: " + data.message);
                     }
@@ -631,14 +630,6 @@
                     alert("An error occurred while creating the order. Please try again.");
                 });
         }
-
-        // Example usage of setCookie
-        // setCookie("cart", JSON.stringify([{ foodID: 1, quantity: 2 }, { foodID: 2, quantity: 3 }]), 3); // Setting cart cookie for 3 minutes
-
-        // Attach createOrder to a button click or form submission
-        document.getElementById("createOrderButton").addEventListener("click", createOrder); // Replace "createOrderButton" with the actual button ID
-
-
     </script>
 <script src="api/getCategory.js"></script>
 
