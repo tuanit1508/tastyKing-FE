@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
 
         document.getElementById('logout').addEventListener('click', function() {
+            // List of local storage items to remove
             const itemsToRemove = [
                 'loggedInUserEmail',
                 'authToken',
@@ -46,12 +47,33 @@ document.addEventListener('DOMContentLoaded', function () {
                 'selectedTableID',
                 'tableID',
                 'token',
-                'total'// Assuming this is a different token
+                'total' // Assuming this is a different token
             ];
 
+            // Remove items from local storage
             itemsToRemove.forEach(key => {
                 localStorage.removeItem(key);
             });
+
+            // Utility function to delete cookies
+            function deleteCookie(name) {
+                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            }
+
+            // List of cookies to delete
+            const cookiesToDelete = [
+                'comboData',
+                'cart',
+                'checkoutData',
+                'orderData'
+            ];
+
+            // Remove cookies
+            cookiesToDelete.forEach(cookie => {
+                deleteCookie(cookie);
+            });
+
+            // Redirect to index.html
             window.location.href = 'index.html';
         });
     } else {

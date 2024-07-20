@@ -123,7 +123,7 @@ function displayOrders(orders, page) {
                                                 Cancel
                                             </button>
                                         </a>` : ''}
-                                    ${order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' && order.orderStatus !== 'Confirm' && order.orderStatus !== 'InProgress' ?
+                                    ${order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' && order.orderStatus !== 'Confirmed' && order.orderStatus !== 'InProgress' ?
             `<a href="updateOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
                                             <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
                                                 Update

@@ -110,16 +110,7 @@ function createFoodItem(food) {
 
     const col2 = document.createElement('div');
     col2.classList.add('col-md-4', 'd-flex', 'align-items-center');
-    checkbox.addEventListener('change', function() {
-        const quantityInput = inputQuantity;
-        if (checkbox.checked) {
-            quantityInput.value = '1';
-        } else {
-            quantityInput.value = '0';
-        }
 
-        updateTotalPrice(); // Update total price after changing quantity
-    });
     const btnDecrease = document.createElement('button');
     btnDecrease.type = 'button';
     btnDecrease.classList.add('btn', 'btn-secondary', 'btn-sm', 'quantity-btn');
@@ -235,17 +226,11 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
         console.log('Update order response:', result); // Debugging statement
 
         if (result.code === 0) {
-            const paymentMethod = document.querySelector('input[name="order_type"]:checked').value;
-
             // Set cookies with order information expiring in 5 minutes
             setCookie('checkoutData', JSON.stringify(orderData), 5);
 
-            // Redirect based on payment method
-            if (paymentMethod === 'vnPay') {
-                window.location.href = 'vnPay.html';
-            } else if (paymentMethod === 'banking') {
-                window.location.href = 'onlineBanking.html';
-            }
+            // Redirect to online banking page
+            window.location.href = 'onlineBanking2.html';
         } else {
             alert('Failed to update order');
         }
@@ -263,29 +248,37 @@ function setCookie(name, value, minutes) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    fetchAvailableTables();
+    // Function to populate tables
+    function populateTables() {
+        const apiUrl = 'http://localhost:8080/TastyKing/table/getTable/available';
+        const token = localStorage.getItem('authToken'); // Replace with the actual token
 
-    async function fetchAvailableTables() {
-        try {
-            const response = await fetch('http://localhost:8080/TastyKing/table/getTable/available'); // Replace with your actual API URL
-            const data = await response.json();
-            if (data.code === 0 && Array.isArray(data.result)) {
-                populateTableOptions(data.result);
-            } else {
-                console.error('Failed to fetch tables:', data);
+        fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
-        } catch (error) {
-            console.error('Error fetching tables:', error);
-        }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result) {
+                    const selectElement = document.getElementById('table');
+                    data.result.forEach(table => {
+                        const option = document.createElement('option');
+                        option.value = table.tableID;
+                        option.text = `${table.tableID} - ${table.tableName}`;
+                        selectElement.appendChild(option);
+                    });
+                } else {
+                    console.error('Failed to fetch tables');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
-    function populateTableOptions(tables) {
-        const tableSelect = document.getElementById('table');
-        tables.forEach(table => {
-            const option = document.createElement('option');
-            option.value = table.tableID;
-            option.textContent = `${table.tableName} - ${table.tablePosition.tablePosition}`;
-            tableSelect.appendChild(option);
-        });
-    }
+    // Call populateTables on page load
+    populateTables();
 });
