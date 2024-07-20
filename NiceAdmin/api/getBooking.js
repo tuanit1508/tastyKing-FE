@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const apiUrl = 'http://localhost:8080/TastyKing/order'; // Replace with your API URL
+    const paymentApiUrl = 'http://localhost:8080/TastyKing/payment'; // Replace with your Payment API URL
     const token = localStorage.getItem('token'); // Replace with your Bearer token
     const itemsPerPage = 5;
     let currentPage = 1;
@@ -147,7 +148,14 @@ document.addEventListener("DOMContentLoaded", function () {
                                 </tr>
                             `).join('')}
                             <tr style="background-color: #f2f2f2;">
-                                <th scope="row" colspan="3" style="color: #333; text-align: right; padding: 20px; padding-right: 20px;">Total amount: ${order.totalAmount}</th>
+                                <th scope="row" colspan="3" style="color: #333; text-align: right; padding: 20px; padding-right: 20px;">
+                                    Total amount: ${order.totalAmount}VND
+                                </th>
+                            </tr>
+                            <tr style="background-color: #f2f2f2;">
+                                <th scope="row" colspan="3" style="color: red; text-align: right; padding: 20px; padding-right: 20px;">
+                                    Deposit: ${order.deposit}VND
+                                </th>
                             </tr>
                             <tr>
                                 <td style="text-align: left; padding: 20px;">Order code:</td>
@@ -224,32 +232,52 @@ document.addEventListener("DOMContentLoaded", function () {
             buttons = ``;
         } else if (['InProgress'].includes(status)) {
             buttons = `
-                <button onclick="doneOrder(${orderID})" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
-                    Done
+                <button onclick="payment(${orderID})" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
+                    Payment
                 </button>
             `;
         }
         return buttons;
     }
-
-    window.showPaymentModal = function (orderID) {
+    window.showPaymentModal = function(orderID) {
         // Set the order ID in the modal form
         document.getElementById('orderID').value = orderID;
-        // Reset the form and hide the change amount div
-        document.getElementById('paymentForm').reset();
-        document.getElementById('changeAmountDiv').style.display = 'none';
-        document.getElementById('changeAmount').value = '';
-        // Show the modal
-        var paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
-        paymentModal.show();
+        // Fetch order details to get totalAmount and deposit
+        fetch(`${apiUrl}/${orderID}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 0 && data.result) {
+                    const order = data.result;
+                    document.getElementById('totalAmount').value = order.totalAmount;
+                    document.getElementById('deposit').value = order.deposit;
+
+                    // Show the modal
+                    var paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+                    paymentModal.show();
+                } else {
+                    alert("Order not found or error retrieving order details.");
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching order details:", error);
+                alert("An error occurred while fetching the order details. Please try again.");
+            });
     }
 
     document.getElementById('paymentForm').addEventListener('input', function () {
-        const totalAmount = parseFloat(document.getElementById('totalAmount').value);
-        const customerPayment = parseFloat(document.getElementById('customerPayment').value);
+        const totalAmount = parseFloat(document.getElementById('totalAmount').value) || 0;
+        const deposit = parseFloat(document.getElementById('deposit').value) || 0;
+        const customerPayment = parseFloat(document.getElementById('customerPayment').value) || 0;
+        const adjustedTotalAmount = totalAmount - deposit;
 
-        if (customerPayment > totalAmount) {
-            const changeAmount = customerPayment - totalAmount;
+        if (customerPayment > adjustedTotalAmount) {
+            const changeAmount = customerPayment - adjustedTotalAmount;
             document.getElementById('changeAmount').value = changeAmount;
             document.getElementById('changeAmountDiv').style.display = 'block';
         } else {
@@ -264,14 +292,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const orderID = document.getElementById('orderID').value;
         const paymentMethod = document.getElementById('paymentMethod').value;
         const totalAmount = document.getElementById('totalAmount').value;
+        const deposit = document.getElementById('deposit').value;
         const customerPayment = document.getElementById('customerPayment').value;
 
         const paymentData = {
             orderID: parseInt(orderID),
-            paymentMethod: paymentMethod
+            paymentMethod: paymentMethod,
+            paymentAmount: parseFloat(totalAmount) - parseFloat(deposit)
         };
 
-        fetch("http://localhost:8080/TastyKing/payment", {
+        fetch(`${paymentApiUrl}/paymentByAdmin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -282,7 +312,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 if (data.code === 0) {
-                    alert(`Payment submitted for Order ID: ${orderID}\nPayment Method: ${paymentMethod}\nTotal Amount: ${totalAmount}\nAmount Received: ${customerPayment}`);
+                    alert(`Payment submitted for Order ID: ${orderID}\nPayment Method: ${paymentMethod}\nTotal Amount: ${totalAmount}\nDeposit: ${deposit}\nAmount Received: ${customerPayment}`);
                     var paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
                     paymentModal.hide();
                 } else {
@@ -295,10 +325,10 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
-    // Example functions for order confirmation and done actions
-    window.doneOrder = function (orderID) {
-        fetch(`http://localhost:8080/TastyKing/order/doneOrder/${orderID}`, {
-            method: 'PUT',
+    window.payment = function(orderID) {
+        // Fetch payment details
+        fetch(`http://localhost:8080/TastyKing/payment/getPayment/${orderID}`, {
+            method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -306,15 +336,102 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(response => response.json())
             .then(data => {
-                if (data.code === 0) {
-                    alert(data.result);
-                    fetchOrders(); // Refresh the orders list
+                if (data.code === 0 && data.result) {
+                    // Set the payment details in the modal form
+                    document.getElementById('paymentID2').value = data.result.paymentID;
+                    document.getElementById('orderID2').value = data.result.orderID;
+                    document.getElementById('paymentMethod2').value = data.result.paymentMethod;
+
+                    // Fetch order details to get totalAmount and deposit
+                    fetch(`${apiUrl}/${orderID}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(orderData => {
+                            if (orderData.code === 0 && orderData.result) {
+                                const totalAmount = orderData.result.totalAmount;
+                                const deposit = orderData.result.deposit;
+                                const newTotalAmount = totalAmount - deposit;
+                                document.getElementById('totalAmount2').value = totalAmount;
+                                document.getElementById('deposit2').value = deposit;
+                                document.getElementById('newTotalAmount2').value = newTotalAmount;
+                            } else {
+                                alert("Order not found or error retrieving order details.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error fetching order details:", error);
+                            alert("An error occurred while fetching the order details. Please try again.");
+                        });
+
+                    // Show the modal
+                    var paymentModal = new bootstrap.Modal(document.getElementById('paymentModal2'));
+                    paymentModal.show();
                 } else {
-                    console.error('Error marking the order as done');
+                    alert("Payment not found or error retrieving payment details.");
                 }
             })
-            .catch(error => console.error('Error:', error));
-    };
+            .catch(error => {
+                console.error("Error fetching payment details:", error);
+                alert("An error occurred while fetching the payment details. Please try again.");
+            });
+    }
+
+    document.getElementById('paymentForm2').addEventListener('input', function () {
+        const newTotalAmount = parseFloat(document.getElementById('newTotalAmount2').value) || 0;
+        const customerPayment = parseFloat(document.getElementById('customerPayment2').value) || 0;
+
+        if (customerPayment > newTotalAmount) {
+            const changeAmount = customerPayment - newTotalAmount;
+            document.getElementById('changeAmount2').value = changeAmount;
+            document.getElementById('changeAmountDiv2').style.display = 'block';
+        } else {
+            document.getElementById('changeAmountDiv2').style.display = 'none';
+            document.getElementById('changeAmount2').value = '';
+        }
+    });
+
+    document.getElementById('paymentForm2').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const paymentID = document.getElementById('paymentID2').value;
+        const orderID = document.getElementById('orderID2').value;
+        const paymentMethod = document.getElementById('paymentMethod2').value;
+        const newTotalAmount = document.getElementById('newTotalAmount2').value;
+
+        const paymentData = {
+            orderID: parseInt(orderID),
+            paymentMethod: paymentMethod,
+            paymentAmount: parseFloat(newTotalAmount)
+        };
+
+        fetch(`http://localhost:8080/TastyKing/payment/update/${paymentID}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(paymentData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 0) {
+                    alert(`Payment updated for Order ID: ${orderID}\nPayment Method: ${paymentMethod}\nTotal Amount: ${newTotalAmount}`);
+                    var paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentModal2'));
+                    paymentModal.hide();
+                } else {
+                    alert("Failed to update payment. Error code: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error updating payment:", error);
+                alert("An error occurred while updating the payment. Please try again.");
+            });
+    });
 
     window.confirmOrder = function (orderID) {
         fetch(`http://localhost:8080/TastyKing/order/confirmOrder/${orderID}`, {
@@ -337,7 +454,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     window.cancelOrder = function (orderID) {
-        fetch(`http://localhost:8080/TastyKing/order/cancelOrder/${orderID}`, {
+        fetch(`http://localhost:8080/TastyKing/order/cancelOrderByAdmin/${orderID}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,

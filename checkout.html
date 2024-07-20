@@ -373,14 +373,14 @@
                                     </ul>
                                 </div>
                                 <div class="checkout__order__widget">
-                                    <label for="VNPAY">
+                                    <label for="paymentVnPay">
                                         Payment By VnPay
-                                        <input type="checkbox" id="VNPAY" name="paymentMethod" value="VNPAY">
+                                        <input type="radio" id="paymentVnPay" name="paymentMethod" value="VNPAY">
                                         <span class="checkmark"></span>
                                     </label>
-                                    <label for="CASH">
+                                    <label for="paymentOnlineBanking">
                                         Online Banking
-                                        <input type="checkbox" id="CASH" name="paymentMethod" value="CASH">
+                                        <input type="radio" id="paymentOnlineBanking" name="paymentMethod" value="Online Banking">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -529,11 +529,29 @@
         });
     </script>
     <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize the datetime picker
+            $('#date3').datetimepicker({
+                format: 'YYYY-MM-DDTHH:mm:ss'
+            });
+
             // Handle form submission
-            document.querySelector('.site-btn').addEventListener('click', function(event) {
+            document.getElementById('checkoutForm').addEventListener('submit', function (event) {
                 event.preventDefault(); // Prevent form submission
-                createOrder();
+
+                // Determine payment method
+                let paymentMethod;
+                if (document.getElementById('paymentVnPay').checked) {
+                    paymentMethod = "VNPAY";
+                } else if (document.getElementById('paymentOnlineBanking').checked) {
+                    paymentMethod = "Online Banking";
+                } else {
+                    alert("Please select a payment method.");
+                    return;
+                }
+
+                // Call createOrder with the selected payment method
+                createOrder(paymentMethod);
             });
         });
 
@@ -556,8 +574,7 @@
             return null; // Return null if no cookie with the given name is found
         }
 
-        function createOrder() {
-            const reservationData = JSON.parse(localStorage.getItem("reservationData"));
+        function createOrder(paymentMethod) {
             const tableID = document.getElementById("table").value;
             const cart = JSON.parse(getCookie("cart") || "[]");
             const total = parseFloat(document.getElementById("total").textContent.replace('$', ''));
@@ -604,25 +621,21 @@
                     return response.json();
                 })
                 .then(data => {
-                    if (data.code === 0) {
+                    if (data.code === 0 && data.result.orderID) {
                         // Save order data to a cookie with a 5-minute expiration
                         setCookie("checkoutData", JSON.stringify(data.result), 5);
                         localStorage.removeItem('tableID');
-
-                        // Determine the selected payment method
-                        const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
-                        if (!selectedPaymentMethod) {
-                            alert("Please select a payment method.");
-                            return;
-                        }
-
-                        if (selectedPaymentMethod.value === 'CASH') {
-                            window.location.href = "onlineBanking.html";
-                        } else if (selectedPaymentMethod.value === 'VNPAY') {
-                            window.location.href = "VnPay.html";
+                        if (paymentMethod === 'Online Banking') {
+                            // Create payment using the received orderID for Online Banking
+                            createPayment(data.result.orderID, total, paymentMethod, authToken);
+                        } else if (paymentMethod === 'VNPAY') {
+                            window.location.href = "VnPay.html"; // Redirect to VNPay URL
+                        } else {
+                            window.location.href = "onlineBanking.html"; // Or handle cash payment as needed
                         }
                     } else {
-                        alert("Please provide the necessary information to complete the booking process. Error code: " + data.message);
+                        console.error("Order creation failed or orderID is missing:", data);
+                        alert("Please provide the necessary information to complete the booking process");
                     }
                 })
                 .catch(error => {
@@ -630,8 +643,42 @@
                     alert("An error occurred while creating the order. Please try again.");
                 });
         }
+
+        function createPayment(orderID, total, paymentMethod, authToken) {
+            const paymentData = {
+                orderID: orderID,
+                paymentMethod: paymentMethod,
+                paymentAmount: total
+            };
+
+            fetch("http://localhost:8080/TastyKing/payment", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${authToken}`
+                },
+                body: JSON.stringify(paymentData)
+            })
+                .then(paymentResponse => paymentResponse.json())
+                .then(paymentResult => {
+                    // Handle payment creation response as needed
+                    console.log("Payment creation result:", paymentResult);
+
+                    // Redirect to onlineBanking.html after successful payment creation
+                    if (paymentMethod === 'Online Banking') {
+                        window.location.href = "onlineBanking.html";
+                    }
+                })
+                .catch(paymentError => {
+                    console.error("Error creating payment:", paymentError);
+                    alert("An error occurred while creating the payment. Please try again.");
+                });
+        }
+
     </script>
-<script src="api/getCategory.js"></script>
+
+
+    <script src="api/getCategory.js"></script>
 
 <script src="api/checkout.js"></script>
 </body>

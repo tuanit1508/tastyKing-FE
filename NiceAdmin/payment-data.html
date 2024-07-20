@@ -556,7 +556,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Menu Management</h1>
+      <h1>Payment Management</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -572,23 +572,22 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex justify-content-between mb-3">
-                <button class="btn btn-warning" id="showModalBtn">Create new Food</button>
-                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search orders...">
+                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search payment...">
               </div>
               <!-- Table with stripped rows -->
               <table class="table datatable">
                 <thead>
                 <tr>
-                  <th><b>F</b>oodID</th>
-                  <th>Food name</th>
-                  <th>Category</th>
-                  <th>Food price</th>
-                  <th>Unit</th>
+                  <th><b>P</b>aymentID</th>
+                  <th>Order ID</th>
+                  <th>Payment Method</th>
+                  <th>Total Amount</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
                 </thead>
-                <tbody id="foodTableBody">
-                <!-- Food items will be dynamically inserted here -->
+                <tbody id="paymentTableBody">
+                <!-- Payment items will be dynamically inserted here -->
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
@@ -600,74 +599,38 @@
 
   </main><!-- End #main -->
 <!--  modal menu-->
-  <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+  <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="menuModalLabel">Create New Food Item</h5>
+          <h5 class="modal-title" id="paymentModalLabel">Payment Information</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="foodForm" enctype="multipart/form-data">
+          <form id="paymentForm" enctype="multipart/form-data">
             <div class="form-group">
-              <label for="categoryName">Category Name *</label>
-              <select class="form-control" id="categoryName" name="categoryName" required>
-                <option value="">Select Category</option>
-              </select>
-              <label for="foodName">Food Name *</label>
-              <input type="text" class="form-control" id="foodName" name="foodName" placeholder="Enter Food name" required>
-              <label for="foodPrice">Food Price ($) *</label>
-              <input type="text" class="form-control" id="foodPrice" name="foodPrice" placeholder="Enter Food price" required>
-              <label for="foodCost">Food Cost ($) *</label>
-              <input type="text" class="form-control" id="foodCost" name="foodCost" placeholder="Enter Food cost" required>
-              <label for="unit">Unit *</label>
-              <input type="text" class="form-control" id="unit" name="unit" placeholder="Enter unit" required>
-              <label for="description">Description *</label>
-              <textarea id="description" name="description" class="form-control" placeholder="Enter description" required></textarea>
-              <label for="foodImage">Food Image *</label>
-              <input type="file" class="form-control" id="foodImage" name="foodImage" required>
+              <label for="orderID">Order ID *</label>
+              <input type="text" class="form-control" id="orderID" name="orderID" placeholder="Enter Order ID" required>
+              <label for="paymentMethod">Payment Method *</label>
+              <input type="text" class="form-control" id="paymentMethod" name="paymentMethod" required>
+              <label for="totalAmount">Total Amount (VND) *</label>
+              <input type="text" class="form-control" id="totalAmount" name="totalAmount" required>
+              <label for="paymentDate">Payment Date *</label>
+              <input type="text" class="form-control" id="paymentDate" name="paymentDate" required>
+              <label for="status">Status *</label>
+              <input type="text" class="form-control" id="status" name="status" required>
+              <label for="paymentDescription">Description *</label>
+              <textarea id="paymentDescription" name="paymentDescription" class="form-control" required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            <button type="button" class="btn btn-primary mt-3" data-bs-dismiss="modal">Close</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="modal fade" id="updatemenuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="updatemenuModalLabel">Update Food Item</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="updatefoodForm" enctype="multipart/form-data">
-            <div class="form-group">
-              <label for="categoryName">Category Name *</label>
-              <select class="form-control" id="updatecategoryName" name="categoryName" required>
-                <option value="">Select Category</option>
-              </select>
-              <label for="foodName">Food Name *</label>
-              <input type="text" class="form-control" id="updatefoodName" name="foodName" placeholder="Enter Food name" required>
-              <label for="foodPrice">Food Price ($) *</label>
-              <input type="text" class="form-control" id="updatefoodPrice" name="foodPrice" placeholder="Enter Food price" required>
-              <label for="foodCost">Food Cost ($) *</label>
-              <input type="text" class="form-control" id="updatefoodCost" name="foodCost" placeholder="Enter Food cost" required>
-              <label for="unit">Unit *</label>
-              <input type="text" class="form-control" id="updateunit" name="unit" placeholder="Enter unit" required>
-              <label for="description">Description *</label>
-              <textarea id="updatedescription" name="description" class="form-control" placeholder="Enter description" required></textarea>
-              <label for="foodImage">Food Image</label>
-              <input type="file" class="form-control" id="updatefoodImage" name="foodImage">
-              <img id="foodImagePreview" src="" alt="Food Image" style="width: 150px; height: 150px; margin-top: 10px;" />
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+
+
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
@@ -730,7 +693,7 @@
     fetchCategories();
 
   </script>
-<script src="api/menu.js"></script>
+<script src="api/payment.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const username = localStorage.getItem('username');
@@ -749,6 +712,41 @@
         window.location.href = 'pages-login.html';
       });
     });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchInput = document.getElementById('searchInput');
+      const table = document.querySelector('.datatable tbody');
+
+      searchInput.addEventListener('keyup', function () {
+        const query = searchInput.value.toLowerCase();
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          const cells = row.getElementsByTagName('td');
+          let match = false;
+
+          for (let j = 0; j < cells.length; j++) {
+            const cell = cells[j];
+            if (cell.textContent.toLowerCase().includes(query)) {
+              match = true;
+              break;
+            }
+          }
+
+          if (match) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        }
+      });
+    });
+
+    function redirectToIndex() {
+      window.location.href = "create-order.html";
+    }
   </script>
 </body>
 

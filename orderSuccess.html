@@ -30,8 +30,8 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/cart.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+
 </head>
 
 <body>
@@ -48,7 +48,7 @@
     <!-- Navbar & Hero Start -->
     <div class="container-xxl position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
-            <a href="index.html" class="navbar-brand p-0" id="homeLink">
+            <a href="" class="navbar-brand p-0">
                 <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Tasty King</h1>
                 <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
@@ -57,11 +57,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0 pe-4">
-                    <a href="index.html" class="nav-item nav-link " id="homeLink2">Home</a>
+                    <a href="index.html" class="nav-item nav-link ">Home</a>
                     <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="voucher.html" class="nav-item nav-link">Voucher</a>
+                    <a href="voucher.html" class="nav-item nav-link ">Voucher</a>
                     <a href="combo.html" class="nav-item nav-link">Combo</a>
-                    <a href="menu.html" class="nav-item nav-link ">Order Now</a>
+                    <a href="menu.html" class="nav-item nav-link">Order Now</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Category</a>
                         <div class="dropdown-menu m-0">
@@ -78,12 +78,12 @@
 
         <div class="container-xxl py-5 bg-dark hero-header mb-5">
             <div class="container text-center my-5 pt-5 pb-4">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">Shopping Cart</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Payment</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center text-uppercase">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="index.html" class="text-primary">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-white " aria-current="page">Cart</li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Payment</li>
                     </ol>
                 </nav>
             </div>
@@ -92,100 +92,23 @@
     <!-- Navbar & Hero End -->
 
 
-    <!-- Menu Start -->
+    <!-- Service Start -->
+    <div class="container">
+        <h1 class="text-center mb-4 text-success">Payment with Vn pay successful. Your order has been paid. Thank you for using our service</h1>
 
-    <div class="site-section">
-        <div class="container">
-            <div class="row mb-5">
-                <form class="col-md-12">
-                    <div class="site-blocks-table">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th class="product-thumbnail">Image</th>
-                                <th class="product-name">Product</th>
-                                <th class="product-price">Price</th>
-                                <th class="product-quantity">Quantity</th>
-                                <th class="product-total">Total</th>
-                                <th class="product-remove">Remove</th>
-                            </tr>
-                            </thead>
-                            <tbody id="cart-items">
-                            <!-- Cart items will be inserted here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
-            </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="row mb-5">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <button id="chooseTableButton" class="btn btn-primary btn-sm btn-block">Choose Table</button>
-                        </div>
-                        <div class="col-md-6">
-                            <button class="btn btn-outline-primary btn-sm btn-block" id="continueShoppingBtn">Continue Shopping</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label class="text-black h4" >Coupon</label>
-                            <p>Enter your coupon code if you have one.</p>
-                        </div>
-                        <div class="col-md-8 mb-3 mb-md-0">
-                            <input type="text" class="form-control py-3" id="voucher-code"  placeholder="Coupon Code">
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-primary btn-sm" id="apply-voucher">Apply Coupon</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 pl-5">
-                    <div class="row justify-content-end">
-                        <div class="col-md-7">
-                            <div class="row">
-                                <div class="col-md-12 text-right border-bottom mb-5">
-                                    <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <span class="text-black">Subtotal</span>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <strong class="text-black" id="cart-subtotal">0.00</strong>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <span class="text-black">Deposit</span>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <strong class="text-black" id="cart-deposit">0.00</strong>
-                                </div>
-                            </div>
-                            <div class="row mb-5">
-                                <div class="col-md-6">
-                                    <span class="text-black">Total</span>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <strong class="text-black" id="cart-total">0.00</strong>
-                                </div>
-                            </div>
+        <div class="col-12 mt-4">
+            <!-- Payment Confirmation Button -->
+            <div class="text-center">
+                <button class="btn btn-secondary mx-2" onclick="redirectToHome()">Back to Home</button>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button class="btn btn-primary btn-lg py-3 btn-block" id="proceed-to-checkout" onclick="window.location='checkout.html'">Proceed To Checkout</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-    <!-- Menu End -->
+
+
+
+    <!-- Service End -->
 
 
     <!-- Footer Start -->
@@ -252,26 +175,7 @@
         </div>
     </div>
     <!-- Footer End -->
-    <!-- Modal -->
-    <div class="modal fade" id="tableModal" tabindex="-1" role="dialog" aria-labelledby="tableModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tableModalLabel">Choose a Table</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <iframe id="tableIframe" src="table.html" style="width: 100%; height: 500px; border: none;"></iframe>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="closeBook" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary"  id="bookNowButton" disabled>Book Now</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -291,7 +195,6 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const urlParams = new URLSearchParams(window.location.search);
@@ -315,9 +218,9 @@
                 </a>
                 <div class="dropdown-menu m-0">
                     <div class="dropdown-item" id="username">${username}</div>
-                    <a href="viewProfile.html" class="dropdown-item">View Profile</a>
+                   <a href="viewProfile.html" class="dropdown-item">View Profile</a>
                      <a href="updatePass.html" class="dropdown-item">Security</a>
-                    <a href="viewOrder.html" class="dropdown-item">View Order</a>
+                   <a href="viewOrder.html" class="dropdown-item">View Order</a>
                     <a href="#" id="logout" class="dropdown-item">Logout</a>
                 </div>
             </div>
@@ -339,63 +242,17 @@
         `;
         }
     });
-</script>
-<script>
-    document.getElementById('chooseTableButton').addEventListener('click', function() {
-        $('#tableModal').modal('show');
-    });
 
-    document.getElementById('closeBook').addEventListener('click', function() {
-        $('#tableModal').modal('hide');
-    });
-    document.getElementById('bookNowButton').addEventListener('click', function() {
-        const iframe = document.getElementById('tableIframe');
-        const selectedTable = iframe.contentWindow.selectedTable; // Access the selected table from the iframe
-
-        if (selectedTable) {
-            alert(`Table ${selectedTable.getAttribute('data-table')} booked successfully!`);
-            $('#tableModal').modal('hide');
-        } else {
-            alert('Please select a table first.');
-        }
-    });
-
-    // Add an event listener to handle table selection within the iframe
-    document.getElementById('tableIframe').addEventListener('load', function() {
-        const iframeDocument = this.contentDocument || this.contentWindow.document;
-
-        iframeDocument.addEventListener('click', function(event) {
-            if (event.target.classList.contains('table') && event.target.classList.contains('available')) {
-                const tables = iframeDocument.querySelectorAll('.table');
-                tables.forEach(function(table) {
-                    table.classList.remove('selected');
-                });
-
-                event.target.classList.add('selected');
-                document.getElementById('bookNowButton').disabled = false;
-
-                // Save the selected table to the iframe's window object
-                iframeDocument.defaultView.selectedTable = event.target;
-            }
-        });
-    });
 
 </script>
-<script>
-    document.getElementById('homeLink').addEventListener('click', function() {
-        localStorage.removeItem('tableID');
-    });
-</script>
-<script>
-    document.getElementById('homeLink2').addEventListener('click', function() {
-        localStorage.removeItem('tableID');
-    });
-</script>
-
 <script src="api/getCategory.js"></script>
-<script src="api/getCart.js"></script>
-<script src="api/getTablePosition.js"></script>
-<script src="api/comboCart.js"></script>
+<script>
+    function redirectToHome() {
+
+        window.location.href = 'index.html';
+    }
+</script>
+
 </body>
 
 </html>

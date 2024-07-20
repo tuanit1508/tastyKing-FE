@@ -124,7 +124,7 @@ function createFoodItem(food) {
     btnDecrease.type = 'button';
     btnDecrease.classList.add('btn', 'btn-secondary', 'btn-sm', 'quantity-btn');
     btnDecrease.textContent = '-';
-
+    btnDecrease.addEventListener('click', () => changeQuantity(food.foodID, -1));
 
     const inputQuantity = document.createElement('input');
     inputQuantity.type = 'number';
@@ -183,39 +183,6 @@ function updateTotalPrice() {
     document.getElementById('totalPrice').textContent = formattedPrice;
 }
 
-function serializeOrderData(orderData) {
-    const params = new URLSearchParams();
-
-    // Serialize basic fields
-    params.append('orderID', orderData.orderID);
-    params.append('user[email]', orderData.user.email);
-    params.append('tables[tableID]', orderData.tables.tableID);
-    params.append('note', orderData.note);
-    params.append('totalAmount', orderData.totalAmount);
-    params.append('numOfCustomer', orderData.numOfCustomer);
-    params.append('customerName', orderData.customerName);
-    params.append('bookingDate', orderData.bookingDate);
-    params.append('customerPhone', orderData.customerPhone);
-
-    // Serialize order details
-    const foodMap = new Map(); // To accumulate quantities
-
-    orderData.orderDetails.forEach(detail => {
-        if (foodMap.has(detail.foodID)) {
-            foodMap.set(detail.foodID, foodMap.get(detail.foodID) + detail.quantity);
-        } else {
-            foodMap.set(detail.foodID, detail.quantity);
-        }
-    });
-
-    foodMap.forEach((quantity, foodID) => {
-        params.append(`orderDetails[${foodID}][foodID]`, foodID);
-        params.append(`orderDetails[${foodID}][quantity]`, quantity);
-    });
-
-    return params.toString();
-}
-
 document.getElementById('orderForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -271,16 +238,11 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
             const paymentMethod = document.querySelector('input[name="order_type"]:checked').value;
 
             // Set cookies with order information expiring in 5 minutes
-            setCookie('orderID', orderData.orderID, 3);
-            setCookie('email', orderData.user.email, 3);
-            setCookie('orderDate', orderData.bookingDate, 3);
-            setCookie('amount', orderData.totalAmount.toFixed(2), 3);
-            setCookie('note', orderData.note, 3);
-            setCookie('paymentMethod', paymentMethod, 3);
+            setCookie('checkoutData', JSON.stringify(orderData), 5);
 
             // Redirect based on payment method
             if (paymentMethod === 'vnPay') {
-                window.location.href = 'vnPayBanking.html';
+                window.location.href = 'vnPay.html';
             } else if (paymentMethod === 'banking') {
                 window.location.href = 'onlineBanking.html';
             }
@@ -299,3 +261,31 @@ function setCookie(name, value, minutes) {
     now.setTime(expiryTime);
     document.cookie = `${name}=${encodeURIComponent(value)}; expires=${now.toUTCString()}; path=/`;
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetchAvailableTables();
+
+    async function fetchAvailableTables() {
+        try {
+            const response = await fetch('http://localhost:8080/TastyKing/table/getTable/available'); // Replace with your actual API URL
+            const data = await response.json();
+            if (data.code === 0 && Array.isArray(data.result)) {
+                populateTableOptions(data.result);
+            } else {
+                console.error('Failed to fetch tables:', data);
+            }
+        } catch (error) {
+            console.error('Error fetching tables:', error);
+        }
+    }
+
+    function populateTableOptions(tables) {
+        const tableSelect = document.getElementById('table');
+        tables.forEach(table => {
+            const option = document.createElement('option');
+            option.value = table.tableID;
+            option.textContent = `${table.tableName} - ${table.tablePosition.tablePosition}`;
+            tableSelect.appendChild(option);
+        });
+    }
+});

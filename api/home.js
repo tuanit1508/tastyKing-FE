@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 'email',
                 'selectedTableID',
                 'tableID',
-                'token' // Assuming this is a different token
+                'token',
+                'total'// Assuming this is a different token
             ];
 
             itemsToRemove.forEach(key => {

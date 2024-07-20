@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('voucherImage').src = voucher.voucherImage;
                     document.getElementById('voucherImageLink').href = voucher.voucherImage;
 
-                    if (voucher.expired) {
+                    if (voucher.expried) {
                         document.getElementById('addToCartBtn').style.display = 'none';
                         document.getElementById('expiredBtn').style.display = 'inline-block';
                     } else {

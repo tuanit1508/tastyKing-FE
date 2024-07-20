@@ -11,23 +11,27 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-const RESERVATION_FEE = 200; // Reservation fee
+const RESERVATION_FEE = 100000; // Reservation fee
+const DEPOSIT_AMOUNT = 2000000; // Deposit amount for tableID 6
 let discount = 0; // Initialize discount variable
 
 function displayCartItems() {
+    console.log("displayCartItems called");
+
     let cart = JSON.parse(getCookie("cart") || "[]");
     const cartContainer = document.getElementById("cart-items");
     cartContainer.innerHTML = "";
 
     let subtotal = 0;
+    let deposit = 0;
 
     if (cart.length === 0) {
         cartContainer.innerHTML = "<tr><td colspan='6'>Your cart is empty.</td></tr>";
         subtotal = RESERVATION_FEE; // Apply reservation fee if cart is empty
     } else {
         cart.forEach((food, index) => {
-            const total = (food.foodPrice * food.quantity).toFixed(0);
-            subtotal += parseFloat(total);
+            const itemTotal = (food.foodPrice * food.quantity).toFixed(0);
+            subtotal += parseFloat(itemTotal);
             const foodItem = document.createElement("tr");
             foodItem.innerHTML = `
                 <td class="product-thumbnail">
@@ -48,7 +52,7 @@ function displayCartItems() {
                         </div>
                     </div>
                 </td>
-                <td class="product-total">${total}VND</td>
+                <td class="product-total">${itemTotal}VND</td>
                 <td><button class="btn btn-primary btn-sm js-btn-remove" data-index="${index}" data-foodid="${food.foodID}">X</button></td>
             `;
             cartContainer.appendChild(foodItem);
@@ -60,11 +64,25 @@ function displayCartItems() {
     // Apply discount if any
     let discountedSubtotal = subtotal - discount;
 
-    // Update subtotal and total in the cart summary
+    // Check if tableID is 6
+    const tableID = localStorage.getItem("tableID");
+    console.log("tableID:", tableID); // Debugging log
+
+    if (tableID === '"7"') {
+        console.log("tableID is 7, setting deposit to 2000000"); // Debugging log
+        deposit = DEPOSIT_AMOUNT;
+    }
+
+    // Calculate total
+    let total = discountedSubtotal + deposit;
+
+    // Update subtotal, deposit, and total in the cart summary
     const subtotalElement = document.getElementById("cart-subtotal");
+    const depositElement = document.getElementById("cart-deposit");
     const totalElement = document.getElementById("cart-total");
-    subtotalElement.textContent = `${subtotal.toFixed(0)}VND`;
-    totalElement.textContent = `${discountedSubtotal.toFixed(0)}VND`; // Display total with discount applied
+    subtotalElement.textContent = `${discountedSubtotal.toFixed(0)}VND`;
+    depositElement.textContent = `${deposit.toFixed(0)}VND`;
+    totalElement.textContent = `${total.toFixed(0)}VND`; // Display total with discount applied
 }
 
 function attachEventListeners() {
@@ -136,8 +154,6 @@ function applyVoucher(voucherCode, email) {
         });
 }
 
-
-
 function getCookie(name) {
     let cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
@@ -151,7 +167,7 @@ function getCookie(name) {
 
 function setCookie(name, value, days) {
     let date = new Date();
-    date.setTime(date.getTime() + (days *60 * 1000));
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
     let expires = "expires=" + date.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
@@ -161,13 +177,11 @@ document.getElementById("continueShoppingBtn").addEventListener("click", functio
     window.location.href = "menu.html";
 });
 
-
-
 document.getElementById("proceed-to-checkout").addEventListener("click", function() {
     const reservationData = JSON.parse(getCookie("reservationData"));
-    const tableID = getCookie("tableID");
+    const tableID = localStorage.getItem("tableID");
     const cart = JSON.parse(getCookie("cart") || "[]");
-    const total = parseFloat(document.getElementById("cart-total").textContent.replace('$', ''));
+    const total = parseFloat(document.getElementById("cart-total").textContent.replace('VND', ''));
 
     const orderData = {
         reservation: reservationData,
@@ -176,6 +190,6 @@ document.getElementById("proceed-to-checkout").addEventListener("click", functio
         total: total
     };
 
-    setCookie("orderData", JSON.stringify(orderData), 3); // 1 day expiration
+    setCookie("orderData", JSON.stringify(orderData), 3); // 3 days expiration
     window.location.href = "checkout.html";
 });

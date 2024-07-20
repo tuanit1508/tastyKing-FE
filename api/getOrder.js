@@ -82,6 +82,8 @@ function displayOrders(orders, page) {
                             </tr>
                             <tr style="background-color: #f2f2f2;">
                                 <th scope="row" colspan="3" style="color: #333; text-align: right; padding: 20px; padding-right: 20px;">Total amount: ${order.totalAmount}</th>
+                            </tr><tr style="background-color: #f2f2f2;">
+                                <th scope="row" colspan="3" style="color: red; text-align: right; padding: 20px; padding-right: 20px;">Deposit: ${order.deposit}</th>
                             </tr>
                             <tr>
                                 <td style="text-align: left; padding: 20px;">Order code:</td>
@@ -121,7 +123,7 @@ function displayOrders(orders, page) {
                                                 Cancel
                                             </button>
                                         </a>` : ''}
-                                    ${order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' ?
+                                    ${order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' && order.orderStatus !== 'Confirm' && order.orderStatus !== 'InProgress' ?
             `<a href="updateOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
                                             <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
                                                 Update
