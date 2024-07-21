@@ -195,7 +195,7 @@
     <div class="container-xxl position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
             <a href="" class="navbar-brand p-0">
-                <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
+                <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Tasty King</h1>
                 <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -334,56 +334,15 @@
                     <div class="px-0 border rounded-2 shadow-0">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Similar items</h5>
-                                <div class="d-flex mb-3">
-                                    <a href="#" class="me-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/8.webp" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                                    </a>
-                                    <div class="info">
-                                        <a href="#" class="nav-link mb-1">
-                                            Rucksack Backpack Large <br />
-                                            Line Mounts
-                                        </a>
-                                        <strong class="text-dark"> $38.90</strong>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex mb-3">
-                                    <a href="#" class="me-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/9.webp" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                                    </a>
-                                    <div class="info">
-                                        <a href="#" class="nav-link mb-1">
-                                            Summer New Men's Denim <br />
-                                            Jeans Shorts
-                                        </a>
-                                        <strong class="text-dark"> $29.50</strong>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex mb-3">
-                                    <a href="#" class="me-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/10.webp" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                                    </a>
-                                    <div class="info">
-                                        <a href="#" class="nav-link mb-1"> T-shirts with multiple colors, for men and lady </a>
-                                        <strong class="text-dark"> $120.00</strong>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex">
-                                    <a href="#" class="me-3">
-                                        <img src="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/11.webp" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                                    </a>
-                                    <div class="info">
-                                        <a href="#" class="nav-link mb-1"> Blazer Suit Dress Jacket for Men, Blue color </a>
-                                        <strong class="text-dark"> $339.90</strong>
-                                    </div>
+                                <h5 class="card-title">Top sales</h5>
+                                <div id="top-sales-container">
+                                    <!-- Dynamic content will be inserted here -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -571,6 +530,43 @@
 <script src="api/getFoodByID.js"></script>
 <script src="api/getCategory.js"></script>
 <script src="api/review.js"></script>
+<script>
+    function fetchTopSales() {
+        fetch('http://localhost:8080/TastyKing/orderDetails/top5')
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 0 && data.result) {
+                    const topSalesContainer = document.getElementById('top-sales-container');
+                    topSalesContainer.innerHTML = ''; // Clear existing content
+
+                    data.result.forEach(item => {
+                        const foodItemHtml = `
+                            <div class="d-flex mb-3">
+                                <a href="#" class="me-3">
+                                    <img src="${item.foodImage || 'default-image-url.jpg'}" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
+                                </a>
+                                <div class="info">
+                                    <a href="#" class="nav-link mb-1">${item.foodName}</a>
+                                    <strong class="text-dark">${item.foodPrice ? `$${item.foodPrice}` : 'Price not available'}</strong>
+                                </div>
+                            </div>
+                        `;
+                        topSalesContainer.insertAdjacentHTML('beforeend', foodItemHtml);
+                    });
+                } else {
+                    console.error('Failed to fetch top sales data');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching top sales data:', error);
+            });
+    }
+
+    // Fetch and display top sales data when the page loads
+    document.addEventListener('DOMContentLoaded', fetchTopSales);
+</script>
+
+
 </body>
 
 </html>

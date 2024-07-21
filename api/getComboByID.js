@@ -9,11 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.code === 0) {
                     const combo = data.result;
                     document.getElementById('comboTitle').innerText = combo.comboTitle;
-                    document.getElementById('newPrice').innerText = `${combo.newPrice}VND`;
-                    document.getElementById('comboDescription').innerText = combo.comboDescription;
+
+
+                    document.getElementById('comboDescriptionTab').innerText = combo.comboDescription; // Set description in the tab
                     document.getElementById('openDate').innerText = new Date(combo.openDate).toLocaleDateString();
                     document.getElementById('endDate').innerText = new Date(combo.endDate).toLocaleDateString();
-                    document.getElementById('newPriceText').innerText = `${combo.newPrice}VND`;
+                    document.getElementById('newPriceText').innerText = `${combo.newPrice} VND`;
                     document.getElementById('comboImage').src = combo.comboImage;
                     document.getElementById('comboImageLink').href = combo.comboImage;
 
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Utility functions to handle cookies
 function setCookie(name, value, days) {
     const d = new Date();
-    d.setTime(d.getTime() + (days*24*60*60*1000));
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
     const expires = "expires=" + d.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
@@ -59,7 +60,7 @@ function getCookie(name) {
     const cname = name + "=";
     const decodedCookie = decodeURIComponent(document.cookie);
     const ca = decodedCookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
+    for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
         while (c.charAt(0) === ' ') {
             c = c.substring(1);
