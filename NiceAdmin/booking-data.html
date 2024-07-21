@@ -267,33 +267,38 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="index.html">
+            <a class="nav-link" href="index.html">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i><span>Booking</span><i class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link active" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i><span>Order</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="booking-data.html">
-                        <i class="bi bi-circle"></i><span>Booking manage</span>
+                    <a href="booking-data.html" class="nav-item nav-link active">
+                        <i class="bi bi-circle"></i><span>Order Management</span>
                     </a>
                 </li>
-
-
-
-
-
-
-
-
-
             </ul>
         </li><!-- End Components Nav -->
+
+        
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#payment-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-bank"></i><span>Payment</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="payment-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="payment-data.html">
+              <i class="bi bi-circle"></i><span>Payment Management</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Charts Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
@@ -340,7 +345,7 @@
             <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="voucher-data.html">
-                        <i class="bi bi-circle"></i><span>Voucher Manage</span>
+                        <i class="bi bi-circle"></i><span>Voucher Management</span>
                     </a>
                 </li>
                 <li>
@@ -361,7 +366,7 @@
             <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="combo-data.html">
-                        <i class="bi bi-circle"></i><span>Combo Manage</span>
+                        <i class="bi bi-circle"></i><span>Combo Management</span>
                     </a>
                 </li>
 
@@ -375,25 +380,18 @@
             <ul id="restaurant-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="area-data.html">
-                        <i class="bi bi-circle"></i><span>Area Manage</span>
+                        <i class="bi bi-circle"></i><span>Area Management</span>
                     </a>
                 </li>
                 <li>
                     <a href="table-data.html">
-                        <i class="bi bi-circle"></i><span>Table Manage</span>
+                        <i class="bi bi-circle"></i><span>Table Management</span>
                     </a>
                 </li>
-                <li>
-                    <a href="payment-data.html">
-                        <i class="bi bi-circle"></i><span>Payment Manage</span>
-                    </a>
-                </li>
-
-
             </ul>
         </li><!-- End Charts Nav -->
 
-
+        <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="pages-login.html">

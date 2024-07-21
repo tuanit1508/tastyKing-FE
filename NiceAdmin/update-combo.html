@@ -15,7 +15,9 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -37,17 +39,21 @@
     * License: https://bootstrapmade.com/license/
     ======================================================== -->
     <style>
-        .table td, .table th {
+        .table td,
+        .table th {
             vertical-align: middle;
         }
+
         .quantity-buttons {
             display: flex;
             align-items: center;
         }
+
         .quantity-buttons button {
             border: none;
             background-color: transparent;
         }
+
         .quantity-buttons input {
             width: 40px;
             text-align: center;
@@ -55,996 +61,853 @@
             border-radius: 0.25rem;
             margin: 0 5px;
         }
+
         .card-img-top {
             max-width: 150px;
-            max-height: 150px; /* Adjust these values as needed */
+            max-height: 150px;
+            /* Adjust these values as needed */
         }
     </style>
 </head>
 
 <body>
 
-<!-- ======= Header ======= -->
-<header id="header" class="header fixed-top d-flex align-items-center">
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
 
-    <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">NiceAdmin</span>
-        </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="assets/img/logo.png" alt="">
+                <span class="d-none d-lg-block">NiceAdmin</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div><!-- End Logo -->
 
-    <div class="search-bar">
-        <form class="search-form d-flex align-items-center" method="POST" action="#">
-            <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-        </form>
-    </div><!-- End Search Bar -->
+        <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+        </div><!-- End Search Bar -->
 
-    <nav class="header-nav ms-auto">
-        <ul class="d-flex align-items-center">
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
 
-            <li class="nav-item d-block d-lg-none">
-                <a class="nav-link nav-icon search-bar-toggle " href="#">
-                    <i class="bi bi-search"></i>
-                </a>
-            </li><!-- End Search Icon-->
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li><!-- End Search Icon-->
 
-            <li class="nav-item dropdown">
+                <li class="nav-item dropdown">
 
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                    <i class="bi bi-bell"></i>
-                    <span class="badge bg-primary badge-number">4</span>
-                </a><!-- End Notification Icon -->
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-primary badge-number">4</span>
+                    </a><!-- End Notification Icon -->
 
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                    <li class="dropdown-header">
-                        You have 4 new notifications
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                        <li class="dropdown-header">
+                            You have 4 new notifications
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                    <li class="notification-item">
-                        <i class="bi bi-exclamation-circle text-warning"></i>
-                        <div>
-                            <h4>Lorem Ipsum</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>30 min. ago</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="notification-item">
-                        <i class="bi bi-x-circle text-danger"></i>
-                        <div>
-                            <h4>Atque rerum nesciunt</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>1 hr. ago</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="notification-item">
-                        <i class="bi bi-check-circle text-success"></i>
-                        <div>
-                            <h4>Sit rerum fuga</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>2 hrs. ago</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="notification-item">
-                        <i class="bi bi-info-circle text-primary"></i>
-                        <div>
-                            <h4>Dicta reprehenderit</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>4 hrs. ago</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li class="dropdown-footer">
-                        <a href="#">Show all notifications</a>
-                    </li>
-
-                </ul><!-- End Notification Dropdown Items -->
-
-            </li><!-- End Notification Nav -->
-
-            <li class="nav-item dropdown">
-
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                    <i class="bi bi-chat-left-text"></i>
-                    <span class="badge bg-success badge-number">3</span>
-                </a><!-- End Messages Icon -->
-
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                    <li class="dropdown-header">
-                        You have 3 new messages
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                        <li class="notification-item">
+                            <i class="bi bi-exclamation-circle text-warning"></i>
                             <div>
-                                <h4>Maria Hudson</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                <h4>Lorem Ipsum</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>30 min. ago</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="notification-item">
+                            <i class="bi bi-x-circle text-danger"></i>
+                            <div>
+                                <h4>Atque rerum nesciunt</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>1 hr. ago</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="notification-item">
+                            <i class="bi bi-check-circle text-success"></i>
+                            <div>
+                                <h4>Sit rerum fuga</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>2 hrs. ago</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="notification-item">
+                            <i class="bi bi-info-circle text-primary"></i>
+                            <div>
+                                <h4>Dicta reprehenderit</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
                                 <p>4 hrs. ago</p>
                             </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                        </li>
 
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                            <div>
-                                <h4>Anna Nelson</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>6 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li class="dropdown-footer">
+                            <a href="#">Show all notifications</a>
+                        </li>
 
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                            <div>
-                                <h4>David Muldon</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>8 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                    </ul><!-- End Notification Dropdown Items -->
 
-                    <li class="dropdown-footer">
-                        <a href="#">Show all messages</a>
-                    </li>
+                </li><!-- End Notification Nav -->
 
-                </ul><!-- End Messages Dropdown Items -->
+                <li class="nav-item dropdown">
 
-            </li><!-- End Messages Nav -->
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span class="badge bg-success badge-number">3</span>
+                    </a><!-- End Messages Icon -->
 
-            <li class="nav-item dropdown pe-3">
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                        <li class="dropdown-header">
+                            You have 3 new messages
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqKotfUM-sQrv-oj4qZcOYHxvQCPZrOsb5vw&s" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">Welcome</span>
-                </a><!-- End Profile Iamge Icon -->
+                        <li class="message-item">
+                            <a href="#">
+                                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                                <div>
+                                    <h4>Maria Hudson</h4>
+                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                    <p>4 hrs. ago</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h6 id="userName"></h6>
-                        <span id="userRole"></span>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                            <i class="bi bi-person"></i>
-                            <span>My Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="#" id="signOutBtn">
-                            <i class="bi bi-box-arrow-right"></i>
-                            <span>Sign Out</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Profile Nav -->
+                        <li class="message-item">
+                            <a href="#">
+                                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                                <div>
+                                    <h4>Anna Nelson</h4>
+                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                    <p>6 hrs. ago</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-        </ul>
-    </nav><!-- End Icons Navigation -->
+                        <li class="message-item">
+                            <a href="#">
+                                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                                <div>
+                                    <h4>David Muldon</h4>
+                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                    <p>8 hrs. ago</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-</header><!-- End Header -->
+                        <li class="dropdown-footer">
+                            <a href="#">Show all messages</a>
+                        </li>
 
-<!-- ======= Sidebar ======= -->
-<aside id="sidebar" class="sidebar">
+                    </ul><!-- End Messages Dropdown Items -->
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+                </li><!-- End Messages Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link " href="index.html">
-                <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
-            </a>
-        </li><!-- End Dashboard Nav -->
+                <li class="nav-item dropdown pe-3">
 
-        <li class="nav-item">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqKotfUM-sQrv-oj4qZcOYHxvQCPZrOsb5vw&s"
+                            alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">Welcome</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6 id="userName"></h6>
+                            <span id="userRole"></span>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                <i class="bi bi-person"></i>
+                                <span>My Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="#" id="signOutBtn">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link " href="index.html">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i><span>Booking</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-menu-button-wide"></i><span>Order</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="booking-data.html">
-                        <i class="bi bi-circle"></i><span>Booking manage</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-accordion.html">
-                        <i class="bi bi-circle"></i><span>Accordion</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-badges.html">
-                        <i class="bi bi-circle"></i><span>Badges</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-breadcrumbs.html">
-                        <i class="bi bi-circle"></i><span>Breadcrumbs</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-buttons.html">
-                        <i class="bi bi-circle"></i><span>Buttons</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-cards.html">
-                        <i class="bi bi-circle"></i><span>Cards</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-carousel.html">
-                        <i class="bi bi-circle"></i><span>Carousel</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-list-group.html">
-                        <i class="bi bi-circle"></i><span>List group</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-modal.html">
-                        <i class="bi bi-circle"></i><span>Modal</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-tabs.html">
-                        <i class="bi bi-circle"></i><span>Tabs</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-pagination.html">
-                        <i class="bi bi-circle"></i><span>Pagination</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-progress.html">
-                        <i class="bi bi-circle"></i><span>Progress</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-spinners.html">
-                        <i class="bi bi-circle"></i><span>Spinners</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="components-tooltips.html">
-                        <i class="bi bi-circle"></i><span>Tooltips</span>
+                        <i class="bi bi-circle"></i><span>Order Management</span>
                     </a>
                 </li>
             </ul>
-        </li><!-- End Components Nav -->
+            </li><!-- End Components Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-text"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="category-data.html">
-                        <i class="bi bi-circle"></i><span>Category</span>
-                    </a>
-                    <a href="menu-data.html">
-                        <i class="bi bi-circle"></i><span>Menu</span>
-                    </a>
-                    <a href="forms-elements.html">
-                        <i class="bi bi-circle"></i><span>Form Elements</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="forms-layouts.html">
-                        <i class="bi bi-circle"></i><span>Form Layouts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="forms-editors.html">
-                        <i class="bi bi-circle"></i><span>Form Editors</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="forms-validation.html">
-                        <i class="bi bi-circle"></i><span>Form Validation</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Forms Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-people"></i><span>User</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="customer-data.html">
-                        <i class="bi bi-circle"></i><span>Customer</span>
-                    </a>
-                    <a href="staff-data.html">
-                        <i class="bi bi-circle"></i><span>Staff</span>
-                    </a>
-                    <a href="tables-general.html">
-                        <i class="bi bi-circle"></i><span>Staff</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="tables-data.html">
-                        <i class="bi bi-circle"></i><span>Data Tables</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Tables Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-credit-card-2-front"></i><span>Voucher</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="voucher-data.html">
-                        <i class="bi bi-circle"></i><span>Voucher Manage</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="voucherExchange-data.html">
-                        <i class="bi bi-circle"></i><span>Voucher Exchange</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-chartjs.html">
-                        <i class="bi bi-circle"></i><span>ChartJS</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-apexcharts.html">
-                        <i class="bi bi-circle"></i><span>ApexCharts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-echarts.html">
-                        <i class="bi bi-circle"></i><span>ECharts</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Charts Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-egg-fried"></i><span>Combo</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="combo-data.html">
-                        <i class="bi bi-circle"></i><span>Combo Manage</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="icons-bootstrap.html">
-                        <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="icons-remix.html">
-                        <i class="bi bi-circle"></i><span>Remix Icons</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="icons-boxicons.html">
-                        <i class="bi bi-circle"></i><span>Boxicons</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Icons Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#restaurant-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-house-gear-fill"></i><span>Restaurant</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="restaurant-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="area-data.html">
-                        <i class="bi bi-circle"></i><span>Area Manage</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="table-data.html">
-                        <i class="bi bi-circle"></i><span>Table Manage</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="payment-data.html">
-                        <i class="bi bi-circle"></i><span>Payment Manage</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-apexcharts.html">
-                        <i class="bi bi-circle"></i><span>ApexCharts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-echarts.html">
-                        <i class="bi bi-circle"></i><span>ECharts</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Charts Nav -->
-
-        <li class="nav-heading">Pages</li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="users-profile.html">
-                <i class="bi bi-person"></i>
-                <span>Profile</span>
-            </a>
-        </li><!-- End Profile Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>F.A.Q</span>
-            </a>
-        </li><!-- End F.A.Q Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-contact.html">
-                <i class="bi bi-envelope"></i>
-                <span>Contact</span>
-            </a>
-        </li><!-- End Contact Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-register.html">
-                <i class="bi bi-card-list"></i>
-                <span>Register</span>
-            </a>
-        </li><!-- End Register Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-login.html">
-                <i class="bi bi-box-arrow-in-right"></i>
-                <span>Login</span>
-            </a>
-        </li><!-- End Login Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-error-404.html">
-                <i class="bi bi-dash-circle"></i>
-                <span>Error 404</span>
-            </a>
-        </li><!-- End Error 404 Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-blank.html">
-                <i class="bi bi-file-earmark"></i>
-                <span>Blank</span>
-            </a>
-        </li><!-- End Blank Page Nav -->
-
-    </ul>
-
-</aside><!-- End Sidebar-->
-<main id="main" class="main">
-    <div class="pagetitle">
-        <h1>Combo</h1>
-    </div><!-- End Page Title -->
-
-    <section class="section profile">
-        <div class="container mt-5">
-            <div class="mb-3">
-                <ul class="nav nav-tabs" id="categoryTabs">
-                    <!-- Categories will be inserted here -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#payment-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-bank"></i><span>Payment</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="payment-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="payment-data.html">
+                            <i class="bi bi-circle"></i><span>Payment Management</span>
+                        </a>
+                    </li>
                 </ul>
-            </div>
+            </li><!-- End Charts Nav -->
 
-            <div class="row" id="foodContainer">
-                <!-- Foods will be inserted here -->
-            </div>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="category-data.html">
+                            <i class="bi bi-circle"></i><span>Category</span>
+                        </a>
+                        <a href="menu-data.html">
+                            <i class="bi bi-circle"></i><span>Menu</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Forms Nav -->
 
-            <!-- Order Summary Table -->
-            <div class="mt-5">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Product</th>
-                        <th scope="col" class="text-center">Quantity</th>
-                        <th scope="col" class="text-right">Price</th>
-                    </tr>
-                    </thead>
-                    <tbody id="orderSummary">
-                    <!-- Ordered items will be inserted here -->
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <th colspan="2" class="text-right">Total Price</th>
-                        <th class="text-right" id="totalAmount"> 0.0VND</th>
-                    </tr>
-                    </tfoot>
-                </table>
-            </div>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-people"></i><span>User</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="customer-data.html">
+                            <i class="bi bi-circle"></i><span>Customer</span>
+                        </a>
+                        <a href="staff-data.html">
+                            <i class="bi bi-circle"></i><span>Staff</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
 
-            <div style="margin-top: 20px" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" style="font-weight: bold" id="contactModalLabel">Combo Information</h5>
-                        </div>
-                        <div class="modal-body">
-                            <form style="margin-top: 12px" id="contact-form" role="form">
-                                <div class="controls">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="comboTitle">Combo title *</label>
-                                                <input id="comboTitle" type="text" name="comboTitle" class="form-control" placeholder="Please enter combo title *" required="required" data-error="Combo title is required.">
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-credit-card-2-front"></i><span>Voucher</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="voucher-data.html">
+                            <i class="bi bi-circle"></i><span>Voucher Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="voucherExchange-data.html">
+                            <i class="bi bi-circle"></i><span>Voucher Exchange</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Charts Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-egg-fried"></i><span>Combo</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="icons-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="combo-data.html" class="nav-item nav-link active">
+                            <i class="bi bi-circle"></i><span>Combo Management</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Icons Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#restaurant-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-house-gear-fill"></i><span>Restaurant</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="restaurant-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="area-data.html">
+                            <i class="bi bi-circle"></i><span>Area Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="table-data.html">
+                            <i class="bi bi-circle"></i><span>Table Management</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Charts Nav -->
+
+            <li class="nav-heading">Pages</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="pages-login.html">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    <span>Login</span>
+                </a>
+            </li><!-- End Login Page Nav -->
+
+        </ul>
+
+    </aside><!-- End Sidebar-->
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Combo</h1>
+        </div><!-- End Page Title -->
+
+        <section class="section profile">
+            <div class="container mt-5">
+                <div class="mb-3">
+                    <ul class="nav nav-tabs" id="categoryTabs">
+                        <!-- Categories will be inserted here -->
+                    </ul>
+                </div>
+
+                <div class="row" id="foodContainer">
+                    <!-- Foods will be inserted here -->
+                </div>
+
+                <!-- Order Summary Table -->
+                <div class="mt-5">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col" class="text-center">Quantity</th>
+                                <th scope="col" class="text-right">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderSummary">
+                            <!-- Ordered items will be inserted here -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" class="text-right">Total Price</th>
+                                <th class="text-right" id="totalAmount"> 0.0VND</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div style="margin-top: 20px" id="orderModal" tabindex="-1" role="dialog"
+                    aria-labelledby="orderModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="font-weight: bold" id="contactModalLabel">Combo
+                                    Information</h5>
+                            </div>
+                            <div class="modal-body">
+                                <form style="margin-top: 12px" id="contact-form" role="form">
+                                    <div class="controls">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="comboTitle">Combo title *</label>
+                                                    <input id="comboTitle" type="text" name="comboTitle"
+                                                        class="form-control" placeholder="Please enter combo title *"
+                                                        required="required" data-error="Combo title is required.">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="newPrice">Price *</label>
+                                                    <input id="newPrice" type="number" name="newPrice"
+                                                        class="form-control" placeholder="Please enter price *"
+                                                        required="required" data-error="Price is required.">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="newPrice">Price *</label>
-                                                <input id="newPrice" type="number" name="newPrice" class="form-control" placeholder="Please enter price *" required="required" data-error="Price is required.">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="openDate">Open Date *</label>
+                                                    <input id="openDate" type="datetime-local" name="openDate"
+                                                        class="form-control" placeholder="Please enter open date *"
+                                                        required="required" data-error="Open date is required.">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="endDate">End Date *</label>
+                                                    <input id="endDate" type="datetime-local" name="endDate"
+                                                        class="form-control" placeholder="Please enter end date *"
+                                                        required="required" data-error="End date is required.">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="comboDescription">Combo Description *</label>
+                                                    <textarea id="comboDescription" name="comboDescription"
+                                                        class="form-control" placeholder="Write description." rows="4"
+                                                        required="required"
+                                                        data-error="Description is required."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="commboImage">Combo Image(URL) *</label>
+                                                    <input id="commboImage" type="text" name="comboImage"
+                                                        class="form-control"
+                                                        placeholder="Please enter combo image (URL) *"
+                                                        required="required" data-error="Image URL is required.">
+                                                    <img id="comboImagePreview" src="" alt="Combo Image Preview"
+                                                        style="margin-top: 10px; width: 100px; height: auto;">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="openDate">Open Date *</label>
-                                                <input id="openDate" type="datetime-local" name="openDate" class="form-control" placeholder="Please enter open date *" required="required" data-error="Open date is required.">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="endDate">End Date *</label>
-                                                <input id="endDate" type="datetime-local" name="endDate" class="form-control" placeholder="Please enter end date *" required="required" data-error="End date is required.">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="comboDescription">Combo Description *</label>
-                                                <textarea id="comboDescription" name="comboDescription" class="form-control" placeholder="Write description." rows="4" required="required" data-error="Description is required."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="commboImage">Combo Image(URL) *</label>
-                                                <input id="commboImage" type="text" name="comboImage" class="form-control" placeholder="Please enter combo image (URL) *" required="required" data-error="Image URL is required.">
-                                                <img id="comboImagePreview" src="" alt="Combo Image Preview" style="margin-top: 10px; width: 100px; height: auto;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="d-flex justify-content-end mt-4">
+                    <button class="btn btn-danger mr-2">Back</button>
+                    <button class="btn btn-primary mr-2">Save</button>
+                </div>
             </div>
-            <div class="d-flex justify-content-end mt-4">
-                <button class="btn btn-danger mr-2">Back</button>
-                <button class="btn btn-primary mr-2">Save</button>
-            </div>
+        </section>
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
         </div>
-    </section>
-</main><!-- End #main -->
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+    </footer><!-- End Footer -->
 
-<!-- ======= Footer ======= -->
-<footer id="footer" class="footer">
-    <div class="copyright">
-        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-</footer><!-- End Footer -->
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="assets/vendor/echarts/echarts.min.js"></script>
+    <script src="assets/vendor/quill/quill.js"></script>
+    <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
 
-<!-- Vendor JS Files -->
-<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/chart.js/chart.umd.js"></script>
-<script src="assets/vendor/echarts/echarts.min.js"></script>
-<script src="assets/vendor/quill/quill.js"></script>
-<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="assets/vendor/tinymce/tinymce.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
 
-<!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchCategories();
+            const urlParams = new URLSearchParams(window.location.search);
+            const comboID = urlParams.get('comboID');
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetchCategories();
-        const urlParams = new URLSearchParams(window.location.search);
-        const comboID = urlParams.get('comboID');
-
-        if (comboID) {
-            fetchComboByID(comboID);
-        }
-
-        const saveButton = document.querySelector('.btn-primary');
-        saveButton.addEventListener('click', saveCombo);
-    });
-
-    function fetchCategories() {
-        fetch('http://localhost:8080/TastyKing/category')
-            .then(response => response.json())
-            .then(data => {
-                displayCategories(data.result);
-            })
-            .catch(error => console.error('Error fetching categories:', error));
-    }
-
-    function displayCategories(categories) {
-        const navTabs = document.querySelector('#categoryTabs');
-        navTabs.innerHTML = ''; // Clear existing content
-
-        categories.forEach((category, index) => {
-            const li = document.createElement('li');
-            li.className = 'nav-item';
-
-            const a = document.createElement('a');
-            a.className = 'nav-link';
-            a.href = `#`;
-            a.textContent = category.categoryName;
-            a.dataset.categoryId = category.categoryID;
-            a.onclick = (e) => {
-                e.preventDefault();
-                fetchFoodsByCategory(category.categoryID);
-                setActiveTab(a);
-            };
-
-            if (index === 0) {
-                a.classList.add('active');
-                fetchFoodsByCategory(category.categoryID); // Load foods for the first category by default
+            if (comboID) {
+                fetchComboByID(comboID);
             }
 
-            li.appendChild(a);
-            navTabs.appendChild(li);
+            const saveButton = document.querySelector('.btn-primary');
+            saveButton.addEventListener('click', saveCombo);
         });
-    }
 
-    function setActiveTab(activeLink) {
-        const links = document.querySelectorAll('.nav-link');
-        links.forEach(link => link.classList.remove('active'));
-        activeLink.classList.add('active');
-    }
-
-    function fetchFoodsByCategory(categoryID) {
-        fetch(`http://localhost:8080/TastyKing/food/${categoryID}`)
-            .then(response => response.json())
-            .then(data => {
-                displayFoods(data.result);
-            })
-            .catch(error => console.error('Error fetching foods:', error));
-    }
-
-    function displayFoods(foods) {
-        const foodContainer = document.querySelector('#foodContainer');
-        foodContainer.innerHTML = ''; // Clear existing content
-
-        foods.forEach(food => {
-            const col = document.createElement('div');
-            col.className = 'col-md-4 mb-4';
-
-            const card = document.createElement('div');
-            card.className = 'card';
-
-            const img = document.createElement('img');
-            img.className = 'card-img-top';
-            img.src = food.foodImage;
-            img.alt = food.foodName;
-
-            const cardBody = document.createElement('div');
-            cardBody.className = 'card-body';
-
-            const cardTitle = document.createElement('h5');
-            cardTitle.className = 'card-title';
-            cardTitle.textContent = food.foodName;
-
-            const addButton = document.createElement('button');
-            addButton.className = 'btn btn-primary mt-2';
-            addButton.textContent = 'Add to Order';
-            addButton.onclick = () => addToOrder(food);
-
-            cardBody.appendChild(cardTitle);
-            cardBody.appendChild(addButton);
-            card.appendChild(img);
-            card.appendChild(cardBody);
-            col.appendChild(card);
-            foodContainer.appendChild(col);
-        });
-    }
-
-    function addToOrder(food) {
-        const orderSummary = document.querySelector('#orderSummary');
-        const existingItem = document.querySelector(`#order-item-${food.foodID}`);
-
-        if (existingItem) {
-            const quantityInput = existingItem.querySelector('.quantity-buttons input');
-            quantityInput.value = parseInt(quantityInput.value) + 1;
-        } else {
-            const tr = document.createElement('tr');
-            tr.id = `order-item-${food.foodID}`;
-
-            const tdName = document.createElement('td');
-            tdName.textContent = food.foodName;
-
-            const tdQuantity = document.createElement('td');
-            tdQuantity.className = 'text-center';
-
-            const quantityButtons = document.createElement('div');
-            quantityButtons.className = 'quantity-buttons';
-
-            const minusButton = document.createElement('button');
-            minusButton.className = 'btn btn-outline-secondary btn-sm';
-            minusButton.textContent = '-';
-            minusButton.onclick = () => updateQuantity(food.foodID, -1);
-
-            const quantityInput = document.createElement('input');
-            quantityInput.type = 'text';
-            quantityInput.value = '1';
-            quantityInput.readOnly = true;
-
-            const plusButton = document.createElement('button');
-            plusButton.className = 'btn btn-outline-secondary btn-sm';
-            plusButton.textContent = '+';
-            plusButton.onclick = () => updateQuantity(food.foodID, 1);
-
-            quantityButtons.appendChild(minusButton);
-            quantityButtons.appendChild(quantityInput);
-            quantityButtons.appendChild(plusButton);
-            tdQuantity.appendChild(quantityButtons);
-
-            const tdPrice = document.createElement('td');
-            tdPrice.className = 'text-right';
-            tdPrice.textContent = `${food.foodPrice}.000VND`;
-
-            const removeButton = document.createElement('button');
-            removeButton.className = 'btn btn-danger btn-sm';
-            removeButton.textContent = 'x';
-            removeButton.onclick = () => removeFromOrder(food.foodID);
-
-            tdPrice.appendChild(removeButton);
-
-            tr.appendChild(tdName);
-            tr.appendChild(tdQuantity);
-            tr.appendChild(tdPrice);
-
-            orderSummary.appendChild(tr);
+        function fetchCategories() {
+            fetch('http://localhost:8080/TastyKing/category')
+                .then(response => response.json())
+                .then(data => {
+                    displayCategories(data.result);
+                })
+                .catch(error => console.error('Error fetching categories:', error));
         }
 
-        updateTotal();
-    }
+        function displayCategories(categories) {
+            const navTabs = document.querySelector('#categoryTabs');
+            navTabs.innerHTML = ''; // Clear existing content
 
-    function updateQuantity(foodID, change) {
-        const item = document.querySelector(`#order-item-${foodID}`);
-        const quantityInput = item.querySelector('.quantity-buttons input');
-        let quantity = parseInt(quantityInput.value);
-        quantity = Math.max(1, quantity + change);
-        quantityInput.value = quantity;
+            categories.forEach((category, index) => {
+                const li = document.createElement('li');
+                li.className = 'nav-item';
 
-        updateTotal();
-    }
+                const a = document.createElement('a');
+                a.className = 'nav-link';
+                a.href = `#`;
+                a.textContent = category.categoryName;
+                a.dataset.categoryId = category.categoryID;
+                a.onclick = (e) => {
+                    e.preventDefault();
+                    fetchFoodsByCategory(category.categoryID);
+                    setActiveTab(a);
+                };
 
-    function removeFromOrder(foodID) {
-        const item = document.querySelector(`#order-item-${foodID}`);
-        item.remove();
-
-        updateTotal();
-    }
-
-    function updateTotal() {
-        const orderSummary = document.querySelector('#orderSummary');
-        const items = orderSummary.querySelectorAll('tr');
-        let total = 0;
-
-        items.forEach(item => {
-            const quantity = parseInt(item.querySelector('.quantity-buttons input').value);
-            const priceText = item.querySelector('td.text-right').textContent;
-            const price = parseFloat(priceText.replace(' $', '').replace(',', '.'));
-            total += quantity * price;
-        });
-
-        const totalAmount = document.querySelector('#totalAmount');
-        totalAmount.textContent = `${total.toFixed(1)} $`;
-    }
-
-    function fetchComboByID(comboID) {
-        fetch(`http://localhost:8080/TastyKing/combo/getCombo/${comboID}`)
-            .then(response => response.json())
-            .then(data => {
-                const combo = data.result;
-                displayComboDetails(combo);
-            })
-            .catch(error => console.error('Error fetching combo details:', error));
-    }
-
-    function displayComboDetails(combo) {
-        document.getElementById('comboTitle').value = combo.comboTitle;
-        document.getElementById('newPrice').value = combo.newPrice;
-        document.getElementById('openDate').value = combo.openDate;
-        document.getElementById('endDate').value = combo.endDate;
-        document.getElementById('comboDescription').value = combo.comboDescription;
-        document.getElementById('commboImage').value = combo.comboImage;
-        document.getElementById('comboImagePreview').src = combo.comboImage;
-
-        const orderSummary = document.getElementById('orderSummary');
-        orderSummary.innerHTML = ''; // Clear existing content
-
-        combo.comboFoods.forEach(food => {
-            const tr = document.createElement('tr');
-            tr.id = `order-item-${food.foodID}`;
-
-            const tdName = document.createElement('td');
-            tdName.textContent = food.foodName;
-
-            const tdQuantity = document.createElement('td');
-            tdQuantity.className = 'text-center';
-
-            const quantityButtons = document.createElement('div');
-            quantityButtons.className = 'quantity-buttons';
-
-            const minusButton = document.createElement('button');
-            minusButton.className = 'btn btn-outline-secondary btn-sm';
-            minusButton.textContent = '-';
-            minusButton.onclick = () => updateQuantity(food.foodID, -1);
-
-            const quantityInput = document.createElement('input');
-            quantityInput.type = 'text';
-            quantityInput.value = food.quantity;
-            quantityInput.readOnly = true;
-
-            const plusButton = document.createElement('button');
-            plusButton.className = 'btn btn-outline-secondary btn-sm';
-            plusButton.textContent = '+';
-            plusButton.onclick = () => updateQuantity(food.foodID, 1);
-
-            quantityButtons.appendChild(minusButton);
-            quantityButtons.appendChild(quantityInput);
-            quantityButtons.appendChild(plusButton);
-            tdQuantity.appendChild(quantityButtons);
-
-            const tdPrice = document.createElement('td');
-            tdPrice.className = 'text-right';
-            tdPrice.textContent = `${food.foodPrice}.000VND`;
-
-            const removeButton = document.createElement('button');
-            removeButton.className = 'btn btn-danger btn-sm';
-            removeButton.textContent = 'x';
-            removeButton.onclick = () => removeFromOrder(food.foodID);
-
-            tdPrice.appendChild(removeButton);
-
-            tr.appendChild(tdName);
-            tr.appendChild(tdQuantity);
-            tr.appendChild(tdPrice);
-
-            orderSummary.appendChild(tr);
-        });
-
-        updateTotal();
-    }
-
-    function saveCombo() {
-        const comboID = new URLSearchParams(window.location.search).get('comboID');
-        const comboTitle = document.getElementById('comboTitle').value;
-        const newPrice = document.getElementById('newPrice').value;
-        const openDate = document.getElementById('openDate').value;
-        const endDate = document.getElementById('endDate').value;
-        const comboDescription = document.getElementById('comboDescription').value;
-        const comboImage = document.getElementById('commboImage').value;
-        const comboFoods = [];
-        const token = localStorage.getItem('token');
-        document.querySelectorAll('#orderSummary tr').forEach(tr => {
-            const foodID = tr.id.replace('order-item-', '');
-            const quantity = tr.querySelector('.quantity-buttons input').value;
-            comboFoods.push({ foodID, quantity });
-        });
-
-        const updateComboRequest = {
-            comboTitle,
-            newPrice,
-            openDate,
-            endDate,
-            comboDescription,
-            comboImage,
-            comboFoods
-        };
-
-        fetch(`http://localhost:8080/TastyKing/combo/${comboID}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(updateComboRequest)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.code === 0) {
-                    alert('Combo updated successfully!');
-                    window.location.href = 'combo-data.html';
-                } else {
-                    alert('Error updating combo');
+                if (index === 0) {
+                    a.classList.add('active');
+                    fetchFoodsByCategory(category.categoryID); // Load foods for the first category by default
                 }
-            })
-            .catch(error => console.error('Error updating combo:', error));
-    }
 
-    // Existing functions to fetch categories and foods, add to order, update quantity, remove from order, and update total remain the same
-
-
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const username = localStorage.getItem('username');
-        const role = localStorage.getItem('role');
-
-        if (username && role) {
-            document.getElementById('userName').textContent = username;
-            document.getElementById('userRole').textContent = role;
+                li.appendChild(a);
+                navTabs.appendChild(li);
+            });
         }
 
-        document.getElementById('signOutBtn').addEventListener('click', function() {
-            // Clear all items in localStorage
-            localStorage.clear();
+        function setActiveTab(activeLink) {
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => link.classList.remove('active'));
+            activeLink.classList.add('active');
+        }
 
-            // Optionally, redirect to the login page
-            window.location.href = 'pages-login.html';
+        function fetchFoodsByCategory(categoryID) {
+            fetch(`http://localhost:8080/TastyKing/food/${categoryID}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayFoods(data.result);
+                })
+                .catch(error => console.error('Error fetching foods:', error));
+        }
+
+        function displayFoods(foods) {
+            const foodContainer = document.querySelector('#foodContainer');
+            foodContainer.innerHTML = ''; // Clear existing content
+
+            foods.forEach(food => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 mb-4';
+
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const img = document.createElement('img');
+                img.className = 'card-img-top';
+                img.src = food.foodImage;
+                img.alt = food.foodName;
+
+                const cardBody = document.createElement('div');
+                cardBody.className = 'card-body';
+
+                const cardTitle = document.createElement('h5');
+                cardTitle.className = 'card-title';
+                cardTitle.textContent = food.foodName;
+
+                const addButton = document.createElement('button');
+                addButton.className = 'btn btn-primary mt-2';
+                addButton.textContent = 'Add to Order';
+                addButton.onclick = () => addToOrder(food);
+
+                cardBody.appendChild(cardTitle);
+                cardBody.appendChild(addButton);
+                card.appendChild(img);
+                card.appendChild(cardBody);
+                col.appendChild(card);
+                foodContainer.appendChild(col);
+            });
+        }
+
+        function addToOrder(food) {
+            const orderSummary = document.querySelector('#orderSummary');
+            const existingItem = document.querySelector(`#order-item-${food.foodID}`);
+
+            if (existingItem) {
+                const quantityInput = existingItem.querySelector('.quantity-buttons input');
+                quantityInput.value = parseInt(quantityInput.value) + 1;
+            } else {
+                const tr = document.createElement('tr');
+                tr.id = `order-item-${food.foodID}`;
+
+                const tdName = document.createElement('td');
+                tdName.textContent = food.foodName;
+
+                const tdQuantity = document.createElement('td');
+                tdQuantity.className = 'text-center';
+
+                const quantityButtons = document.createElement('div');
+                quantityButtons.className = 'quantity-buttons';
+
+                const minusButton = document.createElement('button');
+                minusButton.className = 'btn btn-outline-secondary btn-sm';
+                minusButton.textContent = '-';
+                minusButton.onclick = () => updateQuantity(food.foodID, -1);
+
+                const quantityInput = document.createElement('input');
+                quantityInput.type = 'text';
+                quantityInput.value = '1';
+                quantityInput.readOnly = true;
+
+                const plusButton = document.createElement('button');
+                plusButton.className = 'btn btn-outline-secondary btn-sm';
+                plusButton.textContent = '+';
+                plusButton.onclick = () => updateQuantity(food.foodID, 1);
+
+                quantityButtons.appendChild(minusButton);
+                quantityButtons.appendChild(quantityInput);
+                quantityButtons.appendChild(plusButton);
+                tdQuantity.appendChild(quantityButtons);
+
+                const tdPrice = document.createElement('td');
+                tdPrice.className = 'text-right';
+                tdPrice.textContent = `${food.foodPrice}.000VND`;
+
+                const removeButton = document.createElement('button');
+                removeButton.className = 'btn btn-danger btn-sm';
+                removeButton.textContent = 'x';
+                removeButton.onclick = () => removeFromOrder(food.foodID);
+
+                tdPrice.appendChild(removeButton);
+
+                tr.appendChild(tdName);
+                tr.appendChild(tdQuantity);
+                tr.appendChild(tdPrice);
+
+                orderSummary.appendChild(tr);
+            }
+
+            updateTotal();
+        }
+
+        function updateQuantity(foodID, change) {
+            const item = document.querySelector(`#order-item-${foodID}`);
+            const quantityInput = item.querySelector('.quantity-buttons input');
+            let quantity = parseInt(quantityInput.value);
+            quantity = Math.max(1, quantity + change);
+            quantityInput.value = quantity;
+
+            updateTotal();
+        }
+
+        function removeFromOrder(foodID) {
+            const item = document.querySelector(`#order-item-${foodID}`);
+            item.remove();
+
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const orderSummary = document.querySelector('#orderSummary');
+            const items = orderSummary.querySelectorAll('tr');
+            let total = 0;
+
+            items.forEach(item => {
+                const quantity = parseInt(item.querySelector('.quantity-buttons input').value);
+                const priceText = item.querySelector('td.text-right').textContent;
+                const price = parseFloat(priceText.replace(' $', '').replace(',', '.'));
+                total += quantity * price;
+            });
+
+            const totalAmount = document.querySelector('#totalAmount');
+            totalAmount.textContent = `${total.toFixed(1)} $`;
+        }
+
+        function fetchComboByID(comboID) {
+            fetch(`http://localhost:8080/TastyKing/combo/getCombo/${comboID}`)
+                .then(response => response.json())
+                .then(data => {
+                    const combo = data.result;
+                    displayComboDetails(combo);
+                })
+                .catch(error => console.error('Error fetching combo details:', error));
+        }
+
+        function displayComboDetails(combo) {
+            document.getElementById('comboTitle').value = combo.comboTitle;
+            document.getElementById('newPrice').value = combo.newPrice;
+            document.getElementById('openDate').value = combo.openDate;
+            document.getElementById('endDate').value = combo.endDate;
+            document.getElementById('comboDescription').value = combo.comboDescription;
+            document.getElementById('commboImage').value = combo.comboImage;
+            document.getElementById('comboImagePreview').src = combo.comboImage;
+
+            const orderSummary = document.getElementById('orderSummary');
+            orderSummary.innerHTML = ''; // Clear existing content
+
+            combo.comboFoods.forEach(food => {
+                const tr = document.createElement('tr');
+                tr.id = `order-item-${food.foodID}`;
+
+                const tdName = document.createElement('td');
+                tdName.textContent = food.foodName;
+
+                const tdQuantity = document.createElement('td');
+                tdQuantity.className = 'text-center';
+
+                const quantityButtons = document.createElement('div');
+                quantityButtons.className = 'quantity-buttons';
+
+                const minusButton = document.createElement('button');
+                minusButton.className = 'btn btn-outline-secondary btn-sm';
+                minusButton.textContent = '-';
+                minusButton.onclick = () => updateQuantity(food.foodID, -1);
+
+                const quantityInput = document.createElement('input');
+                quantityInput.type = 'text';
+                quantityInput.value = food.quantity;
+                quantityInput.readOnly = true;
+
+                const plusButton = document.createElement('button');
+                plusButton.className = 'btn btn-outline-secondary btn-sm';
+                plusButton.textContent = '+';
+                plusButton.onclick = () => updateQuantity(food.foodID, 1);
+
+                quantityButtons.appendChild(minusButton);
+                quantityButtons.appendChild(quantityInput);
+                quantityButtons.appendChild(plusButton);
+                tdQuantity.appendChild(quantityButtons);
+
+                const tdPrice = document.createElement('td');
+                tdPrice.className = 'text-right';
+                tdPrice.textContent = `${food.foodPrice}.000VND`;
+
+                const removeButton = document.createElement('button');
+                removeButton.className = 'btn btn-danger btn-sm';
+                removeButton.textContent = 'x';
+                removeButton.onclick = () => removeFromOrder(food.foodID);
+
+                tdPrice.appendChild(removeButton);
+
+                tr.appendChild(tdName);
+                tr.appendChild(tdQuantity);
+                tr.appendChild(tdPrice);
+
+                orderSummary.appendChild(tr);
+            });
+
+            updateTotal();
+        }
+
+        function saveCombo() {
+            const comboID = new URLSearchParams(window.location.search).get('comboID');
+            const comboTitle = document.getElementById('comboTitle').value;
+            const newPrice = document.getElementById('newPrice').value;
+            const openDate = document.getElementById('openDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const comboDescription = document.getElementById('comboDescription').value;
+            const comboImage = document.getElementById('commboImage').value;
+            const comboFoods = [];
+            const token = localStorage.getItem('token');
+            document.querySelectorAll('#orderSummary tr').forEach(tr => {
+                const foodID = tr.id.replace('order-item-', '');
+                const quantity = tr.querySelector('.quantity-buttons input').value;
+                comboFoods.push({ foodID, quantity });
+            });
+
+            const updateComboRequest = {
+                comboTitle,
+                newPrice,
+                openDate,
+                endDate,
+                comboDescription,
+                comboImage,
+                comboFoods
+            };
+
+            fetch(`http://localhost:8080/TastyKing/combo/${comboID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(updateComboRequest)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code === 0) {
+                        alert('Combo updated successfully!');
+                        window.location.href = 'combo-data.html';
+                    } else {
+                        alert('Error updating combo');
+                    }
+                })
+                .catch(error => console.error('Error updating combo:', error));
+        }
+
+        // Existing functions to fetch categories and foods, add to order, update quantity, remove from order, and update total remain the same
+
+
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const username = localStorage.getItem('username');
+            const role = localStorage.getItem('role');
+
+            if (username && role) {
+                document.getElementById('userName').textContent = username;
+                document.getElementById('userRole').textContent = role;
+            }
+
+            document.getElementById('signOutBtn').addEventListener('click', function () {
+                // Clear all items in localStorage
+                localStorage.clear();
+
+                // Optionally, redirect to the login page
+                window.location.href = 'pages-login.html';
+            });
         });
-    });
-</script>
+    </script>
 </body>
 
 </html>
