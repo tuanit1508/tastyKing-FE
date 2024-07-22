@@ -1,8 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
     const token = localStorage.getItem('token');
+    const itemsPerPage = 10;
+    let currentPage = 1;
+    let totalCustomers = 0;
 
-    // Function to fetch and display all customers in the table
-    function fetchCustomers() {
+    // Function to fetch and display customers in the table with pagination
+    function fetchCustomers(page = 1) {
         fetch('http://localhost:8080/TastyKing/users/getCustomer', {
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -11,8 +14,13 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => {
                 const customers = data.result;
+                totalCustomers = customers.length;
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const paginatedCustomers = customers.slice(start, end);
+
                 let tableBody = '';
-                customers.forEach(customer => {
+                paginatedCustomers.forEach(customer => {
                     tableBody += `
                   <tr>
                     <td>${customer.userId}</td>
@@ -36,9 +44,35 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.querySelectorAll('.block-btn').forEach(button => {
                     button.addEventListener('click', handleBlockUnblock);
                 });
+
+                updatePaginationInfo();
             })
             .catch(error => console.error('Error:', error));
     }
+
+    // Update pagination info
+    function updatePaginationInfo() {
+        const totalPages = Math.ceil(totalCustomers / itemsPerPage);
+        document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+        document.getElementById('prevPageBtn').disabled = currentPage === 1;
+        document.getElementById('nextPageBtn').disabled = currentPage === totalPages;
+    }
+
+    // Event listeners for pagination buttons
+    document.getElementById('prevPageBtn').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchCustomers(currentPage);
+        }
+    });
+
+    document.getElementById('nextPageBtn').addEventListener('click', () => {
+        const totalPages = Math.ceil(totalCustomers / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            fetchCustomers(currentPage);
+        }
+    });
 
     // Handle form submission for creating a customer
     document.getElementById('customerForm').addEventListener('submit', function(event) {
@@ -56,10 +90,10 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => {
                 if (data.code === 0) { // Successful account creation
-                   alert(data.result)
+                    alert(data.result)
                     const myModal = bootstrap.Modal.getInstance(document.getElementById('customerModal'));
                     myModal.hide();
-                    fetchCustomers(); // Update customer list (consider granular updates)
+                    fetchCustomers(currentPage); // Update customer list (consider granular updates)
 
                     // Optional: Display success message
                     console.log('Customer account created successfully!'); // Or use toast notification
@@ -101,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Success: Update UI and close modal
                     const myModal = bootstrap.Modal.getInstance(document.getElementById('updatecustomerModal'));
                     myModal.hide();
-                    fetchCustomers(); // Refresh customer list (consider using a more granular update)
+                    fetchCustomers(currentPage); // Refresh customer list (consider using a more granular update)
 
                     // Optional: Display success message (consider UI integration)
                     console.log('Customer updated successfully!'); // Or use a toast notification
@@ -131,7 +165,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (data && data.result) {
                     const customer = data.result;
                     document.getElementById('updatefullName').value = customer.fullName;
-
                     document.getElementById('updatephone').value = customer.phone;
                     document.getElementById('updatepassword').value = ''; // Clear the password field for security
 
@@ -158,14 +191,14 @@ document.addEventListener("DOMContentLoaded", function() {
             })
                 .then(response => response.json())
                 .then(data => {
-                    fetchCustomers();
+                    fetchCustomers(currentPage);
                 })
                 .catch(error => console.error('Error:', error));
         }
     }
 
     // Initialize: fetch customers on page load
-    fetchCustomers();
+    fetchCustomers(currentPage);
 
     // Reset form and mode when modal is hidden
     document.getElementById('customerModal').addEventListener('hidden.bs.modal', function() {
@@ -180,49 +213,33 @@ document.addEventListener("DOMContentLoaded", function() {
         updateForm.reset();
         updateForm.dataset.email = '';
     });
-});
 
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('keyup', function () {
+        const query = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#customerTableBody tr');
 
-document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.getElementById('searchInput');
-    const table = document.querySelector('.datatable tbody');
-
-    searchInput.addEventListener('keyup', function () {
-        const query = searchInput.value.toLowerCase();
-        const rows = table.getElementsByTagName('tr');
-
-        for (let i = 0; i < rows.length; i++) {
-            const row = rows[i];
-            const cells = row.getElementsByTagName('td');
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
             let match = false;
 
-            for (let j = 0; j < cells.length; j++) {
-                const cell = cells[j];
+            cells.forEach(cell => {
                 if (cell.textContent.toLowerCase().includes(query)) {
                     match = true;
-                    break;
                 }
-            }
+            });
 
             if (match) {
                 row.style.display = '';
             } else {
                 row.style.display = 'none';
             }
-        }
+        });
     });
-});
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Get a reference to the button that triggers the modal
-    var showModalBtn = document.getElementById('showModalBtn');
-
-    // Add click event listener to the button
-    showModalBtn.addEventListener('click', function() {
-        // Create a new modal object using bootstrap.modal
+    // Show modal for creating new customer
+    document.getElementById('showModalBtn').addEventListener('click', function() {
         var myModal = new bootstrap.Modal(document.getElementById('customerModal'));
-
-        // Show the modal
         myModal.show();
     });
 });

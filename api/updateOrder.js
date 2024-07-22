@@ -98,7 +98,15 @@ function createFoodItem(food) {
     checkbox.type = 'checkbox';
     checkbox.name = `food_${food.foodID}`;
     checkbox.dataset.price = food.foodPrice;
-    checkbox.addEventListener('change', updateTotalPrice);
+    checkbox.addEventListener('change', () => {
+        const quantityInput = document.querySelector(`input[name="food_${food.foodID}_qty"]`);
+        if (checkbox.checked) {
+            quantityInput.value = 1;
+        } else {
+            quantityInput.value = 0;
+        }
+        updateTotalPrice();
+    });
 
     const label = document.createElement('label');
     label.classList.add('form-check-label');
