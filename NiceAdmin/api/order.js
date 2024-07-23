@@ -206,6 +206,8 @@ function createOrder() {
         .then(response => response.json())
         .then(data => {
             console.log('Order created successfully:', data);
+            alert('Order created successfully');
+            window.location.href = 'booking-data.js';
             // Optionally, handle success (e.g., show a success message or redirect)
         })
         .catch(error => console.error('Error creating order:', error));

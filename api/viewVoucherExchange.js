@@ -54,7 +54,7 @@ function displayVouchers() {
                         <td rowspan="3" style="text-align: center; padding: 20px;">
                             <img src="${voucher.voucher.voucherImage}" alt="Product Image" style="width: 150px; height: auto; border: 1px solid #ddd; border-radius: 8px;">
                         </td>
-                        <td colspan="2" style="text-align: left; padding: 20px; font-weight: bold;">Voucher Code: ${voucher.voucher.voucherId}</td>
+                        <td colspan="2" style="text-align: left; padding: 20px; font-weight: bold;">Voucher Code: ${voucher.voucher.voucherCode}</td>
                     </tr>
                     <tr>
                         <td style="text-align: left; padding: 20px;">Voucher title:</td>

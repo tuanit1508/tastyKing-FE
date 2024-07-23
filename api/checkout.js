@@ -17,13 +17,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const cartContainer = document.querySelector(".checkout__order__product ul");
         orderData.cart.forEach(food => {
             const foodItem = document.createElement("li");
-            foodItem.innerHTML = `${food.foodName} <span>$${(food.foodPrice * food.quantity).toFixed(2)}</span>`;
+            foodItem.innerHTML = `${food.foodName} <span>${(food.foodPrice * food.quantity).toFixed(2)}VND</span>`;
             cartContainer.appendChild(foodItem);
         });
 
         // Display subtotal and total
-        document.querySelector(".checkout__order__total ul li:nth-child(1) span").textContent = `$${orderData.total.toFixed(0)}`;
-        document.querySelector(".checkout__order__total ul li:nth-child(2) span").textContent = `$${orderData.total.toFixed(0)}`;
+        document.querySelector(".checkout__order__total ul li:nth-child(1) span").textContent = `${orderData.total.toFixed(0)}VND`;
+        document.querySelector(".checkout__order__total ul li:nth-child(2) span").textContent = `${orderData.total.toFixed(0)}VND`;
     } else {
         // Redirect to reservation page if order data is not found
         alert('Order data not found. Please make a reservation first.');

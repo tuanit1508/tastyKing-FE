@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     updateCategoryDropdown.add(updateOption);
                 });
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('Error fetching categories:', error));
     }
 
     // Function to fetch and display all food items in the table
@@ -55,18 +55,19 @@ document.addEventListener("DOMContentLoaded", function() {
                     button.addEventListener('click', handleDelete);
                 });
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('Error fetching food items:', error));
     }
 
-    // Handle form submission for creating a new food item
-    document.getElementById('foodForm').addEventListener('submit', function(event) {
+    // Handle form submission for creating or updating a food item
+    function handleFormSubmit(event, isUpdate) {
         event.preventDefault();
-        const formData = new FormData(this);
-        formData.append('categoryID', document.getElementById('categoryName').value);
+        const form = event.target;
+        const formData = new FormData(form);
+        const categoryID = isUpdate ? 'updatecategoryName' : 'categoryName';
+        formData.append('categoryID', document.getElementById(categoryID).value);
         const token = localStorage.getItem('token');
-        const isUpdate = this.dataset.update === 'true'; // Check if the form is in update mode
 
-        const url = isUpdate ? `http://localhost:8080/TastyKing/food/${this.dataset.foodId}` : 'http://localhost:8080/TastyKing/food';
+        const url = isUpdate ? `http://localhost:8080/TastyKing/food/${form.dataset.foodId}` : 'http://localhost:8080/TastyKing/food';
         const method = isUpdate ? 'PUT' : 'POST';
 
         fetch(url, {
@@ -78,44 +79,20 @@ document.addEventListener("DOMContentLoaded", function() {
         })
             .then(response => response.json())
             .then(data => {
-                // Hide the modal after successful creation or update
-                const myModal = bootstrap.Modal.getInstance(document.getElementById(isUpdate ? 'updatemenuModal' : 'menuModal'));
+                const modalId = isUpdate ? 'updatemenuModal' : 'menuModal';
+                const myModal = bootstrap.Modal.getInstance(document.getElementById(modalId));
                 myModal.hide();
-                // Optionally, fetch and display the updated food list
                 fetchFoodItems();
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error(`Error ${isUpdate ? 'updating' : 'creating'} food item:`, error));
+    }
+
+    document.getElementById('foodForm').addEventListener('submit', function(event) {
+        handleFormSubmit(event, false);
     });
 
-    // Handle form submission for updating a food item
     document.getElementById('updatefoodForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const formData = new FormData(this);
-        formData.append('categoryID', document.getElementById('updatecategoryName').value);
-        const token = localStorage.getItem('token');
-        const foodID = this.dataset.foodId;
-
-        const fileInput = document.getElementById('updatefoodImage');
-        if (fileInput.files.length > 0) {
-            formData.append('foodImage', fileInput.files[0]);
-        }
-
-        fetch(`http://localhost:8080/TastyKing/food/${foodID}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': 'Bearer ' + token
-            },
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Hide the modal after successful update
-                const myModal = bootstrap.Modal.getInstance(document.getElementById('updatemenuModal'));
-                myModal.hide();
-                // Optionally, fetch and display the updated food list
-                fetchFoodItems();
-            })
-            .catch(error => console.error('Error:', error));
+        handleFormSubmit(event, true);
     });
 
     // Handle update button click
@@ -123,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const foodID = event.target.getAttribute('data-id');
         const token = localStorage.getItem('token');
 
-        // Fetch food details and populate the form for updating
         fetch(`http://localhost:8080/TastyKing/food/getFood/${foodID}`, {
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -133,30 +109,25 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => {
                 if (data && data.result) {
                     const food = data.result;
-                    console.log('Fetched food details:', food); // Log the fetched food details for debugging
-
-                    // Populate the form fields with the fetched food details
                     document.getElementById('updatecategoryName').value = food.category.categoryID;
                     document.getElementById('updatefoodName').value = food.foodName;
                     document.getElementById('updatefoodPrice').value = food.foodPrice;
-                    document.getElementById('updatefoodCost').value = food.foodCost;
+                    
                     document.getElementById('updateunit').value = food.unit;
                     document.getElementById('updatedescription').value = food.description;
 
-                    // Show the existing image in the preview
                     const foodImagePreview = document.getElementById('foodImagePreview');
                     foodImagePreview.src = `http://localhost:63343/TastyKing-FE/${food.foodImage}`;
 
-                    // Set form to update mode
                     const foodForm = document.getElementById('updatefoodForm');
-                    foodForm.dataset.update = 'true';
                     foodForm.dataset.foodId = foodID;
                 } else {
                     console.error('No food details found for the given ID:', foodID);
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('Error fetching food details:', error));
     }
+
     // Handle delete button click
     function handleDelete(event) {
         const foodID = event.target.getAttribute('data-id');
@@ -172,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(data => {
                     fetchFoodItems();
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => console.error('Error deleting food item:', error));
         }
     }
 
@@ -184,17 +155,14 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('updatemenuModal').addEventListener('hidden.bs.modal', function() {
         const foodForm = document.getElementById('updatefoodForm');
         foodForm.reset();
-        foodForm.dataset.update = 'false';
         foodForm.dataset.foodId = '';
     });
-});
 
-// Search functionality
-document.addEventListener('DOMContentLoaded', function () {
+    // Search functionality
     const searchInput = document.getElementById('searchInput');
     const table = document.querySelector('.datatable tbody');
 
-    searchInput.addEventListener('keyup', function () {
+    searchInput.addEventListener('keyup', function() {
         const query = searchInput.value.toLowerCase();
         const rows = table.getElementsByTagName('tr');
 

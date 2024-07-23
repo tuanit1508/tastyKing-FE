@@ -88,7 +88,7 @@ function displayCartItems() {
     const tableID = localStorage.getItem("tableID");
     console.log("tableID:", tableID); // Debugging log
 
-    if (tableID === '"7"') {
+    if (tableID === '"7"' || tableID === '"11"') {
         console.log("tableID is 7, setting deposit to 2000000"); // Debugging log
         deposit = DEPOSIT_AMOUNT;
     }
