@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     else if (['Confirmed'].includes(status)) {
         buttons = `
-                <button class="btn btn-danger m-2" onclick="cancelOrder(${orderID})">Cancel</button>
+                
             `;
     }
         return buttons;
