@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Users / Profile - NiceAdmin Bootstrap Template</title>
+  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -37,27 +37,18 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   <style>
-    .table td, .table th {
-      vertical-align: middle;
-    }
-    .quantity-buttons {
+    .pagination {
       display: flex;
-      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
     }
-    .quantity-buttons button {
-      border: none;
-      background-color: transparent;
-    }
-    .quantity-buttons input {
-      width: 40px;
-      text-align: center;
-      border: 1px solid #ced4da;
-      border-radius: 0.25rem;
+    .pagination button {
       margin: 0 5px;
+      padding: 5px 10px;
+      cursor: pointer;
     }
-    .card-img-top {
-      max-width: 150px;
-      max-height: 150px; /* Adjust these values as needed */
+    .search-input {
+      width: 250px;
     }
   </style>
 </head>
@@ -269,6 +260,8 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 
@@ -285,9 +278,9 @@
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Order</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="booking-data.html" >
+            <a href="booking-data.html">
               <i class="bi bi-circle"></i><span>Order Management</span>
             </a>
           </li>
@@ -295,12 +288,12 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#payment-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link active" data-bs-target="#payment-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-bank"></i><span>Payment</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="payment-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="payment-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="payment-data.html">
+            <a href="payment-data.html" class="nav-item nav-link active">
               <i class="bi bi-circle"></i><span>Payment Management</span>
             </a>
           </li>
@@ -381,11 +374,6 @@
             </a>
           </li>
           <li>
-            <a href="review-data.html">
-              <i class="bi bi-circle"></i><span>Review Management</span>
-            </a>
-          </li>
-          <li>
             <a href="table-data.html">
               <i class="bi bi-circle"></i><span>Table Management</span>
             </a>
@@ -395,14 +383,13 @@
 
       <li class="nav-heading">Pages</li>
 
-
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-login.html">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Login</span>
         </a>
       </li><!-- End Login Page Nav -->
+
 
     </ul>
 
@@ -411,138 +398,68 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Order</h1>
+      <h1>Review Management</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Tables</li>
+          <li class="breadcrumb-item active">Data</li>
+        </ol>
+      </nav>
     </div><!-- End Page Title -->
 
-    <section class="section profile">
-      <div class="container mt-5">
-        <div class="d-flex justify-content-between mb-3">
-
-
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
               <div class="d-flex justify-content-between mb-3">
-                <button id="showModalBtn" class="btn btn-primary">Order Information</button>
+                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search reviews...">
               </div>
-
-
-
-        </div>
-
-        <div class="mb-3">
-          <ul class="nav nav-tabs" id="categoryTabs">
-            <!-- Categories will be inserted here -->
-          </ul>
-        </div>
-
-        <div class="row" id="foodContainer">
-          <!-- Foods will be inserted here -->
-        </div>
-
-        <!-- Order Summary Table -->
-        <div class="mt-5">
-          <table class="table">
-            <thead>
-            <tr>
-              <th scope="col">Product</th>
-              <th scope="col" class="text-center">Quantity</th>
-              <th scope="col" class="text-right">Price</th>
-            </tr>
-            </thead>
-            <tbody id="orderSummary">
-            <!-- Ordered items will be inserted here -->
-            </tbody>
-            <tfoot>
-            <tr>
-              <th colspan="2" class="text-right">Total Price</th>
-              <th class="text-right" id="totalAmount">$ 0</th>
-            </tr>
-            </tfoot>
-          </table>
-        </div>
-
-        <div class="d-flex justify-content-end mt-4">
-          <button class="btn btn-danger mr-2">Back</button>
-          <button class="btn btn-primary mr-2 save-order">Save</button>
-          <button class="btn btn-success">Thanh toán</button>
-        </div>
-      </div>
-    </section>
-<!--modal create order-->
-      <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="contactModalLabel">Order Information</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <!-- Your contact form here -->
-              <form id="contact-form" role="form">
-                <div class="controls">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="customerName">Order By *</label>
-                        <input id="email" type="text" name="name" class="form-control" placeholder="" required="required" data-error="Firstname is required." readonly>
-                      </div>
-                      <div class="form-group">
-                        <label for="customerName">Customer Name *</label>
-                        <input id="customerName" type="text" name="name" class="form-control" placeholder="Please enter your fullname *" required="required" data-error="Firstname is required.">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="customerPhone">Customer Phone *</label>
-                        <input id="customerPhone" type="text" name="surname" class="form-control" placeholder="Please enter your phone *" required="required" data-error="Lastname is required.">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="bookingDate">Booking Date *</label>
-                        <input id="bookingDate" type="datetime-local" name="date" class="form-control" placeholder="Please enter booking date *" required="required" data-error="Valid booking date is required.">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="table">Please choose table *</label>
-                        <select id="table" name="need" class="form-control" required="required" data-error="Please specify your need.">
-                          <option value="" selected disabled>--Select Your Table--</option>
-                          <!-- Options will be populated here -->
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label for="numOfCustomer">No of Customer *</label>
-                        <input id="numOfCustomer" type="number" name="num" class="form-control" placeholder="Number of customer" rows="4" required="required" data-error="Please, leave us a message."></input>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label for="note">Speacial Request *</label>
-                        <textarea id="note" name="message" class="form-control" placeholder="Write your message here." rows="4" required="required" data-error="Please, leave us a message."></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" id="btnCloseModal">Close</button>
-
+              <table class="table datatable">
+                <thead>
+                <tr>
+                  <th>ReviewID</th>
+                  <th>User</th>
+                  <th>Rating</th>
+                  <th>Food</th>
+                  <th>Review Date</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody id="reviewTableBody">
+                <!-- Review items will be dynamically inserted here -->
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
-
-
+    </section>
 
   </main><!-- End #main -->
+<!--  modal menu-->
+  <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reviewModalLabel">Review Information</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="reviewForm">
+            <div class="form-group">
+              <label for="reviewText">Content *</label>
+              <textarea id="reviewText" name="reviewText" class="form-control" required readonly></textarea>
+            </div>
+            <button type="button" class="btn btn-primary mt-3" data-bs-dismiss="modal">Close</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
@@ -572,29 +489,8 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-<script>
-  // Ensure the DOM is fully loaded before executing any JavaScript
-  // Wait for the DOM to be fully loaded
-  document.addEventListener("DOMContentLoaded", function() {
-    // Get a reference to the button that triggers the modal
-    var showModalBtn = document.getElementById('showModalBtn');
 
-    // Add click event listener to the button
-    showModalBtn.addEventListener('click', function() {
-      // Create a new modal object using bootstrap.modal
-      var myModal = new bootstrap.Modal(document.getElementById('orderModal'));
-
-      // Show the modal
-      myModal.show();
-    });
-  });
-  // Wait for the DOM to be fully loaded
-
-
-
-
-</script>
-<script src="api/update-order.js"></script>
+<script src="api/review.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const username = localStorage.getItem('username');
@@ -613,6 +509,41 @@
         window.location.href = 'pages-login.html';
       });
     });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchInput = document.getElementById('searchInput');
+      const table = document.querySelector('.datatable tbody');
+
+      searchInput.addEventListener('keyup', function () {
+        const query = searchInput.value.toLowerCase();
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          const cells = row.getElementsByTagName('td');
+          let match = false;
+
+          for (let j = 0; j < cells.length; j++) {
+            const cell = cells[j];
+            if (cell.textContent.toLowerCase().includes(query)) {
+              match = true;
+              break;
+            }
+          }
+
+          if (match) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        }
+      });
+    });
+
+    function redirectToIndex() {
+      window.location.href = "create-order.html";
+    }
   </script>
 </body>
 
