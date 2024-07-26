@@ -66,7 +66,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 'comboData',
                 'cart',
                 'checkoutData',
-                'orderData'
+                'orderData',
+                'comboCart'
             ];
 
             // Remove cookies

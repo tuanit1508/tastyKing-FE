@@ -83,7 +83,7 @@ function displayFoods(foods) {
 
         const addButton = document.createElement('button');
         addButton.className = 'btn btn-primary mt-2';
-        addButton.textContent = 'Add to Order';
+        addButton.textContent = 'Add to Combo';
         addButton.onclick = () => addToOrder(food);
 
         cardBody.appendChild(cardTitle);
@@ -137,7 +137,7 @@ function addToOrder(food) {
 
         const tdPrice = document.createElement('td');
         tdPrice.className = 'text-right';
-        tdPrice.textContent = `${food.foodPrice} $`;
+        tdPrice.textContent = `${food.foodPrice} VND`;
 
         const removeButton = document.createElement('button');
         removeButton.className = 'btn btn-danger btn-sm';
@@ -186,7 +186,7 @@ function updateTotal() {
     });
 
     const totalAmount = document.querySelector('#totalAmount');
-    totalAmount.textContent = `${total.toFixed(1)} $`;
+    totalAmount.textContent = `${total.toFixed(1)} `;
 }
 
 function createCombo() {
@@ -211,7 +211,7 @@ function createCombo() {
 
     const requestData = {
         comboTitle,
-        newPrice,
+        newVND,
         openDate,
         endDate,
         comboDescription,

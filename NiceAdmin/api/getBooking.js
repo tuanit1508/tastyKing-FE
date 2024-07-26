@@ -506,13 +506,15 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 if (data.code === 0) {
                     alert(data.result);
-                    fetchOrders(); // Refresh the orders list
+                    window.location.reload(); // Reload the page
+
                 } else {
                     console.error('Error canceling the order');
                 }
             })
             .catch(error => console.error('Error:', error));
     };
+
 
     window.receiveTable = function (orderID) {
         fetch(`http://localhost:8080/TastyKing/order/receiveTable/${orderID}`, {
