@@ -269,8 +269,8 @@
         <!-- Navbar & Hero Start -->
         <div class="container-xxl position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
-                <a href="index.html" class="navbar-brand p-0">
-                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Tasty King</h1>
+                <a href="index.html" class="navbar-brand p-0" id="homeLink2">
+                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>TastyKing</h1>
                     <!-- <img src="img/logo.png" alt="Logo"> -->
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -581,7 +581,7 @@
             const bookingDate = document.getElementById("bookingDate").value;
             const authToken = localStorage.getItem('authToken');
             const loggedInUserEmail = localStorage.getItem('loggedInUserEmail');
-
+            const voucherId = localStorage.getItem('voucherId');
             if (!authToken) {
                 alert("Authentication token is missing. Please log in again.");
                 return;
@@ -605,6 +605,12 @@
                     quantity: item.quantity
                 }))
             };
+
+            if (voucherId) {
+                orderData.voucher = {
+                    voucherId: voucherId
+                };
+            }
 
             fetch("http://localhost:8080/TastyKing/order", {
                 method: "POST",
@@ -644,6 +650,7 @@
                 });
         }
 
+
         function createPayment(orderID, total, paymentMethod, authToken) {
             const paymentData = {
                 orderID: orderID,
@@ -681,6 +688,12 @@
     <script src="api/getCategory.js"></script>
 
 <script src="api/checkout.js"></script>
+    <script>
+        document.getElementById('homeLink2').addEventListener('click', function() {
+            localStorage.removeItem('tableID');
+            localStorage.removeItem('voucherId')
+        });
+    </script>
 </body>
 
 </html>

@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 if (data.code === 0) {
                                     let cartItems = JSON.parse(getCookie('cartItems') || '[]');
                                     cartItems.push(...data.result);
+                                    console.log(data.result);
                                     setCookie('cartItems', JSON.stringify(cartItems), 7); // Store for 7 days
                                     window.location.href = 'cart.html';
                                 } else {

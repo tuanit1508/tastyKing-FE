@@ -280,6 +280,9 @@
             <a href="payment-data.html">
               <i class="bi bi-circle"></i><span>Payment Management</span>
             </a>
+            <a href="refund-data.html">
+              <i class="bi bi-circle"></i><span>Refund Management</span>
+            </a>
           </li>
         </ul>
       </li><!-- End Charts Nav -->
@@ -399,7 +402,6 @@
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
-
             <!-- Sales Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
@@ -451,7 +453,7 @@
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
-                      <h6 id="totalAmount">0.00VND</h6>
+                      <h6 id="totalAmount">0.00 VND</h6>
                       <span class="text-success small pt-1 fw-bold">8%</span>
                       <span class="text-muted small pt-2 ps-1">increase</span>
                     </div>
@@ -1033,7 +1035,10 @@
         })
                 .then(response => response.json())
                 .then(data => {
+                  console.log("Fetched data:", data); // Debugging statement
+
                   const reportData = data.result;
+                  console.log("Report data:", reportData); // Debugging statement
 
                   // Update chart data
                   reportChart.data.datasets[0].data = [
@@ -1044,15 +1049,36 @@
                   reportChart.update();
 
                   // Update card data
-                  document.getElementById('numberOfOrders').innerText = reportData.numberOfOrders || 0;
-                  document.getElementById('totalAmount').innerText = `$${reportData.totalAmount.toFixed(2) || '0.00'}`;
-                  document.getElementById('userCount').innerText = reportData.userCount || 0;
+                  const numberOfOrdersElement = document.getElementById('numberOfOrders');
+                  if (numberOfOrdersElement) {
+                    numberOfOrdersElement.innerText = reportData.numberOfOrders || 0;
+                    console.log("Updated numberOfOrders:", reportData.numberOfOrders); // Debugging statement
+                  } else {
+                    console.error("Element with id 'numberOfOrders' not found");
+                  }
+
+                  const totalAmountElement = document.getElementById('totalAmount');
+                  if (totalAmountElement) {
+                    totalAmountElement.innerText = `${(reportData.totalAmount || 0).toFixed(2)} VND`;
+                    console.log("Updated totalAmount:", reportData.totalAmount); // Debugging statement
+                  } else {
+                    console.error("Element with id 'totalAmount' not found");
+                  }
+
+                  const userCountElement = document.getElementById('userCount');
+                  if (userCountElement) {
+                    userCountElement.innerText = reportData.userCount || 0;
+                    console.log("Updated userCount:", reportData.userCount); // Debugging statement
+                  } else {
+                    console.error("Element with id 'userCount' not found");
+                  }
 
                   // Update period labels
+                  const periodText = `| ${period.charAt(0).toUpperCase() + period.slice(1)}`;
                   document.getElementById('reportPeriod').innerText = `/${period.charAt(0).toUpperCase() + period.slice(1)}`;
-                  document.getElementById('salesPeriod').innerText = `| ${period.charAt(0).toUpperCase() + period.slice(1)}`;
-                  document.getElementById('revenuePeriod').innerText = `| ${period.charAt(0).toUpperCase() + period.slice(1)}`;
-                  document.getElementById('customersPeriod').innerText = `| ${period.charAt(0).toUpperCase() + period.slice(1)}`;
+                  document.getElementById('salesPeriod').innerText = periodText;
+                  document.getElementById('revenuePeriod').innerText = periodText;
+                  document.getElementById('customersPeriod').innerText = periodText;
                 })
                 .catch(error => console.error('Error fetching report data:', error));
       };
@@ -1061,8 +1087,7 @@
 
       window.updateReport = updateReport; // Make function accessible globally
     });
-  </script>
-  <script>
+
     document.addEventListener('DOMContentLoaded', function() {
       const username = localStorage.getItem('username');
       const role = localStorage.getItem('role');
@@ -1081,6 +1106,29 @@
       });
     });
   </script>
+
+
+
+
+  <!--  <script>-->
+<!--    document.addEventListener('DOMContentLoaded', function() {-->
+<!--      const username = localStorage.getItem('username');-->
+<!--      const role = localStorage.getItem('role');-->
+
+<!--      if (username && role) {-->
+<!--        document.getElementById('userName').textContent = username;-->
+<!--        document.getElementById('userRole').textContent = role;-->
+<!--      }-->
+
+<!--      document.getElementById('signOutBtn').addEventListener('click', function() {-->
+<!--        // Clear all items in localStorage-->
+<!--        localStorage.clear();-->
+
+<!--        // Optionally, redirect to the login page-->
+<!--        window.location.href = 'pages-login.html';-->
+<!--      });-->
+<!--    });-->
+<!--  </script>-->
 </body>
 
 </html>

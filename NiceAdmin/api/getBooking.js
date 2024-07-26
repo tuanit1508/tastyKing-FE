@@ -39,9 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 const row = document.createElement('tr');
 
                 const cellOrderBy = document.createElement('td');
-                cellOrderBy.textContent = order.user.fullName;
+                cellOrderBy.textContent = order.user.email;
                 row.appendChild(cellOrderBy);
-
                 const cellOrderID = document.createElement('td');
                 cellOrderID.textContent = order.orderID;
                 row.appendChild(cellOrderID);
@@ -228,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </a>
                 <button class="btn btn-primary m-2" onclick="showPaymentModal(${orderID})">Payment</button>
             `;
-        } else if (['Done', 'Canceled'].includes(status)) {
+        } else if (['Canceled'].includes(status)) {
             buttons = ``;
         } else if (['InProgress'].includes(status)) {
             buttons = `
@@ -236,6 +235,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     Payment
                 </button>
             `;
+        } else if (['Done'].includes(status)) {
+            buttons = `
+            <button onclick="printBill(${orderID})" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
+                Print Bill
+            </button>
+        `;
         }
     else if (['Confirmed'].includes(status)) {
         buttons = `
@@ -244,6 +249,37 @@ document.addEventListener("DOMContentLoaded", function () {
     }
         return buttons;
     }
+    window.printBill = function(orderID) {
+        const url = `http://localhost:8080/TastyKing/bill/print/${orderID}`;
+        const token = localStorage.getItem('token'); // Thay thế bằng token thực của bạn
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.blob())
+            .then(blob => {
+                const blobUrl = window.URL.createObjectURL(blob);
+                const newTab = window.open(blobUrl, '_blank');
+                if (newTab) {
+                    newTab.onload = function() {
+                        window.URL.revokeObjectURL(blobUrl);
+                    };
+                } else {
+                    alert('Please allow popups for this website');
+                    window.URL.revokeObjectURL(blobUrl);
+                }
+            })
+            .catch(error => {
+                console.error('Error generating bill:', error);
+                alert('An error occurred while generating the bill. Please try again.');
+            });
+    }
+
+
     window.showPaymentModal = function(orderID) {
         // Set the order ID in the modal form
         document.getElementById('orderID').value = orderID;

@@ -1,12 +1,17 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     fetchOrders();
 
     // Add event listener to dynamically created cancel buttons
-    document.getElementById('orders-container').addEventListener('click', function(event) {
+    document.getElementById('orders-container').addEventListener('click', function (event) {
         if (event.target.closest('.cancel-order')) {
             event.preventDefault();
             const orderID = event.target.closest('.cancel-order').getAttribute('data-order-id');
-            cancelOrder(orderID);
+            // Set orderID to hidden field in modal
+            document.getElementById('orderID').value = orderID;
+            document.getElementById('orderIDError').style.display = 'none'; // Hide error message
+            // Show modal
+            var myModal = new bootstrap.Modal(document.getElementById('cancelOrderModal'));
+            myModal.show();
         }
     });
 });
@@ -117,19 +122,23 @@ function displayOrders(orders, page) {
                             <!-- New row for buttons -->
                             <tr>
                                 <td colspan="3" style="text-align: center; padding: 20px;">
-                                    ${order.orderStatus !== 'Canceled' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'Done' ?
-            `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
-                                            <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
-                                                Cancel
-                                            </button>
-                                        </a>` : ''}
-                                    ${order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' && order.orderStatus !== 'Confirmed' && order.orderStatus !== 'InProgress' ?
-            `<a href="updateOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
-                                            <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
-                                                Update
-                                            </button>
-                                        </a>` : ''}
-                                </td>
+                            ${order.orderStatus === 'PendingCancellation' ? 
+                                `<button style="background-color: #ffd700; color: white; border: none; border-radius: 5px; padding: 10px 20px;" disabled>Cancel request pending...</button>`
+                                : 
+                                (order.orderStatus !== 'Canceled' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'Done' ?
+                                    `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
+                                        <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
+                                            Cancel
+                                        </button>
+                                    </a>`
+                                    : '') +
+                                (order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' && order.orderStatus !== 'Confirmed' && order.orderStatus !== 'InProgress' ?
+                                    `<a href="updateOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
+                                        <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
+                                            Update
+                                        </button>
+                                    </a>` : '')}
+                        </td>
                             </tr>
                         </tbody>
                     </table>
@@ -137,7 +146,7 @@ function displayOrders(orders, page) {
         container.appendChild(orderElement);
 
         // JavaScript to toggle order details visibility
-        document.getElementById(`toggle-arrow-${order.orderID}`).addEventListener('click', function() {
+        document.getElementById(`toggle-arrow-${order.orderID}`).addEventListener('click', function () {
             const details = document.getElementById(`order-details-${order.orderID}`);
             if (details.style.display === 'none') {
                 details.style.display = 'table-row';
@@ -166,7 +175,7 @@ function setupPagination(orders) {
         pageButton.style.borderRadius = '5px';
         pageButton.style.backgroundColor = '#007bff';
         pageButton.style.color = 'white';
-        pageButton.addEventListener('click', function() {
+        pageButton.addEventListener('click', function () {
             currentPage = i;
             displayOrders(orders, currentPage);
             document.querySelectorAll('.pagination button').forEach(btn => btn.classList.remove('active'));
@@ -175,6 +184,15 @@ function setupPagination(orders) {
 
         paginationContainer.appendChild(pageButton);
     }
+}
+
+function convertFileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
 }
 
 function getOrderStatusButton(status) {
@@ -189,26 +207,78 @@ function getOrderStatusButton(status) {
     return `<button disabled style="background-color: ${color}; color: white; border: none; border-radius: 5px; padding: 10px 20px;">${status}</button>`;
 }
 
-async function cancelOrder(orderID) {
+document.getElementById('cancelOrderForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const orderID = document.getElementById('orderID').value;
+    const customerName = document.getElementById('customerName').value;
+    const refundBankAccount = document.getElementById('refundBankAccount').value;
+    const refundBankName = document.getElementById('refundBankName').value;
+    const refundImage = document.getElementById('refundImage').files[0];
     const authToken = localStorage.getItem("authToken");
+
+    // Ẩn các thông báo lỗi trước khi kiểm tra điều kiện
+    document.getElementById('orderIDError').style.display = 'none';
+
+    // Kiểm tra điều kiện
+    let hasError = false;
+    if (!orderID) {
+        document.getElementById('orderIDError').style.display = 'block';
+        hasError = true;
+    }
+
+    if (hasError) return;
+
+    let refundImageBase64 = '';
+    if (refundImage) {
+        refundImageBase64 = await convertFileToBase64(refundImage);
+    }
+
+    const formData = {
+        orderID: orderID,
+        customerName: customerName,
+        refundBankAccount: refundBankAccount,
+        refundBankName: refundBankName,
+
+    };
+
     try {
-        const response = await fetch(`http://localhost:8080/TastyKing/order/cancelOrder/${orderID}`, {
+        // Gửi yêu cầu hoàn tiền
+        const refundResponse = await fetch('http://localhost:8080/TastyKing/refund', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(formData)
+        });
+
+        const refundResult = await refundResponse.json();
+
+        if (refundResult.code !== 0) {
+            alert('Failed to process refund. Please try again.');
+            return;
+        }
+
+        // Gửi yêu cầu hủy đơn hàng
+        const cancelResponse = await fetch(`http://localhost:8080/TastyKing/order/cancelOrder/${orderID}`, {
             method: 'PUT',
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${authToken}`
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
             }
         });
-        const data = await response.json();
 
-        if (data.code === 0) {
-            alert(data.result); // Thông báo hủy đơn thành công
-            fetchOrders(); // Cập nhật danh sách đơn hàng sau khi hủy
+        const cancelResult = await cancelResponse.json();
+
+        if (cancelResult.code === 0) {
+            alert('Order canceled successfully');
+            location.reload(); // Tải lại trang để cập nhật trạng thái
         } else {
-            alert(data.message);
-            console.error('Error canceling order:', data);
+            alert('Failed to cancel order. Please try again.');
         }
     } catch (error) {
         console.error('Error:', error);
+        alert('An error occurred. Please try again.');
     }
-}
+});

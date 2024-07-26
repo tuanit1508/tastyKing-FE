@@ -262,7 +262,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating date" id="date3" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" id="datetime" placeholder="Date & Time" data-target="#date3" data-toggle="datetimepicker" />
+                                    <input type="datetime-local" class="form-control datetimepicker-input" id="datetime" placeholder="Date & Time" data-target="#date3" data-toggle="datetimepicker" />
                                     <label for="datetime">Date & Time</label>
                                     <div id="datetimeError" class="text-danger"></div>
                                 </div>
@@ -529,6 +529,7 @@
 <script>
     document.getElementById('homeLink2').addEventListener('click', function() {
         localStorage.removeItem('tableID');
+        localStorage.removeItem('voucherId')
     });
 </script>
 </body>

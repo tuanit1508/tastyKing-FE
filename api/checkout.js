@@ -31,8 +31,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Remove "orderData" cookie after processing
-    deleteCookie("orderData");
-    deleteCookie("reservationData");
+    // deleteCookie("orderData");
+    // deleteCookie("reservationData");
 });
 
 // Utility functions for setting, getting, and deleting cookies
@@ -54,6 +54,6 @@ function getCookie(name) {
     return null; // Return null if no cookie with the given name is found
 }
 
-function deleteCookie(name) {
-    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-}
+// function deleteCookie(name) {
+//     document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+// }
