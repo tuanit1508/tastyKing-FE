@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 'selectedTableID',
                 'tableID',
                 'token',
-                'total' // Assuming this is a different token
+                'total',
+                'voucherId'// Assuming this is a different token
             ];
 
             // Remove items from local storage

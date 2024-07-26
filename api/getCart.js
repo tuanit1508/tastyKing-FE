@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const orderData = {
             reservation: reservationData,
+
             tableID: tableID,
             cart: cart,
             total: total
@@ -162,7 +163,9 @@ function applyVoucher(voucherCode, email) {
         })
         .then(data => {
             if (data.code === 0 && data.result && data.result.expried === 0) {
-                discount = data.result.voucherDiscount; // Update global discount variable
+                discount = data.result.voucherDiscount;
+                    voucherId = data.result.voucherId
+                localStorage.setItem("voucherId", voucherId)// Update global discount variable
                 displayCartItems(); // Update cart display with new discount
             } else {
                 alert("Voucher is invalid or not found.");

@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const voucherCode = getQueryParam('voucherID');
 
     // Show the initial modal when the "Get Voucher" button is clicked
+    const exampleModal = new bootstrap.Modal(document.getElementById('exampleModal'));
     document.getElementById("addToCartBtn").addEventListener("click", function() {
-        const exampleModal = new bootstrap.Modal(document.getElementById('exampleModal'));
         exampleModal.show();
     });
 
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const token = localStorage.getItem('authToken');
 
         if (email && token) {
-            exchangeVoucher(voucherCode, email, token);
+            exchangeVoucher(voucherCode, email, token, exampleModal);
         } else {
             alert("User not logged in or token not available.");
         }
@@ -26,7 +26,7 @@ function getQueryParam(param) {
     return urlParams.get(param);
 }
 
-function exchangeVoucher(voucherCode, email, token) {
+function exchangeVoucher(voucherCode, email, token, exampleModal) {
     const requestBody = {
         user: {
             email: email
@@ -49,10 +49,12 @@ function exchangeVoucher(voucherCode, email, token) {
             if (data.code === 0) {
                 const successModal = new bootstrap.Modal(document.getElementById('trade-success'));
                 successModal.show();
+                exampleModal.hide(); // Hide the initial modal
             } else {
                 document.getElementById("failMessage").textContent = data.message;
                 const failModal = new bootstrap.Modal(document.getElementById('trade-fail'));
                 failModal.show();
+                exampleModal.hide(); // Hide the initial modal
             }
         })
         .catch(error => {
@@ -60,5 +62,6 @@ function exchangeVoucher(voucherCode, email, token) {
             document.getElementById("failMessage").textContent = "An unexpected error occurred. Please try again.";
             const failModal = new bootstrap.Modal(document.getElementById('trade-fail'));
             failModal.show();
+            exampleModal.hide(); // Hide the initial modal
         });
 }
