@@ -20,29 +20,30 @@ let currentPage = 1;
 const ordersPerPage = 5;
 let ordersData = [];
 
-async function fetchOrders() {
-    try {
-        const authToken = localStorage.getItem("authToken");
-        const email = localStorage.getItem("loggedInUserEmail"); // Replace with the desired email
-        const response = await fetch(`http://localhost:8080/TastyKing/order/getOrder/${email}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${authToken}`
-            }
-        });
-        const data = await response.json();
+function fetchOrders() {
+    const authToken = localStorage.getItem("authToken");
+    const email = localStorage.getItem("loggedInUserEmail"); // Replace with the desired email
 
-        if (data.code === 0) {
-            ordersData = data.result;
-            displayOrders(ordersData, currentPage);
-            setupPagination(ordersData);
-        } else {
-            console.error('Error fetching orders:', data);
+    fetch(`http://localhost:8080/TastyKing/order/getOrder/${email}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${authToken}`
         }
-    } catch (error) {
-        console.error('Error:', error);
-    }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 0) {
+                ordersData = data.result;
+                displayOrders(ordersData, currentPage);
+                setupPagination(ordersData);
+            } else {
+                console.error('Error fetching orders:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 function displayOrders(orders, page) {
@@ -122,23 +123,23 @@ function displayOrders(orders, page) {
                             <!-- New row for buttons -->
                             <tr>
                                 <td colspan="3" style="text-align: center; padding: 20px;">
-                                    ${order.orderStatus === 'PendingCancellation' ? 
-                                        `<button style="background-color: #ffd700; color: white; border: none; border-radius: 5px; padding: 10px 20px;" disabled>Cancel request pending...</button>`
-                                        : 
-                                        (order.orderStatus !== 'Canceled' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'Done' && order.orderStatus !== 'CancelByRestaurant' ?
-                                            `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
+                                    ${order.orderStatus === 'PendingCancellation' ?
+                `<button style="background-color: #ffd700; color: white; border: none; border-radius: 5px; padding: 10px 20px;" disabled>Cancel request pending...</button>`
+                :
+                (order.orderStatus !== 'Canceled' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'Done' && order.orderStatus !== 'CancelByRestaurant' ?
+                    `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
                                                 <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
                                                     Cancel
                                                 </button>
                                             </a>`
-                                            : order.orderStatus === 'CancelByRestaurant' ? 
-                                            `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
+                    : order.orderStatus === 'CancelByRestaurant' ?
+                        `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
                                                 <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
                                                     Enter refund information
                                                 </button>
                                             </a>` : '') +
-                                        (order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' && order.orderStatus !== 'Confirmed' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'CancelByRestaurant' ?
-                                            `<a href="updateOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
+                (order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' && order.orderStatus !== 'Confirmed' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'CancelByRestaurant' ?
+                    `<a href="updateOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
                                                 <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
                                                     Update
                                                 </button>
@@ -203,7 +204,7 @@ function getOrderStatusButton(status) {
     return `<button disabled style="background-color: ${color}; color: white; border: none; border-radius: 5px; padding: 10px 20px;">${status}</button>`;
 }
 
-document.getElementById('cancelOrderForm').addEventListener('submit', async function (event) {
+document.getElementById('cancelOrderForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
     const orderID = document.getElementById('orderID').value;
@@ -225,51 +226,49 @@ document.getElementById('cancelOrderForm').addEventListener('submit', async func
 
     if (hasError) return;
 
-    const formData = {
-        orderID: orderID,
-        refundBankAccountOwner: refundBankAccountOwner,
-        refundBankAccount: refundBankAccount,
-        refundBankName: refundBankName,
-        // refundImage: refundImage
-    };
+    // Tạo đối tượng FormData
+    const formData = new FormData();
+    formData.append('orderID', orderID);
+    formData.append('refundBankAccountOwner', refundBankAccountOwner);
+    formData.append('refundBankAccount', refundBankAccount);
+    formData.append('refundBankName', refundBankName);
+    formData.append('refundImage', refundImage);
 
-    try {
-        // Gửi yêu cầu hoàn tiền
-        const refundResponse = await fetch('http://localhost:8080/TastyKing/refund', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
-            },
-            body: JSON.stringify(formData)
-        });
-
-        const refundResult = await refundResponse.json();
-
-        if (refundResult.code !== 0) {
-            alert('Failed to process refund. Please try again.');
-            return;
-        }
-
-        // Gửi yêu cầu hủy đơn hàng
-        const cancelResponse = await fetch(`http://localhost:8080/TastyKing/order/cancelOrder/${orderID}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`
+    // Gửi yêu cầu hoàn tiền
+    fetch('http://localhost:8080/TastyKing/refund', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${authToken}`
+        },
+        body: formData
+    })
+        .then(response => response.json())
+        .then(refundResult => {
+            if (refundResult.code !== 0) {
+                alert('Failed to process refund. Please try again.');
+                return;
             }
+
+            // Gửi yêu cầu hủy đơn hàng
+            return fetch(`http://localhost:8080/TastyKing/order/cancelOrder/${orderID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                }
+            });
+        })
+        .then(response => response.json())
+        .then(cancelResult => {
+            if (cancelResult.code === 0) {
+                alert('Order canceled successfully');
+                location.reload(); // Tải lại trang để cập nhật trạng thái
+            } else {
+                alert('Failed to cancel order. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
         });
-
-        const cancelResult = await cancelResponse.json();
-
-        if (cancelResult.code === 0) {
-            alert('Order canceled successfully');
-            location.reload(); // Tải lại trang để cập nhật trạng thái
-        } else {
-            alert('Failed to cancel order. Please try again.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
-    }
 });

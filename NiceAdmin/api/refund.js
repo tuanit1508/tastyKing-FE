@@ -79,8 +79,10 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('refundDate').value = new Date(refund.refundDate).toLocaleString();
         document.getElementById('refundStatus').value = refund.refundStatus;
         document.getElementById('refundDescription').value = refund.refundDescription;
-        const refundImage = document.getElementById('refundImage');
+        const refundImage = document.getElementById('refundImageReview');
         refundImage.src = `http://localhost:63343/TastyKing-FE/${refund.refundImage}`;
+        const refundLink = document.getElementById('refundImageLink');
+        refundLink.href= `http://localhost:63343/TastyKing-FE/${refund.refundImage}`;
 
         // Show the modal
         var refundModal = new bootstrap.Modal(document.getElementById('refundModal'));
