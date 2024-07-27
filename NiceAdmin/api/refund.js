@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             row.innerHTML = `
         <td>${refund.refundID}</td>
         <td>${refund.orderID}</td>
-        <td>${refund.customerName}</td>
+        <td>${refund.refundBankAccountOwner}</td>
         <td>${refund.refundAmount}VND</td>
         <td>${refund.refundStatus}</td>
         <td>
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function showModal(refund) {
         document.getElementById('orderID').value = refund.orderID;
-        document.getElementById('customerName').value = refund.customerName;
+        document.getElementById('refundBankAccountOwner').value = refund.refundBankAccountOwner;
         document.getElementById('refundBankAccount').value = refund.refundBankAccount;
         document.getElementById('refundBankName').value = refund.refundBankName;
         document.getElementById('totalAmount').value = refund.refundAmount;
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     window.acceptRefund = function (orderID) {
-        const acceptUrl = `http://localhost:8080/TastyKing/order/cancelOrder/${orderID}/confirm`;
+        const acceptUrl = `http://localhost:8080/TastyKing/order/cancelOrderByAdmin/${orderID}`;
     
         fetch(acceptUrl, {
             method: 'PUT',

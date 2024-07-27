@@ -495,7 +495,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     window.cancelOrder = function (orderID) {
-        fetch(`http://localhost:8080/TastyKing/order/cancelOrderByAdmin/${orderID}`, {
+        fetch(`http://localhost:8080/TastyKing/order/cancelOrderByAdmin/request/${orderID}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,

@@ -122,23 +122,28 @@ function displayOrders(orders, page) {
                             <!-- New row for buttons -->
                             <tr>
                                 <td colspan="3" style="text-align: center; padding: 20px;">
-                            ${order.orderStatus === 'PendingCancellation' ? 
-                                `<button style="background-color: #ffd700; color: white; border: none; border-radius: 5px; padding: 10px 20px;" disabled>Cancel request pending...</button>`
-                                : 
-                                (order.orderStatus !== 'Canceled' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'Done' ?
-                                    `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
-                                        <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
-                                            Cancel
-                                        </button>
-                                    </a>`
-                                    : '') +
-                                (order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' && order.orderStatus !== 'Confirmed' && order.orderStatus !== 'InProgress' ?
-                                    `<a href="updateOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
-                                        <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
-                                            Update
-                                        </button>
-                                    </a>` : '')}
-                        </td>
+                                    ${order.orderStatus === 'PendingCancellation' ? 
+                                        `<button style="background-color: #ffd700; color: white; border: none; border-radius: 5px; padding: 10px 20px;" disabled>Cancel request pending...</button>`
+                                        : 
+                                        (order.orderStatus !== 'Canceled' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'Done' && order.orderStatus !== 'CancelByRestaurant' ?
+                                            `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
+                                                <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
+                                                    Cancel
+                                                </button>
+                                            </a>`
+                                            : order.orderStatus === 'CancelByRestaurant' ? 
+                                            `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
+                                                <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
+                                                    Enter refund information
+                                                </button>
+                                            </a>` : '') +
+                                        (order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' && order.orderStatus !== 'Confirmed' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'CancelByRestaurant' ?
+                                            `<a href="updateOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
+                                                <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
+                                                    Update
+                                                </button>
+                                            </a>` : '')}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -186,15 +191,6 @@ function setupPagination(orders) {
     }
 }
 
-function convertFileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-}
-
 function getOrderStatusButton(status) {
     const statusMap = {
         "Processing": "grey",
@@ -211,7 +207,7 @@ document.getElementById('cancelOrderForm').addEventListener('submit', async func
     event.preventDefault();
 
     const orderID = document.getElementById('orderID').value;
-    const customerName = document.getElementById('customerName').value;
+    const refundBankAccountOwner = document.getElementById('refundBankAccountOwner').value;
     const refundBankAccount = document.getElementById('refundBankAccount').value;
     const refundBankName = document.getElementById('refundBankName').value;
     const refundImage = document.getElementById('refundImage').files[0];
@@ -229,17 +225,12 @@ document.getElementById('cancelOrderForm').addEventListener('submit', async func
 
     if (hasError) return;
 
-    let refundImageBase64 = '';
-    if (refundImage) {
-        refundImageBase64 = await convertFileToBase64(refundImage);
-    }
-
     const formData = {
         orderID: orderID,
-        customerName: customerName,
+        refundBankAccountOwner: refundBankAccountOwner,
         refundBankAccount: refundBankAccount,
         refundBankName: refundBankName,
-
+        // refundImage: refundImage
     };
 
     try {
