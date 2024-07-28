@@ -212,10 +212,7 @@
                             <div class="form-group">
                                 <label for="orderID">Order ID *</label>
                                 <input type="text" class="form-control" id="orderID" name="orderID"
-                                    placeholder="Enter Order ID" required>
-                                <input type="hidden" id="orderID" name="orderID">
-                                <div id="orderIDError" class="text-danger" style="display: none;">Order ID does not
-                                    match.</div>
+                                    placeholder="Enter Order ID" required readonly>
 
                                 <label for="refundBankAccountOwner">Bank Account Owner *</label>
                                 <textarea id="refundBankAccountOwner" name="refundBankAccountOwner" class="form-control"
@@ -241,6 +238,50 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="updateCancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateCancelOrderModalLabel">Update refund information </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateCancelOrderForm" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="orderID">Order ID *</label>
+                                <input type="text" class="form-control" id="updateOrderID" name="orderID"
+                                    placeholder="Enter Order ID" required readonly>
+                                <label for="refundBankAccountOwner">Bank Account Owner *</label>
+                                <textarea id="updateRefundBankAccountOwner" name="refundBankAccountOwner" class="form-control"
+                                    placeholder="Enter your name" required></textarea>
+                                <label for="refundBankAccount">Bank Account *</label>
+                                <textarea id="updateRefundBankAccount" name="refundBankAccount" class="form-control"
+                                    placeholder="Enter your bank account" required></textarea>
+                                <label for="refundBankName">Bank Name *</label>
+                                <textarea id="updateRefundBankName" name="refundBankName" class="form-control"
+                                    placeholder="Enter your bank name" required></textarea>
+                                <label for="refundImage">Bank Transfer photo * (If you don't want to change the photo, please do not fill in this box)</label>
+                                <input type="file" class="form-control" id="updateRefundImage" name="refundImage">
+                                <label for="refundImage">Your Previous Refund Image *</label><br/>
+                                <a id="refundImageLink" href="#" target="_blank">
+                                    <img id="refundImageReview" src="" alt="Refund Image" style="width: 150px; height: 150px; margin-top: 10px;" />
+                                </a>
+                                <div class="form-check mt-3">
+                                    <input type="checkbox" class="form-check-input" id="confirmCancellation" required>
+                                    <label class="form-check-label" for="confirmCancellation">Are you sure you want to
+                                        change your refund infomation?</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
 
 
         <!-- Back to Top -->

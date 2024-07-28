@@ -8,13 +8,54 @@ document.addEventListener('DOMContentLoaded', function () {
             const orderID = event.target.closest('.cancel-order').getAttribute('data-order-id');
             // Set orderID to hidden field in modal
             document.getElementById('orderID').value = orderID;
-            document.getElementById('orderIDError').style.display = 'none'; // Hide error message
             // Show modal
             var myModal = new bootstrap.Modal(document.getElementById('cancelOrderModal'));
+            myModal.show();
+        } else if (event.target.closest('.update-refund-info')) {
+            event.preventDefault();
+            const orderID = event.target.closest('.update-refund-info').getAttribute('data-order-id');
+            // Set orderID to hidden field in modal
+            document.getElementById('updateOrderID').value = orderID;
+
+            // Fetch existing refund information
+            fetchRefundInfo(orderID);
+
+            // Show modal
+            var myModal = new bootstrap.Modal(document.getElementById('updateCancelOrderModal'));
             myModal.show();
         }
     });
 });
+
+function fetchRefundInfo(orderID) {
+    const authToken = localStorage.getItem("authToken");
+
+    fetch(`http://localhost:8080/TastyKing/refund/get/order/${orderID}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${authToken}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 0) {
+                const refund = data.result;
+                document.getElementById('updateRefundBankAccountOwner').value = refund.refundBankAccountOwner;
+                document.getElementById('updateRefundBankAccount').value = refund.refundBankAccount;
+                document.getElementById('updateRefundBankName').value = refund.refundBankName;
+                const refundImage = document.getElementById('refundImageReview');
+                refundImage.src = `http://localhost:63343/TastyKing-FE/${refund.refundImage}`;
+                const refundLink = document.getElementById('refundImageLink');
+                refundLink.href = `http://localhost:63343/TastyKing-FE/${refund.refundImage}`;
+            } else {
+                console.error('Error fetching refund info:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 
 let currentPage = 1;
 const ordersPerPage = 5;
@@ -122,9 +163,14 @@ function displayOrders(orders, page) {
                             </tr>
                             <!-- New row for buttons -->
                             <tr>
-                                <td colspan="3" style="text-align: center; padding: 20px;">
+                                <<td colspan="3" style="text-align: center; padding: 20px;">
                                     ${order.orderStatus === 'PendingCancellation' ?
-                `<button style="background-color: #ffd700; color: white; border: none; border-radius: 5px; padding: 10px 20px;" disabled>Cancel request pending...</button>`
+                `<button style="background-color: #ffd700; color: white; border: none; border-radius: 5px; padding: 10px 20px;" disabled>Cancel request pending...</button>
+                                         <a href="#" class="m-2 update-refund-info" data-order-id="${order.orderID}" style="text-decoration: none;">
+                                            <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
+                                                Update your refund information
+                                            </button>
+                                         </a>`
                 :
                 (order.orderStatus !== 'Canceled' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'Done' && order.orderStatus !== 'CancelByRestaurant' ?
                     `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
@@ -214,18 +260,6 @@ document.getElementById('cancelOrderForm').addEventListener('submit', function (
     const refundImage = document.getElementById('refundImage').files[0];
     const authToken = localStorage.getItem("authToken");
 
-    // Ẩn các thông báo lỗi trước khi kiểm tra điều kiện
-    document.getElementById('orderIDError').style.display = 'none';
-
-    // Kiểm tra điều kiện
-    let hasError = false;
-    if (!orderID) {
-        document.getElementById('orderIDError').style.display = 'block';
-        hasError = true;
-    }
-
-    if (hasError) return;
-
     // Tạo đối tượng FormData
     const formData = new FormData();
     formData.append('orderID', orderID);
@@ -270,5 +304,49 @@ document.getElementById('cancelOrderForm').addEventListener('submit', function (
         .catch(error => {
             console.error('Error:', error);
             alert('An error occurred. Please try again.');
+        });
+});
+
+
+document.getElementById('updateCancelOrderForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const orderID = document.getElementById('updateOrderID').value;
+    const refundBankAccountOwner = document.getElementById('updateRefundBankAccountOwner').value;
+    const refundBankAccount = document.getElementById('updateRefundBankAccount').value;
+    const refundBankName = document.getElementById('updateRefundBankName').value;
+    const refundImage = document.getElementById('updateRefundImage').files[0];
+
+    const formData = new FormData();
+    formData.append('refundBankAccountOwner', refundBankAccountOwner);
+    formData.append('refundBankAccount', refundBankAccount);
+    formData.append('refundBankName', refundBankName);
+    formData.append('refundImage', refundImage);
+
+    const authToken = localStorage.getItem("authToken");
+
+    fetch(`http://localhost:8080/TastyKing/refund/update/order/${orderID}`, {
+        method: "PATCH",
+        headers: {
+            "Authorization": `Bearer ${authToken}`
+        },
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 0) {
+                alert('Refund updated successfully');
+                location.reload();
+                fetchOrders();
+                // Hide modal
+                var myModalEl = document.getElementById('updateCancelOrderModal');
+                var modal = bootstrap.Modal.getInstance(myModalEl);
+                modal.hide();
+            } else {
+                console.error('Error updating refund:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
 });
