@@ -560,6 +560,31 @@
         </div>
     </div>
 </div>
+
+<!--view feedback-->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalLabel">View Feedback</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="feedbackForm">
+                    <div class="form-group">
+                        <label for="email">Customer email *</label>
+                        <input type="text" class="form-control" id="email" name="email" required>
+                        <label for="emotion">Customer's experience *</label>
+                        <input type="text" class="form-control" id="emotion" name="emotion" required>
+                        <label for="content">Feedback Content *</label>
+                        <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">OK</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
@@ -621,24 +646,11 @@
         window.location.href = "create-order.html";
     }
 </script>
-<script>
-    var socket = new SockJS('/ws-endpoint');
-    var stompClient = Stomp.over(socket);
 
-    stompClient.connect({}, function(frame) {
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/orders', function(message) {
-            // Handle new order notification
-            var notification = JSON.parse(message.body);
-            alert(notification);
-        });
-    });
-
-
-</script>
 
 <!-- Include SockJS library -->
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+
+
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>

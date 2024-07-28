@@ -446,7 +446,7 @@
 
   </main><!-- End #main -->
 
-<!--  modal voucher-->
+  <!--  modal voucher-->
   <div class="modal fade" id="voucherModal" tabindex="-1" aria-labelledby="voucherModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -497,19 +497,19 @@
           <form id="updatevoucherForm" enctype="multipart/form-data">
             <div class="form-group">
               <label for="updatevoucherID">Voucher Id *</label>
-              <input type="text" class="form-control" id="updatevoucherID" name="voucherId" placeholder="Enter voucher id" required readonly>
+              <input type="text" class="form-control" id="updatevoucherID" name="voucherCode" placeholder="Enter voucher code" required readonly>
               <label for="updateVoucherTitle">Voucher Title *</label>
-              <input type="text" class="form-control" id="updateVoucherTitle" name="updateVoucherTitle" placeholder="Enter voucher title" required>
+              <input type="text" class="form-control" id="updateVoucherTitle" name="voucherTitle" placeholder="Enter voucher title" required>
               <label for="updateDiscount">Discount *</label>
-              <input type="number" class="form-control" id="updateDiscount" name="updateDiscount" placeholder="Enter discount" required>
+              <input type="number" class="form-control" id="updateDiscount" name="discount" placeholder="Enter discount" required>
               <label for="updateQuantity">Quantity *</label>
-              <input type="number" class="form-control" id="updateQuantity" name="updateQuantity" placeholder="Enter quantity" required>
+              <input type="number" class="form-control" id="updateQuantity" name="quantity" placeholder="Enter quantity" required>
               <label for="updateExchangePoint">Point to exchange *</label>
-              <input type="number" class="form-control" id="updateExchangePoint" name="updateExchangePoint" placeholder="Enter point" required>
+              <input type="number" class="form-control" id="updateExchangePoint" name="point" placeholder="Enter point" required>
               <label for="updateopendate">Open date *</label>
               <input id="updateopendate" type="datetime-local" name="updateOpenDate" class="form-control" placeholder="Enter open date" required>
               <label for="updateenddate">End date *</label>
-              <input id="updateenddate" type="datetime-local" name="updateEndDate" class="form-control" placeholder="Enter end date" required>
+              <input id="updateenddate" type="datetime-local" name="updateenddate" class="form-control" placeholder="Enter end date" required>
               <label for="updateDescription">Description *</label>
               <textarea id="updateDescription" name="updateDescription" class="form-control" placeholder="Enter description" required></textarea>
               <label for="updateVoucherImage">Voucher Image</label>
@@ -522,8 +522,6 @@
       </div>
     </div>
   </div>
-
-
 
 
   <!-- View Voucher Modal -->

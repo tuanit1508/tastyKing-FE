@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Restoran - Bootstrap Restaurant Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <style>
+
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+        .form-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .form-caption {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-field {
+            margin-bottom: 20px;
+        }
+        .form-field label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-field textarea {
+            width: 100%;
+            height: 60px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        .form-field .hint {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        .smiley-scale {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .smiley-scale label {
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .smiley-scale label input {
+            display: none;
+        }
+        .smiley-scale svg {
+            width: 48px;
+            height: 48px;
+            fill: #ddd;
+        }
+        .smiley-scale input:checked + svg {
+            fill: #f0ad4e;
+        }
+        .recommendation {
+            display: flex;
+            justify-content: space-between;
+        }
+        .recommendation label {
+            flex: 1;
+            text-align: center;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .recommendation input {
+            display: none;
+        }
+        .consent {
+            display: flex;
+            align-items: center;
+        }
+        .consent input {
+            margin-right: 10px;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-xxl bg-white p-0">
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar & Hero Start -->
+    <div class="container-xxl position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+            <a href="" class="navbar-brand p-0">
+                <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Tasty King</h1>
+                <!-- <img src="img/logo.png" alt="Logo"> -->
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0 pe-4">
+                    <a href="index.html" class="nav-item nav-link ">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="voucher.html" class="nav-item nav-link ">Voucher</a>
+                    <a href="combo.html" class="nav-item nav-link">Combo</a>
+                    <a href="menu.html" class="nav-item nav-link">Order Now</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Category</a>
+                        <div class="dropdown-menu m-0">
+                            <!-- Categories will be dynamically added here -->
+                        </div>
+                    </div>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+                <div class="d-flex ms-auto" id="auth-buttons">
+
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-xxl py-5 bg-dark hero-header mb-5">
+            <div class="container text-center my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Feedback</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center text-uppercase">
+                        <li class="breadcrumb-item"><a href="index.html" class="text-primary">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Feedback</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar & Hero End -->
+
+
+    <!-- Service Start -->
+    <div class="form-container">
+        <div class="form-title">Customer Testimonial</div>
+        <div class="form-caption">We would love to hear about your experience with our service!</div>
+        <form id="feedbackForm">
+            <div class="form-field">
+                <label for="testimonial">Your Testimonial</label>
+                <textarea id="testimonial" name="testimonial" placeholder="Share your experience with us..."></textarea>
+            </div>
+            <div class="form-field">
+                <label>Satisfaction Level</label>
+                <div class="hint">How happy are you with our service?</div>
+                <div class="smiley-scale">
+                    <label>
+                        <input type="radio" name="satisfaction" value="Awful">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+
+                            <path d="M24 28.609c3.89 0 7.596 1.647 10.169 4.521a1.044 1.044 0 0 1-1.555 1.392A11.564 11.564 0 0 0 24 30.696a11.561 11.561 0 0 0-8.614 3.826 1.043 1.043 0 1 1-1.555-1.392c2.571-2.873 6.279-4.52 10.169-4.52zm-8.348-10.435a3.134 3.134 0 0 1 3.13 3.13 3.134 3.134 0 0 1-3.13 3.13 3.134 3.134 0 0 1-3.13-3.13 3.134 3.134 0 0 1 3.13-3.13zm16.696 0a3.134 3.134 0 0 1 3.13 3.13 3.134 3.134 0 0 1-3.13 3.13 3.134 3.134 0 0 1-3.13-3.13 3.134 3.134 0 0 1 3.13-3.13zM15.652 20.26a1.044 1.044 0 0 0 0 2.087c.575 0 1.044-.469 1.044-1.044 0-.575-.469-1.043-1.044-1.043zm16.696 0a1.045 1.045 0 0 0 0 2.087 1.045 1.045 0 0 0 0-2.087zM31.88 9.937a1.044 1.044 0 1 1 .934 1.867L28.64 13.89a1.046 1.046 0 0 1-1.4-.466 1.044 1.044 0 0 1 .466-1.4l4.174-2.087zm-17.16.465a1.043 1.043 0 0 1 1.4-.466l4.174 2.087a1.044 1.044 0 0 1-.934 1.867l-4.174-2.087a1.044 1.044 0 0 1-.467-1.4z"></path>
+                        </svg>
+                        <div>Awful</div>
+                    </label>
+                    <label>
+                        <input type="radio" name="satisfaction" value="Poor">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+
+                            <path d="M24 28.609c3.891 0 7.596 1.648 10.169 4.521a1.044 1.044 0 0 1-1.555 1.392c-2.177-2.432-5.317-3.826-8.614-3.826-3.297 0-6.437 1.394-8.614 3.826a1.043 1.043 0 1 1-1.555-1.392c2.573-2.874 6.279-4.52 10.169-4.52zm-8.348-12.522a3.134 3.134 0 0 1 3.13 3.13 3.134 3.134 0 0 1-3.13 3.13 3.134 3.134 0 0 1-3.13-3.13 3.134 3.134 0 0 1 3.13-3.13zm16.696 0a3.134 3.134 0 0 1 3.13 3.13 3.134 3.134 0 0 1-3.13 3.13 3.134 3.134 0 0 1-3.13-3.13 3.134 3.134 0 0 1 3.13-3.13zm-16.696 2.087a1.044 1.044 0 0 0 0 2.087c.575 0 1.044-.469 1.044-1.044 0-.575-.469-1.043-1.044-1.043zm16.696 0a1.044 1.044 0 0 0 0 2.087c.575 0 1.044-.469 1.044-1.044 0-.575-.469-1.043-1.044-1.043zm6.53-1.044a1.044 1.044 0 1 1 1.555-1.392c2.177 2.432 5.317 3.826 8.614 3.826 3.297 0 6.437-1.394 8.614-3.826a1.043 1.043 0 1 1 1.555 1.392c-2.573 2.874-6.279 4.52-10.169 4.52-3.891 0-7.596-1.648-10.169-4.52zM24 28.609zm16.696-12.522zm-16.696 2.087z"></path>
+                            <path d="M31.914 27.587a1.044 1.044 0 1 1-1.555-1.392c2.177-2.432 5.317-3.826 8.614-3.826 3.297 0 6.437 1.394 8.614 3.826a1.043 1.043 0 1 1-1.555 1.392c-2.573-2.874-6.279-4.52-10.169-4.52-3.891 0-7.596 1.648-10.169 4.52zm-1.145-5.823a1.044 1.044 0 1 1 1.867-.934l2.087 4.174a1.045 1.045 0 0 1-1.4 1.4l-2.087-4.174a1.044 1.044 0 0 1-.467-1.4zm-.934 1.867a1.044 1.044 0 1 1 1.867-.934l2.087 4.174a1.045 1.045 0 0 1-1.4 1.4l-2.087-4.174a1.044 1.044 0 0 1-.467-1.4z"></path>
+                        </svg>
+                        <div>Poor</div>
+                    </label>
+                    <label>
+                        <input type="radio" name="satisfaction" value="Ok">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+
+                            <path d="M34.435 29.217a1.044 1.044 0 0 1 0 2.087h-20.87a1.044 1.044 0 0 1 0-2.087h20.87zm-2.087-12.521a3.134 3.134 0 0 1 3.13 3.13 3.134 3.134 0 0 1-3.13 3.13 3.134 3.134 0 0 1-3.13-3.13 3.134 3.134 0 0 1 3.13-3.13zm-16.696 0a3.134 3.134 0 0 1 3.13 3.13 3.134 3.134 0 0 1-3.13 3.13 3.134 3.134 0 0 1-3.13-3.13 3.134 3.134 0 0 1 3.13-3.13zm16.696 2.087c-.575 0-1.044.468-1.044 1.043s.469 1.044 1.044 1.044a1.044 1.044 0 0 0 0-2.087zm-16.696 0a1.044 1.044 0 0 0 0 2.087c.575 0 1.044-.469 1.044-1.044 0-.575-.469-1.043-1.044-1.043z"></path>
+                        </svg>
+                        <div>Ok</div>
+                    </label>
+                    <label>
+                        <input type="radio" name="satisfaction" value="Good">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+
+                            <path d="M32.614 29.565a1.043 1.043 0 1 1 1.555 1.392C31.598 33.83 27.89 35.478 24 35.478c-3.89 0-7.596-1.647-10.169-4.521a1.043 1.043 0 1 1 1.555-1.392c2.177 2.432 5.317 3.826 8.614 3.826 3.298 0 6.437-1.394 8.614-3.826zm-.266-12.87a3.134 3.134 0 0 1 3.13 3.131 3.134 3.134 0 0 1-3.13 3.13 3.134 3.134 0 0 1-3.13-3.13 3.134 3.134 0 0 1 3.13-3.13zm-16.696 0a3.134 3.134 0 0 1 3.13 3.131 3.134 3.134 0 0 1-3.13 3.13 3.134 3.134 0 0 1-3.13-3.13 3.134 3.134 0 0 1 3.13-3.13zm16.696 2.088c-.575 0-1.044.468-1.044 1.043s.469 1.044 1.044 1.044a1.044 1.044 0 0 0 0-2.087zm-16.696 0a1.044 1.044 0 0 0 0 2.087c.575 0 1.044-.469 1.044-1.044 0-.575-.469-1.043-1.044-1.043z"></path>
+                        </svg>
+                        <div>Good</div>
+                    </label>
+                    <label>
+                        <input type="radio" name="satisfaction" value="Awesome">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+
+                            <path d="M34.435 27.522c.577 0 1.043.467 1.043 1.043 0 6.329-5.15 11.479-11.478 11.479-6.329 0-11.478-5.15-11.478-11.479 0-.576.466-1.043 1.043-1.043h20.87zm-1.102 2.087H14.667c.52 4.69 4.507 8.347 9.333 8.347 4.826 0 8.812-3.658 9.333-8.347zM32.348 15a3.134 3.134 0 0 1 3.13 3.13 3.134 3.134 0 0 1-3.13 3.13 3.134 3.134 0 0 1-3.13-3.13 3.134 3.134 0 0 1 3.13-3.13zm-16.696 0a3.134 3.134 0 0 1 3.13 3.13 3.134 3.134 0 0 1-3.13 3.13 3.134 3.134 0 0 1-3.13-3.13 3.134 3.134 0 0 1 3.13-3.13zm16.696 2.087c-.575 0-1.044.468-1.044 1.043s.469 1.044 1.044 1.044a1.044 1.044 0 0 0 0-2.087zm-16.696 0a1.044 1.044 0 0 0 0 2.087c.575 0 1.044-.469 1.044-1.044 0-.575-.469-1.043-1.044-1.043z"></path>
+                        </svg>
+                        <div>Awesome</div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-field consent">
+                <input type="checkbox" id="consent" name="consent" required>
+                <label for="consent">I agree to the terms and conditions</label>
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Thank you for your feedback.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='viewOrder.html'">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Service End -->
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Company</h4>
+                    <a class="btn btn-link" href="">About Us</a>
+                    <a class="btn btn-link" href="">Contact Us</a>
+                    <a class="btn btn-link" href="">Reservation</a>
+                    <a class="btn btn-link" href="">Privacy Policy</a>
+                    <a class="btn btn-link" href="">Terms & Condition</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Opening</h4>
+                    <h5 class="text-light fw-normal">Monday - Saturday</h5>
+                    <p>09AM - 09PM</p>
+                    <h5 class="text-light fw-normal">Sunday</h5>
+                    <p>10AM - 08PM</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Newsletter</h4>
+                    <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
+
+                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a><br><br>
+                        Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="">Home</a>
+                            <a href="">Cookies</a>
+                            <a href="">Help</a>
+                            <a href="">FQAs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (token) {
+            localStorage.setItem('authToken', token);
+        }
+
+        const authButtons = document.getElementById('auth-buttons');
+        const storedToken = localStorage.getItem('authToken');
+
+        if (storedToken) {
+            const decodedToken = jwt_decode(storedToken);
+            const username = decodedToken.sub; // Extract the "sub" field for the username
+            console.log(token);
+            authButtons.innerHTML = `
+            <div class="nav-item dropdown">
+                <a href="#" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="fa fa-user"></i>
+                </a>
+                <div class="dropdown-menu m-0">
+                    <div class="dropdown-item" id="username">${username}</div>
+                   <a href="viewProfile.html" class="dropdown-item">View Profile</a>
+                     <a href="updatePass.html" class="dropdown-item">Security</a>
+                   <a href="viewOrder.html" class="dropdown-item">View Order</a>
+                    <a href="#" id="logout" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="cart.html" class="btn btn-outline-light">
+                    <i class="fa fa-shopping-cart"></i>
+                </a>
+            </div>
+        `;
+
+            document.getElementById('logout').addEventListener('click', function() {
+                localStorage.removeItem('authToken');
+                window.location.href = 'index.html';
+            });
+        } else {
+            authButtons.innerHTML = `
+            <a href="login.html" class="btn btn-primary me-2">Login</a>
+            <a href="register.html" class="btn btn-secondary me-2">Register</a>
+        `;
+        }
+    });
+
+
+</script>
+<script src="api/getCategory.js"></script>
+<script>
+    function redirectToHome() {
+
+        window.location.href = 'index.html';
+    }
+</script>
+<script src="api/home.js"></script>
+<script src="api/feedback.js"></script>
+</body>
+
+</html>

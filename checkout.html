@@ -641,7 +641,7 @@
                         }
                     } else {
                         console.error("Order creation failed or orderID is missing:", data);
-                        alert("Please provide the necessary information to complete the booking process");
+                        alert(data.message);
                     }
                 })
                 .catch(error => {

@@ -328,7 +328,7 @@
             </div>
         `;
 
-            document.getElementById('logout').addEventListener('click', function() {
+            document.getElementById('logout').addEventListener('click', function () {
                 localStorage.removeItem('authToken');
                 window.location.href = 'index.html';
             });
@@ -338,17 +338,50 @@
             <a href="register.html" class="btn btn-secondary me-2">Register</a>
         `;
         }
+        fetchOrders();
     });
-</script>
-<script>
-    document.getElementById('chooseTableButton').addEventListener('click', function() {
+
+    async function fetchOrders() {
+        try {
+            const token = localStorage.getItem('authToken');
+            const response = await fetch(`http://localhost:8080/TastyKing/order`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+
+            if (data.code === 0) {
+                const currentTime = new Date();
+                data.result.forEach(order => {
+                    const orderTime = new Date(order.orderDate);
+                    const timeDifference = (orderTime - currentTime) / (1000 * 60 * 60);
+                    if (timeDifference < 3) {
+                        const tableElement = document.querySelector(`[data-table-id="${order.tables.tableID}"]`);
+                        if (tableElement) {
+                            tableElement.classList.add('unavailable');
+                            tableElement.setAttribute('title', 'This table is already booked.');
+                        }
+                    }
+                });
+            } else {
+                console.error('Error fetching orders:', data);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    document.getElementById('chooseTableButton').addEventListener('click', function () {
         $('#tableModal').modal('show');
     });
 
-    document.getElementById('closeBook').addEventListener('click', function() {
+    document.getElementById('closeBook').addEventListener('click', function () {
         $('#tableModal').modal('hide');
     });
-    document.getElementById('bookNowButton').addEventListener('click', function() {
+    document.getElementById('bookNowButton').addEventListener('click', function () {
         const iframe = document.getElementById('tableIframe');
         const selectedTable = iframe.contentWindow.selectedTable; // Access the selected table from the iframe
 
@@ -361,13 +394,13 @@
     });
 
     // Add an event listener to handle table selection within the iframe
-    document.getElementById('tableIframe').addEventListener('load', function() {
+    document.getElementById('tableIframe').addEventListener('load', function () {
         const iframeDocument = this.contentDocument || this.contentWindow.document;
 
-        iframeDocument.addEventListener('click', function(event) {
+        iframeDocument.addEventListener('click', function (event) {
             if (event.target.classList.contains('table') && event.target.classList.contains('available')) {
                 const tables = iframeDocument.querySelectorAll('.table');
-                tables.forEach(function(table) {
+                tables.forEach(function (table) {
                     table.classList.remove('selected');
                 });
 
@@ -380,19 +413,13 @@
         });
     });
 
-</script>
-<script>
-    document.getElementById('homeLink').addEventListener('click', function() {
+    document.getElementById('homeLink').addEventListener('click', function () {
         localStorage.removeItem('tableID');
     });
-</script>
-<script>
-    document.getElementById('homeLink2').addEventListener('click', function() {
+    document.getElementById('homeLink2').addEventListener('click', function () {
         localStorage.removeItem('tableID');
     });
-</script>
-<script>
-    document.getElementById('continueShoppingBtn').addEventListener('click', function() {
+    document.getElementById('continueShoppingBtn').addEventListener('click', function () {
         window.location.href = 'menu.html';
     });
 </script>

@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${voucher.voucherQuantity}</td>
                     <td>
                         <button class="btn btn-info view-btn" data-id="${voucher.voucherId}" data-bs-toggle="modal" data-bs-target="#viewVoucherModal">View</button>
-                        
+                        <button class="btn btn-primary update-btn" data-id="${voucher.voucherId}" data-bs-toggle="modal" data-bs-target="#updatevoucherModal">Update</button>
                     </td>
                 `;
                     voucherTableBody.appendChild(tr);
@@ -112,6 +112,11 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const formData = new FormData(this);
 
+        // Log form data for debugging
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
         fetch('http://localhost:8080/TastyKing/voucher', {
             method: 'POST',
             headers: {
@@ -134,29 +139,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const voucherId = document.getElementById('updatevoucherID').value;
         const formData = new FormData(this);
 
-        const updateopendate = document.getElementById('updateopendate').value;
-        const updateenddate = document.getElementById('updateenddate').value;
-
-        if (!updateopendate || !updateenddate) {
-            alert('Start Date and End Date cannot be empty.');
-            return;
-        }
-
-        formData.set('updateOpenDate', new Date(updateopendate).toISOString());
-        formData.set('updateEndDate', new Date(updateenddate).toISOString());
-
         // Log form data for debugging
-        console.log('Updating voucher with data:', {
-            voucherId,
-            voucherTitle: formData.get('updateVoucherTitle'),
-            discount: formData.get('updateDiscount'),
-            quantity: formData.get('updateQuantity'),
-            exchangePoint: formData.get('updateExchangePoint'),
-            startDate: formData.get('updateOpenDate'),
-            dueDate: formData.get('updateEndDate'),
-            description: formData.get('updateDescription'),
-            image: formData.get('updateVoucherImage')
-        });
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
 
         fetch(`http://localhost:8080/TastyKing/voucher/${voucherId}`, {
             method: 'PUT',

@@ -240,6 +240,9 @@ document.addEventListener("DOMContentLoaded", function () {
             <button onclick="printBill(${orderID})" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
                 Print Bill
             </button>
+            <button onclick="viewFeedback(${orderID})" style="background-color: #18a0ff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
+                Feedback
+            </button>
         `;
         }
     else if (['Confirmed'].includes(status)) {
@@ -249,6 +252,44 @@ document.addEventListener("DOMContentLoaded", function () {
     }
         return buttons;
     }
+    window.viewFeedback = function(orderID) {
+        var orderModalElement = document.getElementById('orderModal');
+        var orderModal = bootstrap.Modal.getInstance(orderModalElement);
+        if (orderModal) {
+            orderModal.hide();
+        }
+
+        const url = `http://localhost:8080/TastyKing/feedback/getFeedbackOrder/${orderID}`;
+        const token = localStorage.getItem('token'); // Replace with your actual token retrieval method
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 0 && data.result) {
+                    const feedback = data.result;
+                    document.getElementById('email').value = feedback.user.email;
+                    document.getElementById('emotion').value = feedback.emotion;
+                    document.getElementById('content').value = feedback.content;
+
+                    // Show the modal
+                    var feedbackModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+                    feedbackModal.show();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching feedback details:", error);
+                alert("An error occurred while fetching the feedback details. Please try again.");
+            });
+    }
+
     window.printBill = function(orderID) {
         const url = `http://localhost:8080/TastyKing/bill/print/${orderID}`;
         const token = localStorage.getItem('token'); // Thay thế bằng token thực của bạn
@@ -281,6 +322,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     window.showPaymentModal = function(orderID) {
+        var orderModalElement = document.getElementById('orderModal');
+        var orderModal = bootstrap.Modal.getInstance(orderModalElement);
+        if (orderModal) {
+            orderModal.hide();
+        }
         // Set the order ID in the modal form
         document.getElementById('orderID').value = orderID;
         // Fetch order details to get totalAmount and deposit
@@ -367,6 +413,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     window.payment = function(orderID) {
+        var orderModalElement = document.getElementById('orderModal');
+        var orderModal = bootstrap.Modal.getInstance(orderModalElement);
+        if (orderModal) {
+            orderModal.hide();
+        }
         // Fetch payment details
         fetch(`http://localhost:8080/TastyKing/payment/getPayment/${orderID}`, {
             method: 'GET',
