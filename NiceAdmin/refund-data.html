@@ -402,7 +402,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Order Management</h1>
+        <h1>Refund Management</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -413,176 +413,79 @@
     </div><!-- End Page Title -->
 
     <section class="section">
-
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
-                            <button class="btn btn-warning" onclick="redirectToIndex()">Create new order</button>
-                            <input type="text" id="searchInput" class="form-control search-input" placeholder="Search orders...">
+                            <input type="text" id="searchInput" class="form-control search-input" placeholder="Search refund...">
                         </div>
                         <!-- Table with stripped rows -->
                         <table class="table datatable">
                             <thead>
                             <tr>
-                                <th><b>Order by</b></th>
-                                <th>OrderID</th>
-                                <th data-type="date" data-format="YYYY/DD/MM">Order Date</th>
-                                <th data-type="date" data-format="YYYY/DD/MM">Booking Date</th>
-                                <th>Order Status</th>
+                                <th><b>R</b>efundID</th>
+                                <th>Order ID</th>
+                                <th>Customer Name</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <!-- Data will be populated here -->
+                            <tbody id="refundTableBody">
+                            <!-- Refund items will be dynamically inserted here -->
                             </tbody>
                         </table>
-                        <div class="pagination">
-                            <!-- Pagination buttons will be populated here -->
-                        </div>
                         <!-- End Table with stripped rows -->
-
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
 </main><!-- End #main -->
-<!--pop up update data-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tasty King restaurant system</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Notification message will be inserted here -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="confirmExchangeBtn">Ok</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--modal-->
-<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Order details will be populated here -->
-            </div>
-        </div>
-    </div>
-</div>
-<!--//////////////////////-->
-<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+<!--  modal menu-->
+<div class="modal fade" id="refundModal" tabindex="-1" aria-labelledby="refundModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="paymentModalLabel">Payment</h5>
+                <h5 class="modal-title" id="refundModalLabel">Refund Information</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="paymentForm">
-                    <div class="form-group">
-                        <label for="orderID">Order ID *</label>
-                        <input type="text" class="form-control" id="orderID" name="orderID" placeholder="Enter Order ID" required>
-                        <label for="paymentMethod">Payment method *</label>
-                        <select class="form-control" id="paymentMethod" name="paymentMethod" required>
-                            <option value="">Select Method</option>
-                            <option value="Online Banking">Online Banking</option>
-                            <option value="Cash">Cash</option>
-                        </select>
-                        <label for="totalAmount">Total (VND)*</label>
-                        <input type="number" class="form-control" id="totalAmount" name="totalAmount" placeholder="Enter Total" required>
-                        <label for="totalAmount">Deposit (VND)*</label>
-                        <input type="number" class="form-control" id="deposit" name="deposit" placeholder="Enter deposit" required>
-                        <label for="customerPayment">Amount Received *</label>
-                        <input type="number" class="form-control" id="customerPayment" name="customerPayment" placeholder="Enter Amount Received" required>
-                        <div class="form-group mt-3" id="changeAmountDiv" style="display: none;">
-                            <label for="changeAmount">Change (VND)</label>
-                            <input type="number" class="form-control" id="changeAmount" name="changeAmount" readonly>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
-                </form>
+                <br id="refundForm" enctype="multipart/form-data">
+                <br class="form-group">
+                <label for="orderID">Order ID *</label>
+                <input type="text" class="form-control" id="orderID" name="orderID" placeholder="Enter Order ID" required>
+                <label for="refundBankAccount">Customer Bank Account*</label>
+                <input type="text" class="form-control" id="refundBankAccount" name="refundBankAccount" required>
+                <label for="refundBankName">Customer Bank Name*</label>
+                <input type="text" class="form-control" id="refundBankName" name="refundBankName" required>
+                <label for="refundBankAccountOwner">Customer Bank Account Owner *</label>
+                <input type="text" class="form-control" id="refundBankAccountOwner" name="refundBankAccountOwner" required>
+                <label for="totalAmount">Total Amount (VND) *</label>
+                <input type="text" class="form-control" id="totalAmount" name="totalAmount" required>
+                <label for="refundDate">Refund Date *</label>
+                <input type="text" class="form-control" id="refundDate" name="refundDate" required>
+                <label for="refundStatus">Status *</label>
+                <input type="text" class="form-control" id="refundStatus" name="refundStatus" required>
+                <label for="refundDescription">Description *</label>
+                <textarea id="refundDescription" name="refundDescription" class="form-control" required></textarea>
+                <label for="refundImage">Refund Image</label><br/>
+                <a id="refundImageLink" href="#" target="_blank">
+                    <img id="refundImageReview" src="" alt="Refund Image" style="width: 150px; height: 150px; margin-top: 10px;" />
+                </a>
+
             </div>
+            <button type="button" class="btn btn-primary mt-3" data-bs-dismiss="modal">Close</button>
+            </form>
         </div>
     </div>
+</div>
 </div>
 
-<div class="modal fade" id="paymentModal2" tabindex="-1" aria-labelledby="paymentModalLabel2" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="paymentModalLabel2">Payment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="paymentForm2">
-                    <div class="form-group">
-                        <label for="paymentID2">Payment ID *</label>
-                        <input type="text" class="form-control" id="paymentID2" name="paymentID2" placeholder="Enter Payment ID" readonly>
-                        <label for="orderID2">Order ID *</label>
-                        <input type="text" class="form-control" id="orderID2" name="orderID" placeholder="Enter Order ID" readonly>
-                        <label for="paymentMethod2">Payment method *</label>
-                        <input type="text" class="form-control" id="paymentMethod2" name="paymentMethod2" placeholder="Enter Payment Method" required>
-                        <label for="totalAmount2">Total (VND)*</label>
-                        <input type="number" class="form-control" id="totalAmount2" name="totalAmount" placeholder="Enter Total" readonly>
-                        <label for="deposit2">Deposit (VND)*</label>
-                        <input type="number" class="form-control" id="deposit2" name="deposit" placeholder="Enter Deposit" readonly>
-                        <label for="totalAmount2">New Total (VND)*</label>
-                        <input type="number" class="form-control" id="newTotalAmount2" name="totalAmount" placeholder="Enter Total" readonly>
-                        <label for="customerPayment">Amount Received *</label>
-                        <input type="number" class="form-control" id="customerPayment2" name="customerPayment" placeholder="Enter Amount Received" required>
-                        <div class="form-group mt-3" id="changeAmountDiv2" style="display: none;">
-                            <label for="changeAmount">Change (VND)</label>
-                            <input type="number" class="form-control" id="changeAmount2" name="changeAmount" readonly>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!--view feedback-->
-<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="feedbackModalLabel">View Feedback</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="feedbackForm">
-                    <div class="form-group">
-                        <label for="email">Customer email *</label>
-                        <input type="text" class="form-control" id="email" name="email" required>
-                        <label for="emotion">Customer's experience *</label>
-                        <input type="text" class="form-control" id="emotion" name="emotion" required>
-                        <label for="content">Feedback Content *</label>
-                        <textarea class="form-control" id="content" name="content" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">OK</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
@@ -607,8 +510,64 @@
 <script src="assets/vendor/quill/quill.js"></script>
 <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>a
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get a reference to the button that triggers the modal
+        var showModalBtn = document.getElementById('showModalBtn');
+
+        // Add click event listener to the button
+        showModalBtn.addEventListener('click', function() {
+            // Create a new modal object using bootstrap.modal
+            var myModal = new bootstrap.Modal(document.getElementById('menuModal'));
+
+            // Show the modal
+            myModal.show();
+        });
+    });
+
+    function fetchCategories() {
+        fetch('http://localhost:8080/TastyKing/category')
+            .then(response => response.json())
+            .then(data => {
+                const categories = data.result;
+                let categoryDropdown = document.getElementById('categoryName');
+                categories.forEach(category => {
+                    let option = document.createElement('option');
+                    option.value = category.categoryID;
+                    option.text = category.categoryName;
+                    categoryDropdown.add(option);
+                });
+            });
+    }
+
+    // Fetch and display categories on page load
+    fetchCategories();
+
+</script>
+<script src="api/refund.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const username = localStorage.getItem('username');
+        const role = localStorage.getItem('role');
+
+        if (username && role) {
+            document.getElementById('userName').textContent = username;
+            document.getElementById('userRole').textContent = role;
+        }
+
+        document.getElementById('signOutBtn').addEventListener('click', function() {
+            // Clear all items in localStorage
+            localStorage.clear();
+
+            // Optionally, redirect to the login page
+            window.location.href = 'pages-login.html';
+        });
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const searchInput = document.getElementById('searchInput');
@@ -644,15 +603,6 @@
         window.location.href = "create-order.html";
     }
 </script>
-
-
-<!-- Include SockJS library -->
-
-
-
-<!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
-<script src="api/getBooking.js"></script>
 </body>
 
 </html>

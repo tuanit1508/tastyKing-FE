@@ -1,43 +1,90 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     fetchOrders();
 
     // Add event listener to dynamically created cancel buttons
-    document.getElementById('orders-container').addEventListener('click', function(event) {
+    document.getElementById('orders-container').addEventListener('click', function (event) {
         if (event.target.closest('.cancel-order')) {
             event.preventDefault();
             const orderID = event.target.closest('.cancel-order').getAttribute('data-order-id');
-            cancelOrder(orderID);
+            // Set orderID to hidden field in modal
+            document.getElementById('orderID').value = orderID;
+            // Show modal
+            var myModal = new bootstrap.Modal(document.getElementById('cancelOrderModal'));
+            myModal.show();
+        } else if (event.target.closest('.update-refund-info')) {
+            event.preventDefault();
+            const orderID = event.target.closest('.update-refund-info').getAttribute('data-order-id');
+            // Set orderID to hidden field in modal
+            document.getElementById('updateOrderID').value = orderID;
+
+            // Fetch existing refund information
+            fetchRefundInfo(orderID);
+
+            // Show modal
+            var myModal = new bootstrap.Modal(document.getElementById('updateCancelOrderModal'));
+            myModal.show();
         }
     });
 });
+
+function fetchRefundInfo(orderID) {
+    const authToken = localStorage.getItem("authToken");
+
+    fetch(`http://localhost:8080/TastyKing/refund/get/order/${orderID}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${authToken}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 0) {
+                const refund = data.result;
+                document.getElementById('updateRefundBankAccountOwner').value = refund.refundBankAccountOwner;
+                document.getElementById('updateRefundBankAccount').value = refund.refundBankAccount;
+                document.getElementById('updateRefundBankName').value = refund.refundBankName;
+                const refundImage = document.getElementById('refundImageReview');
+                refundImage.src = `http://localhost:63343/TastyKing-FE/${refund.refundImage}`;
+                const refundLink = document.getElementById('refundImageLink');
+                refundLink.href = `http://localhost:63343/TastyKing-FE/${refund.refundImage}`;
+            } else {
+                console.error('Error fetching refund info:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 
 let currentPage = 1;
 const ordersPerPage = 5;
 let ordersData = [];
 
-async function fetchOrders() {
-    try {
-        const authToken = localStorage.getItem("authToken");
-        const email = localStorage.getItem("loggedInUserEmail"); // Replace with the desired email
-        const response = await fetch(`http://localhost:8080/TastyKing/order/getOrder/${email}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${authToken}`
-            }
-        });
-        const data = await response.json();
+function fetchOrders() {
+    const authToken = localStorage.getItem("authToken");
+    const email = localStorage.getItem("loggedInUserEmail"); // Replace with the desired email
 
-        if (data.code === 0) {
-            ordersData = data.result;
-            displayOrders(ordersData, currentPage);
-            setupPagination(ordersData);
-        } else {
-            console.error('Error fetching orders:', data);
+    fetch(`http://localhost:8080/TastyKing/order/getOrder/${email}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${authToken}`
         }
-    } catch (error) {
-        console.error('Error:', error);
-    }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 0) {
+                ordersData = data.result;
+                displayOrders(ordersData, currentPage);
+                setupPagination(ordersData);
+            } else {
+                console.error('Error fetching orders:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 function displayOrders(orders, page) {
@@ -116,25 +163,33 @@ function displayOrders(orders, page) {
                             </tr>
                             <!-- New row for buttons -->
                             <tr>
-                                <td colspan="3" style="text-align: center; padding: 20px;">
-                                    ${order.orderStatus !== 'Canceled' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'Done' ?
-            `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
+                                <<td colspan="3" style="text-align: center; padding: 20px;">
+                                    ${order.orderStatus === 'PendingCancellation' ?
+            `<button style="background-color: #ffd700; color: white; border: none; border-radius: 5px; padding: 10px 20px;" disabled>Cancel request pending...</button>
+                                         <a href="#" class="m-2 update-refund-info" data-order-id="${order.orderID}" style="text-decoration: none;">
                                             <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
-                                                Cancel
+                                                Update your refund information
                                             </button>
-                                        </a>` : ''}
-                                    ${order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' && order.orderStatus !== 'Confirmed' && order.orderStatus !== 'InProgress' ?
-            `<a href="updateOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
-                                            <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
-                                                Update
-                                            </button>
-                                        </a>` : ''}
-                                     ${order.orderStatus === 'Done' ?
-            `<a href="feedbackOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
-                                            <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
-                                                Send Feedback
-                                            </button>
-                                        </a>` : ''}
+                                         </a>`
+            :
+            (order.orderStatus !== 'Canceled' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'Done' && order.orderStatus !== 'CancelByRestaurant' ?
+                `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
+                                                <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
+                                                    Cancel
+                                                </button>
+                                            </a>`
+                : order.orderStatus === 'CancelByRestaurant' ?
+                    `<a href="#" class="m-2 cancel-order" data-order-id="${order.orderID}" style="text-decoration: none;">
+                                                <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
+                                                    Enter refund information
+                                                </button>
+                                            </a>` : '') +
+            (order.orderStatus !== 'Canceled' && order.orderStatus !== 'Done' && order.orderStatus !== 'Confirmed' && order.orderStatus !== 'InProgress' && order.orderStatus !== 'CancelByRestaurant' ?
+                `<a href="updateOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
+                                                <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
+                                                    Update
+                                                </button>
+                                            </a>` : '')}
                                 </td>
                             </tr>
                         </tbody>
@@ -143,7 +198,7 @@ function displayOrders(orders, page) {
         container.appendChild(orderElement);
 
         // JavaScript to toggle order details visibility
-        document.getElementById(`toggle-arrow-${order.orderID}`).addEventListener('click', function() {
+        document.getElementById(`toggle-arrow-${order.orderID}`).addEventListener('click', function () {
             const details = document.getElementById(`order-details-${order.orderID}`);
             if (details.style.display === 'none') {
                 details.style.display = 'table-row';
@@ -172,7 +227,7 @@ function setupPagination(orders) {
         pageButton.style.borderRadius = '5px';
         pageButton.style.backgroundColor = '#007bff';
         pageButton.style.color = 'white';
-        pageButton.addEventListener('click', function() {
+        pageButton.addEventListener('click', function () {
             currentPage = i;
             displayOrders(orders, currentPage);
             document.querySelectorAll('.pagination button').forEach(btn => btn.classList.remove('active'));
@@ -195,26 +250,103 @@ function getOrderStatusButton(status) {
     return `<button disabled style="background-color: ${color}; color: white; border: none; border-radius: 5px; padding: 10px 20px;">${status}</button>`;
 }
 
-async function cancelOrder(orderID) {
-    const authToken = localStorage.getItem("authToken");
-    try {
-        const response = await fetch(`http://localhost:8080/TastyKing/order/cancelOrder/${orderID}`, {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${authToken}`
-            }
-        });
-        const data = await response.json();
+document.getElementById('cancelOrderForm').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-        if (data.code === 0) {
-            alert(data.result); // Thông báo hủy đơn thành công
-            fetchOrders(); // Cập nhật danh sách đơn hàng sau khi hủy
-        } else {
-            alert(data.message);
-            console.error('Error canceling order:', data);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
+    const orderID = document.getElementById('orderID').value;
+    const refundBankAccountOwner = document.getElementById('refundBankAccountOwner').value;
+    const refundBankAccount = document.getElementById('refundBankAccount').value;
+    const refundBankName = document.getElementById('refundBankName').value;
+    const refundImage = document.getElementById('refundImage').files[0];
+    const authToken = localStorage.getItem("authToken");
+
+    // Tạo đối tượng FormData
+    const formData = new FormData();
+    formData.append('orderID', orderID);
+    formData.append('refundBankAccountOwner', refundBankAccountOwner);
+    formData.append('refundBankAccount', refundBankAccount);
+    formData.append('refundBankName', refundBankName);
+    formData.append('refundImage', refundImage);
+
+    // Gửi yêu cầu hoàn tiền
+    fetch('http://localhost:8080/TastyKing/refund', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${authToken}`
+        },
+        body: formData
+    })
+        .then(response => response.json())
+        .then(refundResult => {
+            if (refundResult.code !== 0) {
+                alert('Failed to process refund. Please try again.');
+                return;
+            }
+
+            // Gửi yêu cầu hủy đơn hàng
+            return fetch(`http://localhost:8080/TastyKing/order/cancelOrder/${orderID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                }
+            });
+        })
+        .then(response => response.json())
+        .then(cancelResult => {
+            if (cancelResult.code === 0) {
+                alert('Order canceled successfully');
+                location.reload(); // Tải lại trang để cập nhật trạng thái
+            } else {
+                alert('Failed to cancel order. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+});
+
+
+document.getElementById('updateCancelOrderForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const orderID = document.getElementById('updateOrderID').value;
+    const refundBankAccountOwner = document.getElementById('updateRefundBankAccountOwner').value;
+    const refundBankAccount = document.getElementById('updateRefundBankAccount').value;
+    const refundBankName = document.getElementById('updateRefundBankName').value;
+    const refundImage = document.getElementById('updateRefundImage').files[0];
+
+    const formData = new FormData();
+    formData.append('refundBankAccountOwner', refundBankAccountOwner);
+    formData.append('refundBankAccount', refundBankAccount);
+    formData.append('refundBankName', refundBankName);
+    formData.append('refundImage', refundImage);
+
+    const authToken = localStorage.getItem("authToken");
+
+    fetch(`http://localhost:8080/TastyKing/refund/update/order/${orderID}`, {
+        method: "PATCH",
+        headers: {
+            "Authorization": `Bearer ${authToken}`
+        },
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 0) {
+                alert('Refund updated successfully');
+                location.reload();
+                fetchOrders();
+                // Hide modal
+                var myModalEl = document.getElementById('updateCancelOrderModal');
+                var modal = bootstrap.Modal.getInstance(myModalEl);
+                modal.hide();
+            } else {
+                console.error('Error updating refund:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
