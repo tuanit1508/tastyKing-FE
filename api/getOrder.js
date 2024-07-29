@@ -165,7 +165,7 @@ function displayOrders(orders, page) {
                             <tr>
                                 <<td colspan="3" style="text-align: center; padding: 20px;">
                                     ${order.orderStatus === 'PendingCancellation' ?
-            `<button style="background-color: #ffd700; color: white; border: none; border-radius: 5px; padding: 10px 20px;" disabled>Cancel request pending...</button>
+            `
                                          <a href="#" class="m-2 update-refund-info" data-order-id="${order.orderID}" style="text-decoration: none;">
                                             <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px; margin-right: 10px;">
                                                 Update your refund information
