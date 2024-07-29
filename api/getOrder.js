@@ -260,7 +260,6 @@ document.getElementById('cancelOrderForm').addEventListener('submit', function (
     const refundImage = document.getElementById('refundImage').files[0];
     const authToken = localStorage.getItem("authToken");
 
-    // Tạo đối tượng FormData
     const formData = new FormData();
     formData.append('orderID', orderID);
     formData.append('refundBankAccountOwner', refundBankAccountOwner);
@@ -268,7 +267,6 @@ document.getElementById('cancelOrderForm').addEventListener('submit', function (
     formData.append('refundBankName', refundBankName);
     formData.append('refundImage', refundImage);
 
-    // Gửi yêu cầu hoàn tiền
     fetch('http://localhost:8080/TastyKing/refund', {
         method: 'POST',
         headers: {
@@ -279,11 +277,10 @@ document.getElementById('cancelOrderForm').addEventListener('submit', function (
         .then(response => response.json())
         .then(refundResult => {
             if (refundResult.code !== 0) {
-                alert('Failed to process refund. Please try again.');
-                return;
+                alert(`Failed to process refund: ${refundResult.message}`);
+                throw new Error('Refund failed');
             }
 
-            // Gửi yêu cầu hủy đơn hàng
             return fetch(`http://localhost:8080/TastyKing/order/cancelOrder/${orderID}`, {
                 method: 'PUT',
                 headers: {
@@ -296,16 +293,19 @@ document.getElementById('cancelOrderForm').addEventListener('submit', function (
         .then(cancelResult => {
             if (cancelResult.code === 0) {
                 alert('Order canceled successfully');
-                location.reload(); // Tải lại trang để cập nhật trạng thái
+                location.reload();
             } else {
-                alert('Failed to cancel order. Please try again.');
+                alert(`Failed to cancel order: ${cancelResult.message}`);
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
+            if (error.message !== 'Refund failed') {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
         });
 });
+
 
 
 document.getElementById('updateCancelOrderForm').addEventListener('submit', function (event) {

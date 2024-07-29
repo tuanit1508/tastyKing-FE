@@ -211,7 +211,7 @@ function createCombo() {
 
     const requestData = {
         comboTitle,
-        newVND,
+        newPrice,
         openDate,
         endDate,
         comboDescription,

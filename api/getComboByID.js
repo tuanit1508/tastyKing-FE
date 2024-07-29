@@ -9,32 +9,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.code === 0) {
                     const combo = data.result;
                     document.getElementById('comboTitle').innerText = combo.comboTitle;
-
-
-                    document.getElementById('comboDescriptionTab').innerText = combo.comboDescription; // Set description in the tab
+                    document.getElementById('comboDescription').innerText = combo.comboDescription;
                     document.getElementById('openDate').innerText = new Date(combo.openDate).toLocaleDateString();
                     document.getElementById('endDate').innerText = new Date(combo.endDate).toLocaleDateString();
                     document.getElementById('newPriceText').innerText = `${combo.newPrice} VND`;
                     document.getElementById('comboImage').src = combo.comboImage;
                     document.getElementById('comboImageLink').href = combo.comboImage;
 
-                    // Add to Cart Button Handler
+                    // Add event listener to the "Add to Cart" button
                     document.getElementById('addToCartBtn').addEventListener('click', function() {
                         fetch(`http://localhost:8080/TastyKing/combo/getComboFood/${comboID}`)
                             .then(response => response.json())
-                            .then(data => {
-                                if (data.code === 0) {
-                                    let cartItems = JSON.parse(getCookie('cartItems') || '[]');
-                                    cartItems.push(...data.result);
-                                    console.log(data.result);
-                                    setCookie('cartItems', JSON.stringify(cartItems), 7); // Store for 7 days
-                                    window.location.href = 'cart.html';
+                            .then(foodData => {
+                                if (foodData.code === 0) {
+                                    const foodItems = foodData.result;
+                                    foodItems.forEach(food => addToCart(food));
                                 } else {
-                                    console.error('Failed to fetch combo food items:', data.message);
+                                    console.error('Failed to fetch combo food details:', foodData.message);
                                 }
                             })
                             .catch(error => {
-                                console.error('Error fetching combo food items:', error);
+                                console.error('Error fetching combo food details:', error);
                             });
                     });
                 } else {
@@ -71,4 +66,27 @@ function getCookie(name) {
         }
     }
     return "";
+}
+
+function addToCart(food) {
+    // Get the existing cart from cookies
+    let cart = JSON.parse(getCookie("cart") || "[]");
+
+    // Check if the item is already in the cart
+    const existingItem = cart.find(item => item.foodID === food.foodID);
+
+    if (existingItem) {
+        // If it exists, increase the quantity
+        existingItem.quantity += food.quantity;
+    } else {
+        // If it does not exist, add it to the cart with its quantity
+        cart.push(food);
+    }
+
+    // Save the updated cart back to the cookies
+    setCookie("cart", JSON.stringify(cart), 7); // Expires in 7 days
+
+    // Show the modal
+    var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+    modal.show();
 }
