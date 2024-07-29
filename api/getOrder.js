@@ -189,7 +189,12 @@ function displayOrders(orders, page) {
                                                 <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
                                                     Update
                                                 </button>
-                                            </a>` : '')}
+                                            </a>` : '')}${order.orderStatus === 'Done' ?
+            `<a href="feedbackOrder.html?orderID=${order.orderID}" class="m-2" style="text-decoration: none;">
+                                            <button style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 10px 20px;">
+                                                Send Feedback
+                                            </button>
+                                        </a>` : ''}
                                 </td>
                             </tr>
                         </tbody>

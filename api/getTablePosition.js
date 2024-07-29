@@ -1,5 +1,3 @@
-
-
 function setLocalStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 }
@@ -101,8 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const tableID = this.getAttribute('data-table');
                 const tableName = this.getAttribute('data-name');
                 const tablePosition = this.getAttribute('data-position');
-                const status = this.classList.contains('available') ? 'available' :
-                    this.classList.contains('booked') ? 'booked' : 'serving';
+                const status = this.classList.contains('available') ? 'available' : 'serving';
 
                 if (status === 'available') {
                     // Deselect any previously selected table
@@ -119,8 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Update booking message
                     document.getElementById('booking-message').innerHTML = `<p>Table ${tableName} - ${tablePosition} selected. Click 'Book Now' to confirm.</p>`;
-                } else if (status === 'booked') {
-                    document.getElementById('booking-message').innerHTML = `<p>Table ${tableName} - ${tablePosition} is already booked. Please choose another table.</p>`;
                 } else if (status === 'serving') {
                     document.getElementById('booking-message').innerHTML = `<p>Table ${tableName} - ${tablePosition} is currently serving. Please choose another table.</p>`;
                 }

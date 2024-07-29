@@ -386,7 +386,7 @@
         const selectedTable = iframe.contentWindow.selectedTable; // Access the selected table from the iframe
 
         if (selectedTable) {
-            alert(`Table ${selectedTable.getAttribute('data-table')} booked successfully!`);
+            alert(`Table ${selectedTable.getAttribute('data-table')} is selected. Click Proceed Check Out to continue!`);
             $('#tableModal').modal('hide');
         } else {
             alert('Please select a table first.');

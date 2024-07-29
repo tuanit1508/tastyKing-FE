@@ -14,11 +14,12 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
             password: password
         })
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Please check your email or password');
+        .then(response => response.json())
+        .then(responseResult => {
+            if (responseResult.code !== 0) {
+                throw new Error(responseResult.message);
             }
-            return response.json();
+
         })
         .then(data => {
             // Handle success response
