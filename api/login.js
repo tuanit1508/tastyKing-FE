@@ -19,6 +19,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
             if (responseResult.code !== 0) {
                 throw new Error(responseResult.message);
             }
+            return responseResult;
 
         })
         .then(data => {
